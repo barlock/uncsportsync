@@ -1,3 +1,5 @@
+package edu.cs.unc.sportsync.main.ui;
+
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
