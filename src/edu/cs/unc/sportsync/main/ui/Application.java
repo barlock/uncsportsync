@@ -18,14 +18,14 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-public class SportsSyncGUI {
+public class Application {
 
 	private Shell shell;
 	private Shell dialog;
 	private Scale scale;
 	Combo combo1, combo2;
 
-	public SportsSyncGUI(Display display) {
+	public Application(Display display) {
 
 		
 		shell = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN );
@@ -292,15 +292,5 @@ public class SportsSyncGUI {
 
 		// Point p = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		// label.setBounds(5, 5, p.x+5, p.y+5);
-		
-		
-		
-		
-	}
-
-	public static void main(String[] args) {
-		Display display = new Display();
-		new SportsSyncGUI(display);
-		display.dispose();
 	}
 }
