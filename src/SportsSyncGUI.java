@@ -121,6 +121,8 @@ public class SportsSyncGUI {
 		lod.bottom = new FormAttachment(combo2, -20, SWT.BOTTOM);
 		lo.setLayoutData(lod);
 		
+		//LALALA new comment!
+		
 		// Line-in options button
 		Button inOption = new Button(shell, SWT.PUSH);
 		inOption.setText("Options...");
