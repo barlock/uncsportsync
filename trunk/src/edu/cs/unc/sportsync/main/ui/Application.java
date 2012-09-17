@@ -17,19 +17,20 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import edu.cs.unc.sportsync.main.settings.Settings;
+
 public class Application {
 
 	private Shell shell;
 	private Shell dialog;
-	private int delayTime;  // in seconds
+	private Settings settings;
 	
 
 	public Application(Display display) {
-
 		shell = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
 		shell.setText("UNC SportsSync");
 		
-		delayTime = 60;
+		settings = new Settings(60);
 
 		initMainUI();
 
@@ -93,8 +94,8 @@ public class Application {
 
 		Listener listener = new Listener() {
 			public void handleEvent(Event event) {
-				initSettingsUI();
-				dialog.open();
+				SettingsDialog settingsDialog = new SettingsDialog(shell, settings, delayTimeChangeListner);
+				settingsDialog.open();
 			}
 		};
 
@@ -181,7 +182,7 @@ public class Application {
 		scale = new Scale(shell, SWT.HORIZONTAL); // WHY FINAL???
 		// Rectangle clientArea = shell.getClientArea ();
 		scale.setMaximum(1);
-		scale.setMaximum(delayTime*10);
+		scale.setMaximum(settings.delayTime*10);
 		scale.setIncrement(1);
 		scale.setPageIncrement(10);
 		FormData sliderBar = new FormData(300, 40);
@@ -216,7 +217,7 @@ public class Application {
 		startScale.setLayoutData(startScaleData);
 
 		endScale = new Label(shell, SWT.LEFT);
-		endScale.setText(delayTime + " sec");
+		endScale.setText(settings.delayTime + " sec");
 		FormData endScaleData = new FormData(50, 30);
 		endScaleData.right = new FormAttachment(scale, 20, SWT.RIGHT);
 		endScaleData.bottom = new FormAttachment(scale, 30, SWT.BOTTOM);
@@ -252,118 +253,14 @@ public class Application {
 		// label.setBounds(5, 5, p.x+5, p.y+5);
 	}
 
-	Combo inputList, OutputList, DelayList;
-
-	public void initSettingsUI() {
-
-		//dialog = new Shell(shell, SWT.APPLICATION_MODAL);
-		dialog = new Shell(shell);
-		dialog.setText("Settings");
-		dialog.setSize(400, 500);
-		dialog.setLocation(400, 150);
-
-		FormLayout layout = new FormLayout();
-		dialog.setLayout(layout);
-
-		// INPUT and OUTPUT selection
-		inputList = new Combo(dialog, SWT.READ_ONLY);
-		String[] listOfInputDevices = new String[] { "Line-in", "Online Radio" };
-		inputList.setItems(listOfInputDevices);
-		inputList.select(0);
-		FormData inputListF = new FormData(100, 100);
-		inputListF.left = new FormAttachment(50);
-		inputListF.top = new FormAttachment(20);
-		inputList.setLayoutData(inputListF);
-
-		inputList.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				System.out.println("Input Selection detail -> "
-						+ inputList.getText());
-			}
-		});
-
-		OutputList = new Combo(dialog, SWT.READ_ONLY);
-		String[] listOfOutputDevices = new String[] { "Line-Out Jack",
-				"Speakers" };
-		OutputList.setItems(listOfOutputDevices);
-		OutputList.select(0);
-		FormData OutputListF = new FormData(100, 100);
-		OutputListF.left = new FormAttachment(inputList, 0, SWT.LEFT);
-		OutputListF.bottom = new FormAttachment(inputList, 50, SWT.BOTTOM);
-		OutputList.setLayoutData(OutputListF);
-
-		OutputList.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				System.out.println("Input Selection detail -> "
-						+ OutputList.getText());
-			}
-		});
-
-		// Labels for INPUT and OUTPUT
-		Label ln = new Label(dialog, SWT.RIGHT);
-		ln.setText("Audio Input:");
-		FormData lnd = new FormData(100, 20);
-		lnd.right = new FormAttachment(inputList, -10, SWT.LEFT);
-		lnd.bottom = new FormAttachment(inputList, 0, SWT.BOTTOM);
-		ln.setLayoutData(lnd);
-
-		Label lo = new Label(dialog, SWT.RIGHT);
-		lo.setText("Audio Output:");
-		FormData lod = new FormData(100, 20);
-		lod.right = new FormAttachment(OutputList, -10, SWT.LEFT);
-		lod.bottom = new FormAttachment(OutputList, 0, SWT.BOTTOM);
-		lo.setLayoutData(lod);
-		
-		// Optional Delay times
-		DelayList = new Combo(dialog, SWT.READ_ONLY);
-		String[] listOfDelayTimes = new String[40];
-		String time;
-		for (int i = 0 ; i < 40 ; i++ ){
-			time = (i+1)/4==0 ? String.format("%d sec", 15*((i+1)%4)) :
-				(15*((i+1)%4)==0 ? String.format("%d min", (i+1)/4) :
-					String.format("%d min & %d sec", (i+1)/4,  15*((i+1)%4)));
-			listOfDelayTimes[i] =  time;
+	Combo DelayList;
+	
+	final Listener delayTimeChangeListner = new Listener() {
+		public void handleEvent(Event event) {
+			System.out.println("Input Selection detail -> " + DelayList.getText());
+			settings.delayTime = (DelayList.getSelectionIndex()+1)*15;
+			endScale.setText(settings.delayTime + " sec");
+			scale.setMaximum(settings.delayTime*10);
 		}
-		DelayList.setItems(listOfDelayTimes);
-		DelayList.select(delayTime/15-1);
-		FormData DelayListF = new FormData(100, 100);
-		DelayListF.left = new FormAttachment(inputList, 0, SWT.LEFT);
-		DelayListF.bottom = new FormAttachment(inputList, 100, SWT.BOTTOM);
-		DelayList.setLayoutData(DelayListF);
-
-		DelayList.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				System.out.println("Input Selection detail -> "
-						+ DelayList.getText());
-				delayTime = (DelayList.getSelectionIndex()+1)*15;
-				endScale.setText(delayTime + " sec");
-				scale.setMaximum(delayTime*10);
-			}
-		});
-		
-		Label dl = new Label(dialog, SWT.RIGHT);
-		dl.setText("Audio Delay Time:");
-		FormData dld = new FormData(100, 20);
-		dld.right = new FormAttachment(DelayList, -10, SWT.LEFT);
-		dld.bottom = new FormAttachment(DelayList, 0, SWT.BOTTOM);
-		dl.setLayoutData(dld);
-
-		
-		// Okay/Exit Button
-		Button ok = new Button(dialog, SWT.PUSH);
-		ok.setText("OK");
-		FormData okForm = new FormData(50, 30);
-		okForm.bottom = new FormAttachment(95);
-		okForm.left = new FormAttachment(45);
-		ok.setLayoutData(okForm);
-		Listener listenerExit = new Listener() {
-			public void handleEvent(Event event) {
-				dialog.close();
-			}
-		};
-		ok.addListener(SWT.Selection, listenerExit);
-		
-		
-
-	}
+	};
 }
