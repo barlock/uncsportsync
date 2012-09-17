@@ -22,6 +22,7 @@ public class Application {
 	private Shell shell;
 	private Shell dialog;
 	private int delayTime;  // in seconds
+	
 
 	public Application(Display display) {
 
@@ -288,7 +289,7 @@ public class Application {
 		OutputList.select(0);
 		FormData OutputListF = new FormData(100, 100);
 		OutputListF.left = new FormAttachment(inputList, 0, SWT.LEFT);
-		OutputListF.bottom = new FormAttachment(inputList, 100, SWT.BOTTOM);
+		OutputListF.bottom = new FormAttachment(inputList, 50, SWT.BOTTOM);
 		OutputList.setLayoutData(OutputListF);
 
 		OutputList.addListener(SWT.Selection, new Listener() {
@@ -299,18 +300,18 @@ public class Application {
 		});
 
 		// Labels for INPUT and OUTPUT
-		Label ln = new Label(dialog, SWT.LEFT);
+		Label ln = new Label(dialog, SWT.RIGHT);
 		ln.setText("Audio Input:");
-		FormData lnd = new FormData(100, 30);
-		lnd.left = new FormAttachment(inputList, 0, SWT.LEFT);
-		lnd.bottom = new FormAttachment(inputList, -20, SWT.BOTTOM);
+		FormData lnd = new FormData(100, 20);
+		lnd.right = new FormAttachment(inputList, -10, SWT.LEFT);
+		lnd.bottom = new FormAttachment(inputList, 0, SWT.BOTTOM);
 		ln.setLayoutData(lnd);
 
-		Label lo = new Label(dialog, SWT.LEFT);
+		Label lo = new Label(dialog, SWT.RIGHT);
 		lo.setText("Audio Output:");
-		FormData lod = new FormData(100, 30);
-		lod.left = new FormAttachment(OutputList, 0, SWT.LEFT);
-		lod.bottom = new FormAttachment(OutputList, -20, SWT.BOTTOM);
+		FormData lod = new FormData(100, 20);
+		lod.right = new FormAttachment(OutputList, -10, SWT.LEFT);
+		lod.bottom = new FormAttachment(OutputList, 0, SWT.BOTTOM);
 		lo.setLayoutData(lod);
 		
 		// Optional Delay times
@@ -327,7 +328,7 @@ public class Application {
 		DelayList.select(delayTime/15-1);
 		FormData DelayListF = new FormData(100, 100);
 		DelayListF.left = new FormAttachment(inputList, 0, SWT.LEFT);
-		DelayListF.bottom = new FormAttachment(inputList, 200, SWT.BOTTOM);
+		DelayListF.bottom = new FormAttachment(inputList, 100, SWT.BOTTOM);
 		DelayList.setLayoutData(DelayListF);
 
 		DelayList.addListener(SWT.Selection, new Listener() {
@@ -339,6 +340,13 @@ public class Application {
 				scale.setMaximum(delayTime*10);
 			}
 		});
+		
+		Label dl = new Label(dialog, SWT.RIGHT);
+		dl.setText("Audio Delay Time:");
+		FormData dld = new FormData(100, 20);
+		dld.right = new FormAttachment(DelayList, -10, SWT.LEFT);
+		dld.bottom = new FormAttachment(DelayList, 0, SWT.BOTTOM);
+		dl.setLayoutData(dld);
 
 		
 		// Okay/Exit Button
