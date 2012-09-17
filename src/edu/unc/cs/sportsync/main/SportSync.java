@@ -1,18 +1,15 @@
 package edu.unc.cs.sportsync.main;
 
-import org.eclipse.swt.widgets.Display;
-
-import edu.unc.cs.sportsync.main.ui.Application;
+import edu.unc.cs.sportsync.main.ui.ApplicationPresenter;
 
 public class SportSync {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Display display = new Display();
-		new Application(display);
-		display.dispose();
-	}
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+	ApplicationPresenter app = new ApplicationPresenter();
+	app.dispose();
+    }
 
 }
