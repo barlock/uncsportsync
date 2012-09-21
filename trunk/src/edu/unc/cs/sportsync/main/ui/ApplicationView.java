@@ -8,7 +8,6 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -20,7 +19,7 @@ import edu.unc.cs.sportsync.main.settings.Settings;
 
 public class ApplicationView extends View {
 
-    private Shell shell;
+    private Shell application;
     private Settings settings;
     private Display display;
     private Scale scale;
@@ -44,16 +43,13 @@ public class ApplicationView extends View {
     private FormData sliderBar;
     private FormData startScaleData;
 
-    private SettingsDialog settingsDialog;
-
     public ApplicationView() {
 	init();
-
-	shell.setText("UNC SportsSync");
+	application.setText("UNC SportsSync");
 
 	settings = new Settings(60);
 
-	shell.setLayout(layout);
+	application.setLayout(layout);
 	//
 	// // Define Options Dialog
 	// //dialog = new Shell (shell);
@@ -146,7 +142,7 @@ public class ApplicationView extends View {
 	// speakers.setText("&Built-In Speakers");
 
 	exitItem.setText("&Exit");
-	shell.setMenuBar(menuBar);
+	application.setMenuBar(menuBar);
 
 	// Slider
 
@@ -217,40 +213,64 @@ public class ApplicationView extends View {
 
 	// dialog.open();
 
-	shell.setSize(600, 450);
-	shell.setLocation(100, 100);
+	application.setSize(600, 450);
+	application.setLocation(100, 100);
 
     }
 
     public void init() {
 	display = new Display();
-	shell = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
+	application = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
 
 	layout = new FormLayout();
-	settingsButton = new Button(shell, SWT.PUSH);
+	settingsButton = new Button(application, SWT.PUSH);
 
-	scaleValue = new Label(shell, SWT.LEFT);
-	endScale = new Label(shell, SWT.LEFT);
-	startScale = new Label(shell, SWT.LEFT);
+	scaleValue = new Label(application, SWT.LEFT);
+	endScale = new Label(application, SWT.LEFT);
+	startScale = new Label(application, SWT.LEFT);
 
 	settingsButtonData = new FormData(60, 25);
 
-	menuBar = new Menu(shell, SWT.BAR);
+	menuBar = new Menu(application, SWT.BAR);
 	cascadeFileMenu = new MenuItem(menuBar, SWT.CASCADE);
-	fileMenu = new Menu(shell, SWT.DROP_DOWN);
+	fileMenu = new Menu(application, SWT.DROP_DOWN);
 	exitItem = new MenuItem(fileMenu, SWT.PUSH);
 
-	scale = new Scale(shell, SWT.HORIZONTAL);
+	scale = new Scale(application, SWT.HORIZONTAL);
 	scaleValueData = new FormData(150, 30);
 	endScaleData = new FormData(50, 30);
 	sliderBar = new FormData(300, 40);
 	startScaleData = new FormData(50, 30);
     }
 
-    public void open() {
-	shell.open();
+    public Shell getApplication() {
+	return application;
+    }
 
-	while (!shell.isDisposed()) {
+    public void setApplication(Shell application) {
+	this.application = application;
+    }
+
+    public Settings getSettings() {
+	return settings;
+    }
+
+    public void setSettings(Settings settings) {
+	this.settings = settings;
+    }
+
+    public Display getDisplay() {
+	return display;
+    }
+
+    public void setDisplay(Display display) {
+	this.display = display;
+    }
+
+    public void open() {
+	application.open();
+
+	while (!application.isDisposed()) {
 	    if (!display.readAndDispatch()) {
 		display.sleep();
 	    }
@@ -273,31 +293,19 @@ public class ApplicationView extends View {
 	display.dispose();
     }
 
-    public void openSettingsDialog() {
-	if (settingsDialog == null) {
-	    settingsDialog = new SettingsDialog(shell, settings, delayTimeChangeListner);
-	}
-
-	settingsDialog.open();
+    public void updateDelayTime() {
+	System.out.println("Input Selection detail -> " + DelayList.getText());
+	settings.delayTime = (DelayList.getSelectionIndex() + 1) * 15;
+	endScale.setText(settings.delayTime + " sec");
+	scale.setMaximum(settings.delayTime * 10);
     }
-
-    // The ok button on the settings page should do this and all of the other
-    // settings at the same time
-    final Listener delayTimeChangeListner = new Listener() {
-	public void handleEvent(Event event) {
-	    System.out.println("Input Selection detail -> " + DelayList.getText());
-	    settings.delayTime = (DelayList.getSelectionIndex() + 1) * 15;
-	    endScale.setText(settings.delayTime + " sec");
-	    scale.setMaximum(settings.delayTime * 10);
-	}
-    };
 
     public void setDelayAmountText(double amount) {
 	scaleValue.setText("Delay: " + amount + " seconds");
     }
 
     public void exit() {
-	shell.getDisplay().dispose();
+	application.getDisplay().dispose();
 	System.exit(0);
     }
 
