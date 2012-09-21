@@ -10,10 +10,12 @@ public class ApplicationPresenter extends Presenter {
 
     private Listener settingsButtonListener;
     private Listener sliderListener;
+    private Listener delayTimeChangeListener;
     private SelectionAdapter exitAdapter;
 
-    @Override
-    protected void init() {
+    private SettingsDialogPresenter settingsPresenter;
+
+    public ApplicationPresenter() {
 	view = new ApplicationView();
 
 	initListners();
@@ -34,9 +36,19 @@ public class ApplicationPresenter extends Presenter {
 
     @Override
     protected void initListners() {
+	delayTimeChangeListener = new Listener() {
+
+	    @Override
+	    public void handleEvent(Event event) {
+		view.updateDelayTime();
+	    }
+	};
+
 	settingsButtonListener = new Listener() {
 	    public void handleEvent(Event event) {
-		view.openSettingsDialog();
+		settingsPresenter = new SettingsDialogPresenter(view.getApplication(), view.getSettings(), delayTimeChangeListener);
+
+		settingsPresenter.open();
 	    }
 	};
 
