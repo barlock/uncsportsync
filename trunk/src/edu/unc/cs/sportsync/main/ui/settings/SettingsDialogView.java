@@ -1,4 +1,4 @@
-package edu.unc.cs.sportsync.main.ui;
+package edu.unc.cs.sportsync.main.ui.settings;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
@@ -11,8 +11,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
+import edu.unc.cs.sportsync.main.ui.IView;
 
-public class SettingsDialogView extends View {
+public class SettingsDialogView implements IView {
     private final Settings settings;
     private final Shell settingsDialog;
 
@@ -47,7 +48,7 @@ public class SettingsDialogView extends View {
         settingsDialog.setSize(400, 500);
         settingsDialog.setLocation(400, 150);
         settingsDialog.setLayout(layout);
-        ;
+
         init();
 
         // INPUT and OUTPUT selection
@@ -110,7 +111,6 @@ public class SettingsDialogView extends View {
 
     public void close() {
         settingsDialog.close();
-
     }
 
     public Combo getInputList() {
@@ -122,7 +122,6 @@ public class SettingsDialogView extends View {
     }
 
     public void init() {
-
         inputList = new Combo(settingsDialog, SWT.READ_ONLY);
         inputListForm = new FormData(100, 100);
 

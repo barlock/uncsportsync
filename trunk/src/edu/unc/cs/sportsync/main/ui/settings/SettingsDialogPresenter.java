@@ -1,4 +1,4 @@
-package edu.unc.cs.sportsync.main.ui;
+package edu.unc.cs.sportsync.main.ui.settings;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,9 @@ import org.eclipse.swt.widgets.Shell;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
+import edu.unc.cs.sportsync.main.ui.IPresenter;
 
-public class SettingsDialogPresenter extends Presenter {
+public class SettingsDialogPresenter implements IPresenter {
 
     private final SettingsDialogView view;
     private final Settings settings;
@@ -37,7 +38,7 @@ public class SettingsDialogPresenter extends Presenter {
     }
 
     @Override
-    protected void addListeners() {
+    public void addListeners() {
         view.addDelayTimeChangeListener(delayTimeChangeListener);
         view.addOutputSelectionListener(outputSelectionListener);
         view.addInputSelectionListener(inputSelectionListener);
@@ -80,7 +81,7 @@ public class SettingsDialogPresenter extends Presenter {
     }
 
     @Override
-    protected void initListners() {
+    public void initListners() {
         outputSelectionListener = new Listener() {
             @Override
             public void handleEvent(Event event) {
