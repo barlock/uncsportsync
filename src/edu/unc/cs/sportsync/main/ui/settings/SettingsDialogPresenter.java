@@ -18,10 +18,13 @@ public class SettingsDialogPresenter implements IPresenter {
     private final Settings settings;
     private final Shell application;
 
-    private final Listener delayTimeChangeListener;
-    private Listener okButtonListener;
+    private Listener delayTimeChangeListener;
+    private Listener applyButtonListener;
+    private Listener cancelButtonListener;
     private Listener outputSelectionListener;
     private Listener inputSelectionListener;
+    
+    private final int MAX_DELAY = 120;
 
     public SettingsDialogPresenter(Shell app, Settings settings, Listener delayTimeChangeListener) {
         application = app;
@@ -32,7 +35,7 @@ public class SettingsDialogPresenter implements IPresenter {
 
         view.setInputDeviceNames(getInputDeviceNames());
         view.setOutputDeviceNames(getOutputDeviceNames());
-        view.setDelayListTimes(getDelayListTimes());
+        view.setDelayListTimes(MAX_DELAY);
 
         initListners();
     }
@@ -42,20 +45,8 @@ public class SettingsDialogPresenter implements IPresenter {
         view.addDelayTimeChangeListener(delayTimeChangeListener);
         view.addOutputSelectionListener(outputSelectionListener);
         view.addInputSelectionListener(inputSelectionListener);
-        view.addOkButtonListener(okButtonListener);
-    }
-
-    private String[] getDelayListTimes() {
-        // Optional Delay times
-        String[] listOfDelayTimes = new String[40];
-        String time;
-        for (int i = 0; i < 40; i++) {
-            time = (i + 1) / 4 == 0 ? String.format("%d sec", 15 * ((i + 1) % 4)) : (15 * ((i + 1) % 4) == 0 ? String.format("%d min", (i + 1) / 4) : String.format("%d min & %d sec", (i + 1) / 4,
-                    15 * ((i + 1) % 4)));
-            listOfDelayTimes[i] = time;
-        }
-
-        return listOfDelayTimes;
+        view.addApplyButtonListener(applyButtonListener);
+        view.addCancelButtonListener(cancelButtonListener);
     }
 
     private String[] getInputDeviceNames() {
@@ -79,6 +70,10 @@ public class SettingsDialogPresenter implements IPresenter {
 
         return names;
     }
+    
+    public void applyChanges(){
+    	settings.delayTime = view.getDelayList().getSelection();
+    }
 
     @Override
     public void initListners() {
@@ -97,11 +92,26 @@ public class SettingsDialogPresenter implements IPresenter {
             }
         };
 
-        okButtonListener = new Listener() {
+        applyButtonListener = new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+            	applyChanges();
+                view.close();
+            }
+        };
+        
+        cancelButtonListener = new Listener() {
             @Override
             public void handleEvent(Event event) {
                 view.close();
             }
+        };
+        
+        delayTimeChangeListener = new Listener() {
+        	@Override
+        	public void handleEvent (Event event) {
+        		System.out.println("Delay Value -> " + view.getDelayList().getSelection());
+        	}
         };
 
         addListeners();

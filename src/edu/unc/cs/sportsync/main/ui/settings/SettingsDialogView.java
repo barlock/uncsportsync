@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Spinner;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.ui.IView;
@@ -29,13 +30,16 @@ public class SettingsDialogView implements IView {
     private Label outputLabel;
     private FormData outputLabelForm;
 
-    private Combo delayList;
+    private Spinner delayList;
     private FormData delayListForm;
     private Label delayLabel;
     private FormData delayLabelForm;
 
-    private Button okButton;
-    private FormData okButtonForm;
+    private Button applyButton;
+    private FormData applyButtonForm;
+    
+    private Button cancelButton;
+    private FormData cancelButtonForm;
 
     public SettingsDialogView(Shell shell, Settings s) {
         settings = s;
@@ -75,21 +79,27 @@ public class SettingsDialogView implements IView {
 
         // Optional Delay times
 
-        delayList.select(settings.delayTime / 15 - 1);
+        delayList.setSelection(settings.delayTime);
         delayListForm.left = new FormAttachment(inputList, 0, SWT.LEFT);
         delayListForm.bottom = new FormAttachment(inputList, 100, SWT.BOTTOM);
         delayList.setLayoutData(delayListForm);
 
-        delayLabel.setText("Audio Delay Time:");
+        delayLabel.setText("Audio Delay Time (s):");
         delayLabelForm.right = new FormAttachment(delayList, -10, SWT.LEFT);
         delayLabelForm.bottom = new FormAttachment(delayList, 0, SWT.BOTTOM);
         delayLabel.setLayoutData(delayLabelForm);
 
-        // Okay/Exit Button
-        okButton.setText("OK");
-        okButtonForm.bottom = new FormAttachment(95);
-        okButtonForm.left = new FormAttachment(45);
-        okButton.setLayoutData(okButtonForm);
+        // Apply Changes Button
+        applyButton.setText("Apply");
+        applyButtonForm.bottom = new FormAttachment(95);
+        applyButtonForm.left = new FormAttachment(35);
+        applyButton.setLayoutData(applyButtonForm);
+        
+     // Cancel Changes button
+        cancelButton.setText("Cancel");
+        cancelButtonForm.bottom = new FormAttachment(95);
+        cancelButtonForm.right = new FormAttachment(65);
+        cancelButton.setLayoutData(cancelButtonForm);
 
     }
 
@@ -101,8 +111,12 @@ public class SettingsDialogView implements IView {
         inputList.addListener(SWT.Selection, listener);
     }
 
-    public void addOkButtonListener(Listener listener) {
-        okButton.addListener(SWT.Selection, listener);
+    public void addApplyButtonListener(Listener listener) {
+        applyButton.addListener(SWT.Selection, listener);
+    }
+    
+    public void addCancelButtonListener(Listener listener) {
+        cancelButton.addListener(SWT.Selection, listener);
     }
 
     public void addOutputSelectionListener(Listener listener) {
@@ -120,13 +134,17 @@ public class SettingsDialogView implements IView {
     public Combo getOutputList() {
         return outputList;
     }
+    
+    public Spinner getDelayList() {
+        return delayList;
+    }
 
     public void init() {
         inputList = new Combo(settingsDialog, SWT.READ_ONLY);
-        inputListForm = new FormData(100, 100);
+        inputListForm = new FormData(150, 100);
 
         outputList = new Combo(settingsDialog, SWT.READ_ONLY);
-        outputListForm = new FormData(100, 100);
+        outputListForm = new FormData(150, 100);
 
         inputLabel = new Label(settingsDialog, SWT.RIGHT);
         inputLabelForm = new FormData(100, 20);
@@ -134,23 +152,29 @@ public class SettingsDialogView implements IView {
         outputLabel = new Label(settingsDialog, SWT.RIGHT);
         outputLabelForm = new FormData(100, 20);
 
-        delayList = new Combo(settingsDialog, SWT.READ_ONLY);
-        delayListForm = new FormData(100, 100);
+        delayList = new Spinner(settingsDialog, SWT.BORDER);
+        delayListForm = new FormData(20, 20);
 
         delayLabel = new Label(settingsDialog, SWT.RIGHT);
-        delayLabelForm = new FormData(100, 20);
+        delayLabelForm = new FormData(150, 20);
 
-        okButton = new Button(settingsDialog, SWT.PUSH);
-        okButtonForm = new FormData(50, 30);
+        applyButton = new Button(settingsDialog, SWT.PUSH);
+        applyButtonForm = new FormData(50, 30);
+        
+        cancelButton = new Button(settingsDialog, SWT.PUSH);
+        cancelButtonForm = new FormData(50, 30);
     }
 
     public void open() {
         settingsDialog.open();
     }
 
-    public void setDelayListTimes(String[] delayTimes) {
-        delayList.setItems(delayTimes);
-        delayList.select(settings.delayTime / 15 - 1);
+    public void setDelayListTimes(int maxDelay) {
+        delayList.setMinimum(0);
+        delayList.setMaximum(maxDelay);
+        delayList.setSelection(settings.delayTime);
+        delayList.setIncrement(1);
+        delayList.setPageIncrement(5);
     }
 
     public void setInputDeviceNames(String[] inputNames) {

@@ -6,7 +6,6 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -24,7 +23,16 @@ public class ApplicationView implements IView {
     private Settings settings;
     private Display display;
     private Scale scale;
-    private Combo DelayList;
+    
+    private Button OnOffButton;
+    private FormData OnOffButtonData;
+    
+    private Scale volumeScale;
+    private FormData volumeScaleData;
+    private Button muteButton;
+    private FormData muteButtonData;
+    private Label volumeLabel;
+    private FormData volumeLabelData;
 
     private Button settingsButton;
     private MenuItem exitItem;
@@ -51,28 +59,7 @@ public class ApplicationView implements IView {
         settings = new Settings(60);
 
         application.setLayout(layout);
-        //
-        // // Define Options Dialog
-        // //dialog = new Shell (shell);
-        // dialog.setLayout (new FormLayout());
-        // // Labels for INPUT and OUTPUT
-        // Label dl = new Label(dialog, SWT.LEFT);
-        // dl.setText("Caption");
-        // FormData dld = new FormData(100, 30);
-        // dld.left = new FormAttachment(50);
-        // dld.bottom = new FormAttachment(100);
-        // dl.setLayoutData(dld);
-        // final Button ok = new Button (dialog, SWT.PUSH);
-        // ok.setText ("OK");
-        // Button cancel = new Button (dialog, SWT.PUSH);
-        // cancel.setText ("Cancel");
-        // Listener listener =new Listener () {
-        // public void handleEvent (Event event) {
-        // dialog.close ();
-        // }
-        // };
-        // ok.addListener (SWT.Selection, listener);
-        // cancel.addListener (SWT.Selection, listener);
+
 
         // Line-out options button
         settingsButton.setText("Settings");
@@ -81,74 +68,49 @@ public class ApplicationView implements IView {
         settingsButtonData.top = new FormAttachment(0);
         settingsButton.setLayoutData(settingsButtonData);
 
-        // Button cancelButton = new Button(shell, SWT.PUSH);
-        // cancelButton.setText("Input");
-        //
-        // FormData cancelData = new FormData(80, 30);
-        // cancelData.right = new FormAttachment(90);
-        // cancelData.bottom = new FormAttachment(95);
-        // cancelButton.setLayoutData(cancelData);
-        //
-        // Button okButton = new Button(shell, SWT.PUSH);
-        // okButton.setText("OK");
-        //
-        // FormData okData = new FormData(80, 30);
-        // okData.right = new FormAttachment(cancelButton, -5, SWT.LEFT);
-        // okData.bottom = new FormAttachment(cancelButton, 0, SWT.BOTTOM);
-        // okButton.setLayoutData(okData);
-
-        //
-        // Button clearButton = new Button(shell, SWT.PUSH);
-        // clearButton.setText("Clear");
-        //
-        // FormData clearData = new FormData(80, 30);
-        // clearData.left = new FormAttachment(10);
-        // clearData.bottom = new FormAttachment(95);
-        // clearButton.setLayoutData(clearData);
-
-        // Label label = new Label(shell, SWT.LEFT);
-        // label.setText("Label 1");
-        // FormData nameLabelData = new FormData(200, 20);
-        // nameLabelData.left = new FormAttachment(10);
-        // nameLabelData.top = new FormAttachment(10);
 
         // Create menu bar
         cascadeFileMenu.setText("&File");
         cascadeFileMenu.setMenu(fileMenu);
 
-        // // "Input" sub menu in "File" Menu
-        // MenuItem subMenuInput = new MenuItem(fileMenu, SWT.CASCADE);
-        // subMenuInput.setText("Input");
-        //
-        // Menu inputSubmenu = new Menu(shell, SWT.DROP_DOWN);
-        // subMenuInput.setMenu(inputSubmenu);
-        //
-        // MenuItem micIn = new MenuItem(inputSubmenu, SWT.PUSH);
-        // micIn.setText("&Microphone Line-In");
-        //
-        // MenuItem onlineIn = new MenuItem(inputSubmenu, SWT.PUSH);
-        // onlineIn.setText("&Online Radio");
-        //
-        // // "Output" sub menu in "File" Menu
-        // MenuItem subMenuItem = new MenuItem(fileMenu, SWT.CASCADE);
-        // subMenuItem.setText("Output");
-        //
-        // Menu submenu = new Menu(shell, SWT.DROP_DOWN);
-        // subMenuItem.setMenu(submenu);
-        //
-        // MenuItem jackOut = new MenuItem(submenu, SWT.PUSH);
-        // jackOut.setText("&Audio Line-Out");
-        //
-        // MenuItem speakers = new MenuItem(submenu, SWT.PUSH);
-        // speakers.setText("&Built-In Speakers");
-
         exitItem.setText("&Exit");
         application.setMenuBar(menuBar);
+        
+        
+        // Volume control
+        volumeScaleData.top = new FormAttachment(70);
+        volumeScaleData.left = new FormAttachment(10);
+        volumeScale.setLayoutData(volumeScaleData);
+        volumeScale.setMinimum(0);
+        volumeScale.setMaximum(20);
+        volumeScale.setIncrement(1);
+        volumeScale.setPageIncrement(2);
+        volumeScale.setSelection(0);
+        
+        muteButtonData.top = new FormAttachment(volumeScale, 30, SWT.TOP);
+        muteButtonData.left = new FormAttachment(volumeScale, 60, SWT.LEFT);
+        muteButton.setLayoutData(muteButtonData);
+       //Image speakerImg = new Image(display, "C:\\Users\\waivers\\SSworkspace\\SportSync\\src\\edu\\unc\\cs\\sportsync\\main\\ui\\application\\speaker.png");
+        //muteButton.setBackgroundImage(speakerImg);
+        muteButton.setText("Mute");
+        
+        volumeLabelData.top = new FormAttachment(volumeScale, -40, SWT.TOP);
+        volumeLabelData.left = new FormAttachment(volumeScale, 0, SWT.LEFT);
+        volumeLabel.setLayoutData(volumeLabelData);
+        volumeLabel.setText("Volume Control");
+        
+       // On/Off Button
+        OnOffButtonData.top = new FormAttachment(20);
+        OnOffButtonData.left = new FormAttachment(25);
+        OnOffButton.setLayoutData(OnOffButtonData);
+        OnOffButton.setText("ON/Off");
+        
+
 
         // Slider
 
         // Rectangle clientArea = shell.getClientArea ();
-        scale.setMaximum(1);
+        scale.setMinimum(1);
         scale.setMaximum(settings.delayTime * 10);
         scale.setIncrement(1);
         scale.setPageIncrement(10);
@@ -176,44 +138,6 @@ public class ApplicationView implements IView {
         endScaleData.bottom = new FormAttachment(scale, 30, SWT.BOTTOM);
         endScale.setLayoutData(endScaleData);
 
-        // Slider slider = new Slider (shell, SWT.HORIZONTAL);
-        // Rectangle clientArea = shell.getClientArea ();
-        // slider.setBounds (clientArea.x + 10, clientArea.y + 10, 200, 32);
-        //
-        // /*FormData sliderBar = new FormData(400, 20);
-        // sliderBar.left = new FormAttachment(30);
-        // sliderBar.top = new FormAttachment(50);
-        // slider.setLayoutData(sliderBar);
-        // */
-        //
-        // slider.addListener (SWT.Selection, new Listener () {
-        // public void handleEvent (Event event) {
-        // String string = "SWT.NONE";
-        // switch (event.detail) {
-        // case SWT.DRAG: string = "SWT.DRAG"; break;
-        // case SWT.HOME: string = "SWT.HOME"; break;
-        // case SWT.END: string = "SWT.END"; break;
-        // case SWT.ARROW_DOWN: string = "SWT.ARROW_DOWN"; break;
-        // case SWT.ARROW_UP: string = "SWT.ARROW_UP"; break;
-        // case SWT.PAGE_DOWN: string = "SWT.PAGE_DOWN"; break;
-        // case SWT.PAGE_UP: string = "SWT.PAGE_UP"; break;
-        // }
-        // System.out.println ("Scroll detail -> " + string);
-        // }
-        // });
-
-        // Point p = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        // label.setBounds(5, 5, p.x+5, p.y+5);
-
-        // dialog = new Shell(shell, SWT.TITLE);
-        // dialog.setText("Options...");
-        // dialog.setSize(300, 300);
-        // dialog.setLocation(200, 200);
-        // dialog.open();
-        // dialog.setVisible(false);
-
-        // dialog.open();
-
         application.setSize(600, 450);
         application.setLocation(100, 100);
 
@@ -229,6 +153,14 @@ public class ApplicationView implements IView {
 
     public void addSliderListner(Listener listener) {
         scale.addListener(SWT.Selection, listener);
+    }
+    
+    public void addMuteButtonListener(Listener listener) {
+        muteButton.addListener(SWT.Selection, listener);
+    }
+    
+    public void addOnOffButtonListener(Listener listener) {
+        OnOffButton.addListener(SWT.Selection, listener);
     }
 
     public void dispose() {
@@ -262,6 +194,16 @@ public class ApplicationView implements IView {
 
         layout = new FormLayout();
         settingsButton = new Button(application, SWT.PUSH);
+        
+        OnOffButton = new Button(application, SWT.TOGGLE);
+        OnOffButtonData = new FormData(70, 30);
+        
+        muteButton = new Button(application, SWT.TOGGLE);
+        muteButtonData = new FormData(50,30);
+        volumeScale = new Scale(application, SWT.VERTICAL);
+        volumeScaleData = new FormData(40, 100);
+        volumeLabel = new Label(application, SWT.VERTICAL);
+        volumeLabelData = new FormData(100, 40);
 
         scaleValue = new Label(application, SWT.LEFT);
         endScale = new Label(application, SWT.LEFT);
@@ -308,8 +250,6 @@ public class ApplicationView implements IView {
     }
 
     public void updateDelayTime() {
-        System.out.println("Input Selection detail -> " + DelayList.getText());
-        settings.delayTime = (DelayList.getSelectionIndex() + 1) * 15;
         endScale.setText(settings.delayTime + " sec");
         scale.setMaximum(settings.delayTime * 10);
     }
