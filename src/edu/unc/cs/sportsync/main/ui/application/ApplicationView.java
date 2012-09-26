@@ -79,10 +79,9 @@ public class ApplicationView implements IView {
         volumeScaleData.left = new FormAttachment(10);
         volumeScale.setLayoutData(volumeScaleData);
         volumeScale.setMinimum(0);
-        volumeScale.setMaximum(20);
+        volumeScale.setMaximum(100);
         volumeScale.setIncrement(1);
-        volumeScale.setPageIncrement(2);
-        volumeScale.setSelection(0);
+        volumeScale.setPageIncrement(10);
 
         muteButtonData.top = new FormAttachment(volumeScale, 30, SWT.TOP);
         muteButtonData.left = new FormAttachment(volumeScale, 60, SWT.LEFT);
@@ -155,8 +154,12 @@ public class ApplicationView implements IView {
         settingsButton.addListener(SWT.Selection, listener);
     }
 
-    public void addSliderListner(Listener listener) {
+    public void addSliderListener(Listener listener) {
         scale.addListener(SWT.Selection, listener);
+    }
+
+    public void addVolumeSliderListener(Listener listener) {
+        volumeScale.addListener(SWT.Selection, listener);
     }
 
     public void dispose() {
@@ -182,6 +185,10 @@ public class ApplicationView implements IView {
 
     public Settings getSettings() {
         return settings;
+    }
+
+    public Scale getVolumeScale() {
+        return volumeScale;
     }
 
     public void init() {
