@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
+import edu.unc.cs.sportsync.main.sound.AudioControl;
 import edu.unc.cs.sportsync.main.ui.IView;
 
 public class SettingsDialogView implements IView {
@@ -37,7 +38,7 @@ public class SettingsDialogView implements IView {
 
     private Button applyButton;
     private FormData applyButtonForm;
-    
+
     private Button cancelButton;
     private FormData cancelButtonForm;
 
@@ -56,12 +57,10 @@ public class SettingsDialogView implements IView {
         init();
 
         // INPUT and OUTPUT selection
-        // inputList.select(0);
         inputListForm.left = new FormAttachment(50);
         inputListForm.top = new FormAttachment(20);
         inputList.setLayoutData(inputListForm);
 
-        // outputList.select(0);
         outputListForm.left = new FormAttachment(inputList, 0, SWT.LEFT);
         outputListForm.bottom = new FormAttachment(inputList, 50, SWT.BOTTOM);
         outputList.setLayoutData(outputListForm);
@@ -79,7 +78,7 @@ public class SettingsDialogView implements IView {
 
         // Optional Delay times
 
-        delayList.setSelection(settings.delayTime);
+        delayList.setSelection(settings.getDelayTime());
         delayListForm.left = new FormAttachment(inputList, 0, SWT.LEFT);
         delayListForm.bottom = new FormAttachment(inputList, 100, SWT.BOTTOM);
         delayList.setLayoutData(delayListForm);
@@ -94,8 +93,8 @@ public class SettingsDialogView implements IView {
         applyButtonForm.bottom = new FormAttachment(95);
         applyButtonForm.left = new FormAttachment(35);
         applyButton.setLayoutData(applyButtonForm);
-        
-     // Cancel Changes button
+
+        // Cancel Changes button
         cancelButton.setText("Cancel");
         cancelButtonForm.bottom = new FormAttachment(95);
         cancelButtonForm.right = new FormAttachment(65);
@@ -103,20 +102,16 @@ public class SettingsDialogView implements IView {
 
     }
 
-    public void addDelayTimeChangeListener(Listener listener) {
-        delayList.addListener(SWT.Selection, listener);
+    public void addApplyButtonListener(Listener listener) {
+        applyButton.addListener(SWT.Selection, listener);
+    }
+
+    public void addCancelButtonListener(Listener listener) {
+        cancelButton.addListener(SWT.Selection, listener);
     }
 
     public void addInputSelectionListener(Listener listener) {
         inputList.addListener(SWT.Selection, listener);
-    }
-
-    public void addApplyButtonListener(Listener listener) {
-        applyButton.addListener(SWT.Selection, listener);
-    }
-    
-    public void addCancelButtonListener(Listener listener) {
-        cancelButton.addListener(SWT.Selection, listener);
     }
 
     public void addOutputSelectionListener(Listener listener) {
@@ -125,6 +120,11 @@ public class SettingsDialogView implements IView {
 
     public void close() {
         settingsDialog.close();
+        settingsDialog.dispose();
+    }
+
+    public Spinner getDelayList() {
+        return delayList;
     }
 
     public Combo getInputList() {
@@ -133,10 +133,6 @@ public class SettingsDialogView implements IView {
 
     public Combo getOutputList() {
         return outputList;
-    }
-    
-    public Spinner getDelayList() {
-        return delayList;
     }
 
     public void init() {
@@ -160,11 +156,12 @@ public class SettingsDialogView implements IView {
 
         applyButton = new Button(settingsDialog, SWT.PUSH);
         applyButtonForm = new FormData(50, 30);
-        
+
         cancelButton = new Button(settingsDialog, SWT.PUSH);
         cancelButtonForm = new FormData(50, 30);
     }
 
+    @Override
     public void open() {
         settingsDialog.open();
     }
@@ -172,18 +169,22 @@ public class SettingsDialogView implements IView {
     public void setDelayListTimes(int maxDelay) {
         delayList.setMinimum(0);
         delayList.setMaximum(maxDelay);
-        delayList.setSelection(settings.delayTime);
+        delayList.setSelection(settings.getDelayTime());
         delayList.setIncrement(1);
         delayList.setPageIncrement(5);
     }
 
     public void setInputDeviceNames(String[] inputNames) {
         inputList.setItems(inputNames);
-        inputList.select(0);
+        inputList.select(AudioControl.getInputDevices().indexOf(settings.getInputMixer()));
     }
 
     public void setOutputDeviceNames(String[] outputNames) {
         outputList.setItems(outputNames);
-        outputList.select(0);
+        outputList.select(AudioControl.getOutputDevices().indexOf(settings.getOutputMixer()));
+    }
+
+    public boolean isDisposed() {
+        return settingsDialog.isDisposed();
     }
 }

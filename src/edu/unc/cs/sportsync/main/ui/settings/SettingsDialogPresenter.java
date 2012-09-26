@@ -18,18 +18,20 @@ public class SettingsDialogPresenter implements IPresenter {
     private final Settings settings;
     private final Shell application;
 
-    private Listener delayTimeChangeListener;
     private Listener applyButtonListener;
     private Listener cancelButtonListener;
     private Listener outputSelectionListener;
     private Listener inputSelectionListener;
-    
+
+    private ArrayList<Info> inputMixerInfo;
+    private ArrayList<Info> outputMixerInfo;
+
     private final int MAX_DELAY = 120;
 
-    public SettingsDialogPresenter(Shell app, Settings settings, Listener delayTimeChangeListener) {
+    public SettingsDialogPresenter(Shell app, Settings settings, Listener applyButtonListner) {
         application = app;
         this.settings = settings;
-        this.delayTimeChangeListener = delayTimeChangeListener;
+        this.applyButtonListener = applyButtonListner;
 
         view = new SettingsDialogView(application, settings);
 
@@ -42,37 +44,38 @@ public class SettingsDialogPresenter implements IPresenter {
 
     @Override
     public void addListeners() {
-        view.addDelayTimeChangeListener(delayTimeChangeListener);
         view.addOutputSelectionListener(outputSelectionListener);
         view.addInputSelectionListener(inputSelectionListener);
         view.addApplyButtonListener(applyButtonListener);
         view.addCancelButtonListener(cancelButtonListener);
     }
 
-    private String[] getInputDeviceNames() {
-        ArrayList<Info> inputDevices = new ArrayList<Info>(AudioControl.getInputDevices());
-        String[] names = new String[inputDevices.size()];
+    public void updateSettings() {
+        settings.setDelayTime(view.getDelayList().getSelection());
+        settings.setInputMixer(inputMixerInfo.get(view.getInputList().getSelectionIndex()));
+        settings.setOutputMixer(outputMixerInfo.get(view.getOutputList().getSelectionIndex()));
+    }
 
-        for (int i = 0; i < inputDevices.size(); i++) {
-            names[i] = inputDevices.get(i).getName();
+    private String[] getInputDeviceNames() {
+        inputMixerInfo = new ArrayList<Info>(AudioControl.getInputDevices());
+        String[] names = new String[inputMixerInfo.size()];
+
+        for (int i = 0; i < inputMixerInfo.size(); i++) {
+            names[i] = inputMixerInfo.get(i).getName();
         }
 
         return names;
     }
 
     private String[] getOutputDeviceNames() {
-        ArrayList<Info> outputDevices = new ArrayList<Info>(AudioControl.getOutputDevices());
-        String[] names = new String[outputDevices.size()];
+        outputMixerInfo = new ArrayList<Info>(AudioControl.getOutputDevices());
+        String[] names = new String[outputMixerInfo.size()];
 
-        for (int i = 0; i < outputDevices.size(); i++) {
-            names[i] = outputDevices.get(i).getName();
+        for (int i = 0; i < outputMixerInfo.size(); i++) {
+            names[i] = outputMixerInfo.get(i).getName();
         }
 
         return names;
-    }
-    
-    public void applyChanges(){
-    	settings.delayTime = view.getDelayList().getSelection();
     }
 
     @Override
@@ -92,32 +95,26 @@ public class SettingsDialogPresenter implements IPresenter {
             }
         };
 
-        applyButtonListener = new Listener() {
-            @Override
-            public void handleEvent(Event event) {
-            	applyChanges();
-                view.close();
-            }
-        };
-        
         cancelButtonListener = new Listener() {
             @Override
             public void handleEvent(Event event) {
                 view.close();
             }
         };
-        
-        delayTimeChangeListener = new Listener() {
-        	@Override
-        	public void handleEvent (Event event) {
-        		System.out.println("Delay Value -> " + view.getDelayList().getSelection());
-        	}
-        };
 
         addListeners();
     }
 
+    @Override
     public void open() {
         view.open();
+    }
+
+    public void close() {
+        view.close();
+    }
+
+    public boolean isDisposed() {
+        return view.isDisposed();
     }
 }
