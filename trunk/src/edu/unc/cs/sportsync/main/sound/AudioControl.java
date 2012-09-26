@@ -1,8 +1,8 @@
 package edu.unc.cs.sportsync.main.sound;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.CompoundControl;
@@ -14,7 +14,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 
 public class AudioControl {
-    public static String AnalyzeControl(Control thisControl) {
+    private static SoundCheck mySoundCheck;
+
+    private static String AnalyzeControl(Control thisControl) {
         String type = thisControl.getType().toString();
 
         if (thisControl instanceof BooleanControl) {
@@ -110,5 +112,31 @@ public class AudioControl {
         }
 
         return sourceMixers;
+    }
+
+    public static void setVolume(double percentLevel) {
+        mySoundCheck.setVolume(percentLevel);
+    }
+
+    public static void start() {
+        float frameRate = (float) 44100.0;
+        int BUFFER_SIZE = 40960;
+
+        AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
+        mySoundCheck = null;
+        try {
+            mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE);
+        } catch (LineUnavailableException e) {
+            System.exit(1);
+        }
+        mySoundCheck.start();
+    }
+
+    public static void stopRecording() {
+        mySoundCheck.stopRecording();
+    }
+
+    public static void toggleMute() {
+        mySoundCheck.toggleMute();
     }
 }
