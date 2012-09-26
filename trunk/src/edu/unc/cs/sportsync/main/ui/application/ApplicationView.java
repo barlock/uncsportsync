@@ -23,10 +23,10 @@ public class ApplicationView implements IView {
     private Settings settings;
     private Display display;
     private Scale scale;
-    
+
     private Button OnOffButton;
     private FormData OnOffButtonData;
-    
+
     private Scale volumeScale;
     private FormData volumeScaleData;
     private Button muteButton;
@@ -52,14 +52,13 @@ public class ApplicationView implements IView {
     private FormData sliderBar;
     private FormData startScaleData;
 
-    public ApplicationView() {
+    public ApplicationView(Settings settings) {
         init();
         application.setText("UNC SportsSync");
 
-        settings = new Settings(60);
+        this.settings = settings;
 
         application.setLayout(layout);
-
 
         // Line-out options button
         settingsButton.setText("Settings");
@@ -68,15 +67,13 @@ public class ApplicationView implements IView {
         settingsButtonData.top = new FormAttachment(0);
         settingsButton.setLayoutData(settingsButtonData);
 
-
         // Create menu bar
         cascadeFileMenu.setText("&File");
         cascadeFileMenu.setMenu(fileMenu);
 
         exitItem.setText("&Exit");
         application.setMenuBar(menuBar);
-        
-        
+
         // Volume control
         volumeScaleData.top = new FormAttachment(70);
         volumeScaleData.left = new FormAttachment(10);
@@ -86,32 +83,31 @@ public class ApplicationView implements IView {
         volumeScale.setIncrement(1);
         volumeScale.setPageIncrement(2);
         volumeScale.setSelection(0);
-        
+
         muteButtonData.top = new FormAttachment(volumeScale, 30, SWT.TOP);
         muteButtonData.left = new FormAttachment(volumeScale, 60, SWT.LEFT);
         muteButton.setLayoutData(muteButtonData);
-       //Image speakerImg = new Image(display, "C:\\Users\\waivers\\SSworkspace\\SportSync\\src\\edu\\unc\\cs\\sportsync\\main\\ui\\application\\speaker.png");
-        //muteButton.setBackgroundImage(speakerImg);
+        // Image speakerImg = new Image(display,
+        // "C:\\Users\\waivers\\SSworkspace\\SportSync\\src\\edu\\unc\\cs\\sportsync\\main\\ui\\application\\speaker.png");
+        // muteButton.setBackgroundImage(speakerImg);
         muteButton.setText("Mute");
-        
+
         volumeLabelData.top = new FormAttachment(volumeScale, -40, SWT.TOP);
         volumeLabelData.left = new FormAttachment(volumeScale, 0, SWT.LEFT);
         volumeLabel.setLayoutData(volumeLabelData);
         volumeLabel.setText("Volume Control");
-        
-       // On/Off Button
+
+        // On/Off Button
         OnOffButtonData.top = new FormAttachment(20);
         OnOffButtonData.left = new FormAttachment(25);
         OnOffButton.setLayoutData(OnOffButtonData);
         OnOffButton.setText("ON/Off");
-        
-
 
         // Slider
 
         // Rectangle clientArea = shell.getClientArea ();
         scale.setMinimum(1);
-        scale.setMaximum(settings.delayTime * 10);
+        scale.setMaximum(settings.getDelayTime() * 10);
         scale.setIncrement(1);
         scale.setPageIncrement(10);
 
@@ -133,7 +129,7 @@ public class ApplicationView implements IView {
         startScaleData.bottom = new FormAttachment(scale, 30, SWT.BOTTOM);
         startScale.setLayoutData(startScaleData);
 
-        endScale.setText(settings.delayTime + " sec");
+        endScale.setText(settings.getDelayTime() + " sec");
         endScaleData.right = new FormAttachment(scale, 20, SWT.RIGHT);
         endScaleData.bottom = new FormAttachment(scale, 30, SWT.BOTTOM);
         endScale.setLayoutData(endScaleData);
@@ -147,20 +143,20 @@ public class ApplicationView implements IView {
         exitItem.addSelectionListener(adapter);
     }
 
+    public void addMuteButtonListener(Listener listener) {
+        muteButton.addListener(SWT.Selection, listener);
+    }
+
+    public void addOnOffButtonListener(Listener listener) {
+        OnOffButton.addListener(SWT.Selection, listener);
+    }
+
     public void addSettingsButtonListener(Listener listener) {
         settingsButton.addListener(SWT.Selection, listener);
     }
 
     public void addSliderListner(Listener listener) {
         scale.addListener(SWT.Selection, listener);
-    }
-    
-    public void addMuteButtonListener(Listener listener) {
-        muteButton.addListener(SWT.Selection, listener);
-    }
-    
-    public void addOnOffButtonListener(Listener listener) {
-        OnOffButton.addListener(SWT.Selection, listener);
     }
 
     public void dispose() {
@@ -194,12 +190,12 @@ public class ApplicationView implements IView {
 
         layout = new FormLayout();
         settingsButton = new Button(application, SWT.PUSH);
-        
+
         OnOffButton = new Button(application, SWT.TOGGLE);
         OnOffButtonData = new FormData(70, 30);
-        
+
         muteButton = new Button(application, SWT.TOGGLE);
-        muteButtonData = new FormData(50,30);
+        muteButtonData = new FormData(50, 30);
         volumeScale = new Scale(application, SWT.VERTICAL);
         volumeScaleData = new FormData(40, 100);
         volumeLabel = new Label(application, SWT.VERTICAL);
@@ -223,6 +219,7 @@ public class ApplicationView implements IView {
         startScaleData = new FormData(50, 30);
     }
 
+    @Override
     public void open() {
         application.open();
 
@@ -250,7 +247,7 @@ public class ApplicationView implements IView {
     }
 
     public void updateDelayTime() {
-        endScale.setText(settings.delayTime + " sec");
-        scale.setMaximum(settings.delayTime * 10);
+        endScale.setText(settings.getDelayTime() + " sec");
+        scale.setMaximum(settings.getDelayTime() * 10);
     }
 }
