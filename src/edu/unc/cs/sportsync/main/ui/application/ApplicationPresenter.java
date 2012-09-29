@@ -43,8 +43,9 @@ public class ApplicationPresenter implements IPresenter {
 
     public void dispose() {
         settings.save();
-        AudioControl.stopRecording();
+
         view.dispose();
+        AudioControl.stopRecording();
     }
 
     @Override
