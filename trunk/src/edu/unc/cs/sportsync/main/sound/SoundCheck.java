@@ -3,18 +3,26 @@ package edu.unc.cs.sportsync.main.sound;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.BooleanControl;
-import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
+import edu.unc.cs.sportsync.main.settings.Settings;
+
 public class SoundCheck extends Thread {
     private final int BUFFER_SIZE;
-    private final TargetDataLine inputLine;
-    private final SourceDataLine outputLine;
+    private TargetDataLine inputLine = null;
+    private SourceDataLine outputLine = null;
     private boolean isRecording = false;
     private boolean isMuted = false;
+    private final Mixer inputMixer;
+    private final Mixer outputMixer;
+    private final AudioFormat SOUND_FORMAT;
+
+    private static final Settings settings = new Settings();
 
     /*
      * AudioFormat tells the format in which the data is recorded/played
@@ -24,16 +32,44 @@ public class SoundCheck extends Thread {
         /*
          * Get the input/output lines
          */
-        DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class, format, bufferSize);
-        DataLine.Info sourceInfo = new DataLine.Info(SourceDataLine.class, format, bufferSize);
+
         BUFFER_SIZE = bufferSize;
-        inputLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
-        outputLine = (SourceDataLine) AudioSystem.getLine(sourceInfo);
+        SOUND_FORMAT = format;
+        inputMixer = AudioSystem.getMixer(settings.getInputMixer());
+        outputMixer = AudioSystem.getMixer(settings.getOutputMixer());
+        inputMixer.open();
+        outputMixer.open();
+        Line.Info[] targetlineinfos = inputMixer.getTargetLineInfo();
+        for (int i = 0; i < targetlineinfos.length; i++) {
+            if (targetlineinfos[i].getLineClass() == TargetDataLine.class) {
+                inputLine = (TargetDataLine) AudioSystem.getLine(targetlineinfos[i]);
+                break;
+            }
+        }
+        Line.Info[] sourcelineinfos = outputMixer.getSourceLineInfo();
+        for (int i = 0; i < sourcelineinfos.length; i++) {
+            if (sourcelineinfos[i].getLineClass() == SourceDataLine.class) {
+                outputLine = (SourceDataLine) AudioSystem.getLine(sourcelineinfos[i]);
+                break;
+            }
+        }
+        if (inputLine == null || outputLine == null) {
+            throw new LineUnavailableException();
+        }
+
+        /*
+         * inputLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
+         * outputLine = (SourceDataLine) AudioSystem.getLine(sourceInfo);
+         * DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class,
+         * format, bufferSize); DataLine.Info sourceInfo = new
+         * DataLine.Info(SourceDataLine.class, format, bufferSize);
+         */
+
         /*
          * Open the input/output lines
          */
-        inputLine.open(format, bufferSize);
-        outputLine.open(format, bufferSize);
+        inputLine.open(SOUND_FORMAT, BUFFER_SIZE);
+        outputLine.open(SOUND_FORMAT, BUFFER_SIZE);
     }
 
     @Override
@@ -43,6 +79,7 @@ public class SoundCheck extends Thread {
             /*
              * read data from input line
              */
+
             int numBytesCaptured = inputLine.read(myBuffer, 0, myBuffer.length);
 
             /*
@@ -82,23 +119,4 @@ public class SoundCheck extends Thread {
         }
     }
 
-    // public static void main(String[] args)
-    // {
-    // float frameRate = (float) 44100.0;
-    //
-    // AudioFormat audioFormat = new
-    // AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-    // frameRate, 16, 2, 4, frameRate, false);
-    // SoundCheck myAudioLoop = null;
-    // try
-    // {
-    // myAudioLoop = new SoundCheck(audioFormat,
-    // 40960);
-    // }
-    // catch (LineUnavailableException e)
-    // {
-    // System.exit(1);
-    // }
-    // myAudioLoop.start();
-    // }
 }

@@ -12,10 +12,13 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.TargetDataLine;
 
 public class AudioControl {
     private static SoundCheck mySoundCheck;
 
+    @SuppressWarnings("unused")
     private static String AnalyzeControl(Control thisControl) {
         String type = thisControl.getType().toString();
 
@@ -43,72 +46,48 @@ public class AudioControl {
     }
 
     public static ArrayList<Mixer.Info> getInputDevices() {
-        ArrayList<Mixer.Info> sourceMixers = new ArrayList<Mixer.Info>();
+        ArrayList<Mixer.Info> targetMixers = new ArrayList<Mixer.Info>();
 
-        for (Mixer.Info thisMixerInfo : AudioSystem.getMixerInfo()) {
-            // System.out.println("Mixer: "+thisMixerInfo.getDescription() +
-            // " ["+thisMixerInfo.getName()+"]");
-            Mixer thisMixer = AudioSystem.getMixer(thisMixerInfo);
+        Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
 
-            for (Line.Info thisLineInfo : thisMixer.getSourceLineInfo()) {
-                if (thisLineInfo.getLineClass().getName().equals("javax.sound.sampled.Port")) {
-                    Line thisLine;
-
-                    try {
-                        thisLine = thisMixer.getLine(thisLineInfo);
-                        thisLine.open();
-
-                        sourceMixers.add(thisMixerInfo);
-                        // System.out.println("  Source Port: " +
-                        // thisLineInfo.toString());
-
-                        for (Control thisControl : thisLine.getControls()) {
-                            // System.out.println(AnalyzeControl(thisControl));
-                        }
-
-                        thisLine.close();
-                    } catch (LineUnavailableException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+        for (int i = 0; i < mixerInfos.length; i++) {
+            Mixer mixer = AudioSystem.getMixer(mixerInfos[i]);
+            try {
+                mixer.open();
+            } catch (LineUnavailableException e) {
+                e.printStackTrace();
+            }
+            Line.Info[] targetLines = mixer.getTargetLineInfo();
+            for (Line.Info info : targetLines) {
+                if (info.getLineClass() == TargetDataLine.class) {
+                    targetMixers.add(mixerInfos[i]);
                 }
             }
+            mixer.close();
         }
 
-        return sourceMixers;
+        return targetMixers;
     }
 
     public static ArrayList<Mixer.Info> getOutputDevices() {
         ArrayList<Mixer.Info> sourceMixers = new ArrayList<Mixer.Info>();
 
-        for (Mixer.Info thisMixerInfo : AudioSystem.getMixerInfo()) {
-            // System.out.println("Mixer: " + thisMixerInfo.getDescription() +
-            // " [" + thisMixerInfo.getName() + "]");
-            Mixer thisMixer = AudioSystem.getMixer(thisMixerInfo);
+        Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
 
-            for (Line.Info thisLineInfo : thisMixer.getTargetLineInfo()) {
-                if (thisLineInfo.getLineClass().getName().equals("javax.sound.sampled.Port")) {
-                    Line thisLine;
-
-                    try {
-                        thisLine = thisMixer.getLine(thisLineInfo);
-                        thisLine.open();
-
-                        sourceMixers.add(thisMixerInfo);
-                        // System.out.println("  Source Port: " +
-                        // thisLineInfo.toString());
-
-                        for (Control thisControl : thisLine.getControls()) {
-                            // System.out.println(AnalyzeControl(thisControl));
-                        }
-
-                        thisLine.close();
-                    } catch (LineUnavailableException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+        for (int i = 0; i < mixerInfos.length; i++) {
+            Mixer mixer = AudioSystem.getMixer(mixerInfos[i]);
+            try {
+                mixer.open();
+            } catch (LineUnavailableException e) {
+                e.printStackTrace();
+            }
+            Line.Info[] sourceLines = mixer.getSourceLineInfo();
+            for (Line.Info info : sourceLines) {
+                if (info.getLineClass() == SourceDataLine.class) {
+                    sourceMixers.add(mixerInfos[i]);
                 }
             }
+            mixer.close();
         }
 
         return sourceMixers;
