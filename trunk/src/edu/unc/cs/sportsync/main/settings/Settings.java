@@ -1,58 +1,32 @@
 package edu.unc.cs.sportsync.main.settings;
 
-import javax.sound.sampled.Mixer;
-import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 
-import org.xml.sax.SAXException;
+import javax.sound.sampled.Mixer;
 
 import edu.unc.cs.sportsync.main.sound.AudioControl;
-
-import java.io.File;
-import java.io.IOException;
 
 public class Settings {
     private final String PATH = "settings.xml";
     private int delayTime;
+    private int volume;
 
     private Mixer.Info inputMixer;
     private Mixer.Info outputMixer;
 
     public Settings() {
-        this.delayTime = 60;
-        initSettings();
-    }
-    
-    private void initSettings() {
         File file = new File(PATH);
         boolean failed = false;
-        
-        if(file.exists()) {    
-            failed = !parseSettingsFile(file); 
+
+        // Init settings to default
+        setDefaultSettings();
+
+        if (file.exists()) {
+            failed = !parseSettingsFile(file);
         }
-        
-        if(!file.exists() || failed) {
-            delayTime = 60;
-            inputMixer = AudioControl.getInputDevices().iterator().next();
-            outputMixer = AudioControl.getOutputDevices().iterator().next();
-        }
-        
     }
 
-    private boolean parseSettingsFile(File file) {
-        try {
-            SettingsXmlParser parser = new SettingsXmlParser(file);
-            delayTime = Integer.valueOf(parser.getDelayTime());
-            inputMixer = parser.getInputMixer();
-            outputMixer = parser.getOutputMixer();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } 
-        
-        return true;
-    }
-
-    public int getDelayTime() { 
+    public int getDelayTime() {
         return delayTime;
     }
 
@@ -62,6 +36,51 @@ public class Settings {
 
     public Mixer.Info getOutputMixer() {
         return outputMixer;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    private boolean parseSettingsFile(File file) {
+        try {
+            SettingsXmlParser parser = new SettingsXmlParser(file);
+            if (parser.getDelayTime() != null) {
+                delayTime = Integer.valueOf(parser.getDelayTime());
+            }
+            if (parser.getVolume() != null) {
+                volume = Integer.valueOf(parser.getVolume());
+            }
+            if (parser.getInputMixer() != null) {
+                inputMixer = parser.getInputMixer();
+            }
+            if (parser.getOutputMixer() != null) {
+                outputMixer = parser.getOutputMixer();
+            }
+        } catch (Exception e) {
+            // e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public void save() {
+        SettingsXmlBuilder builder = new SettingsXmlBuilder();
+
+        builder.addDelayTime(delayTime);
+        builder.addVolume(volume);
+        builder.addInputMixer(inputMixer);
+        builder.addOutputMixer(outputMixer);
+
+        builder.saveTo(PATH);
+    }
+
+    private void setDefaultSettings() {
+        delayTime = 60;
+        volume = 50;
+        inputMixer = AudioControl.getInputDevices().iterator().next();
+        outputMixer = AudioControl.getOutputDevices().iterator().next();
     }
 
     public void setDelayTime(int delayTime) {
@@ -75,15 +94,9 @@ public class Settings {
     public void setOutputMixer(Mixer.Info outputMixer) {
         this.outputMixer = outputMixer;
     }
-    
-    public void save() {
-        SettingsXmlBuilder builder = new SettingsXmlBuilder();
 
-        builder.addDelayTime(delayTime);
-        builder.addInputMixer(inputMixer);
-        builder.addOutputMixer(outputMixer);
-
-        builder.saveTo(PATH);
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
 
 }

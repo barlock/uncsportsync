@@ -94,6 +94,7 @@ public class ApplicationView implements IView {
         volumeScale.setMaximum(100);
         volumeScale.setIncrement(1);
         volumeScale.setPageIncrement(10);
+        volumeScale.setSelection(settings.getVolume());
 
         muteButtonData.bottom = new FormAttachment(volumeScale, -5, SWT.BOTTOM);
         muteButtonData.left = new FormAttachment(volumeScale, -30, SWT.LEFT);
@@ -167,6 +168,7 @@ public class ApplicationView implements IView {
     public void addMuteButtonListener(Listener listener) {
         muteButton.addListener(SWT.Selection, listener);
     }
+
 
     public void addOnOffButtonListener(Listener listener) {
         OnOffButton.addListener(SWT.Selection, listener);

@@ -21,7 +21,6 @@ public class ApplicationPresenter implements IPresenter {
     private Listener applyButtonListeners;
     private SelectionAdapter exitAdapter;
 
-    private int volumeLevel = 100;
     private boolean isRecording = false;
     private boolean isMuted = false;
 
@@ -47,7 +46,6 @@ public class ApplicationPresenter implements IPresenter {
 
     public void dispose() {
         settings.save();
-
         view.dispose();
         if (isRecording) {
             AudioControl.stopRecording();
@@ -57,11 +55,11 @@ public class ApplicationPresenter implements IPresenter {
     @Override
     public void initListners() {
         applyButtonListeners = new Listener() {
-
             @Override
             public void handleEvent(Event event) {
                 settingsPresenter.updateSettings();
                 view.updateDelayTime();
+                settings.save();
                 settingsPresenter.close();
             }
         };
@@ -84,7 +82,7 @@ public class ApplicationPresenter implements IPresenter {
             public void handleEvent(Event event) {
                 if (!isRecording) {
                     AudioControl.start();
-                    AudioControl.setVolume(volumeLevel);
+                    AudioControl.setVolume(settings.getVolume());
                     if (isMuted) {
                         AudioControl.toggleMute();
                     }
@@ -111,9 +109,10 @@ public class ApplicationPresenter implements IPresenter {
         volumeSliderListener = new Listener() {
             @Override
             public void handleEvent(Event event) {
-                volumeLevel = 100 - view.getVolumeScale().getSelection();
+                int volume = view.getVolumeScale().getSelection();
+                AudioControl.setVolume(volume);
                 if (isRecording) {
-                    AudioControl.setVolume(volumeLevel);
+                    settings.setVolume(volume);
                 }
             }
         };
