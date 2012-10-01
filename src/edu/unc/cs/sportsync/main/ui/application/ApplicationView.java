@@ -32,6 +32,9 @@ public class ApplicationView implements IView {
     private Label volumeLabel;
     private FormData volumeLabelData;
 
+    private Button OnOffButton;
+    private FormData OnOffButtonData;
+
     private Button settingsButton;
     private MenuItem exitItem;
     private MenuItem cascadeFileMenu;
@@ -115,6 +118,12 @@ public class ApplicationView implements IView {
         }
         volumeLabel.setToolTipText("Volume");
 
+        // On/Off Button
+        OnOffButtonData.top = new FormAttachment(20);
+        OnOffButtonData.left = new FormAttachment(25);
+        OnOffButton.setLayoutData(OnOffButtonData);
+        OnOffButton.setText("START");
+
         // Slider
 
         // Rectangle clientArea = shell.getClientArea ();
@@ -157,6 +166,10 @@ public class ApplicationView implements IView {
 
     public void addMuteButtonListener(Listener listener) {
         muteButton.addListener(SWT.Selection, listener);
+    }
+
+    public void addOnOffButtonListener(Listener listener) {
+        settingsButton.addListener(SWT.Selection, listener);
     }
 
     public void addSettingsButtonListener(Listener listener) {
@@ -208,6 +221,9 @@ public class ApplicationView implements IView {
         layout = new FormLayout();
         settingsButton = new Button(application, SWT.PUSH);
         settingsButtonData = new FormData(40, 40);
+
+        OnOffButton = new Button(application, SWT.PUSH);
+        OnOffButtonData = new FormData(70, 30);
 
         muteButton = new Button(application, SWT.TOGGLE);
         muteButtonData = new FormData(35, 35);
