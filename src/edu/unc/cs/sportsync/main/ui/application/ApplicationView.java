@@ -169,7 +169,7 @@ public class ApplicationView implements IView {
     }
 
     public void addOnOffButtonListener(Listener listener) {
-        settingsButton.addListener(SWT.Selection, listener);
+        OnOffButton.addListener(SWT.Selection, listener);
     }
 
     public void addSettingsButtonListener(Listener listener) {
