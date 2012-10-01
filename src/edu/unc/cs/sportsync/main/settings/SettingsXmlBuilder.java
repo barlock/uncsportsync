@@ -81,6 +81,12 @@ public class SettingsXmlBuilder {
         root.appendChild(mixer);
     }
 
+    public void addVolume(int vol) {
+        Element volume = doc.createElement("volume");
+        volume.appendChild(doc.createTextNode(Integer.toString(vol)));
+        root.appendChild(volume);
+    }
+
     public void saveTo(String path) {
         try {
             OutputFormat format = new OutputFormat(doc);
