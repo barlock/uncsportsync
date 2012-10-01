@@ -2,6 +2,7 @@ package edu.unc.cs.sportsync.main.ui.application;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -23,9 +24,6 @@ public class ApplicationView implements IView {
     private Settings settings;
     private Display display;
     private Scale scale;
-
-    private Button OnOffButton;
-    private FormData OnOffButtonData;
 
     private Scale volumeScale;
     private FormData volumeScaleData;
@@ -52,6 +50,11 @@ public class ApplicationView implements IView {
     private FormData sliderBar;
     private FormData startScaleData;
 
+    private Image muteOnImg;
+    private Image muteOffImg;
+    private Image settingsImg;
+    private Image volumeImg;
+
     public ApplicationView(Settings settings) {
         init();
         application.setText("UNC SportsSync");
@@ -61,11 +64,17 @@ public class ApplicationView implements IView {
         application.setLayout(layout);
 
         // Line-out options button
-        settingsButton.setText("Settings");
-
-        settingsButtonData.right = new FormAttachment(100);
-        settingsButtonData.top = new FormAttachment(0);
+        // settingsButton.setText("Settings");
+        try {
+            settingsImg = new Image(display, ApplicationView.class.getResourceAsStream("settingsIcon.gif"));
+            settingsButton.setImage(settingsImg);
+        } catch (Exception e) {
+            settingsButton.setText("Settings");
+        }
+        settingsButtonData.right = new FormAttachment(97);
+        settingsButtonData.top = new FormAttachment(3);
         settingsButton.setLayoutData(settingsButtonData);
+        settingsButton.setToolTipText("Settings (Change audio input/ouput, max delay, etc.)");
 
         // Create menu bar
         cascadeFileMenu.setText("&File");
@@ -76,31 +85,35 @@ public class ApplicationView implements IView {
 
         // Volume control
         volumeScaleData.top = new FormAttachment(70);
-        volumeScaleData.left = new FormAttachment(10);
+        volumeScaleData.left = new FormAttachment(30);
         volumeScale.setLayoutData(volumeScaleData);
         volumeScale.setMinimum(0);
         volumeScale.setMaximum(100);
         volumeScale.setIncrement(1);
         volumeScale.setPageIncrement(10);
 
-        muteButtonData.top = new FormAttachment(volumeScale, 30, SWT.TOP);
-        muteButtonData.left = new FormAttachment(volumeScale, 60, SWT.LEFT);
+        muteButtonData.bottom = new FormAttachment(volumeScale, -5, SWT.BOTTOM);
+        muteButtonData.left = new FormAttachment(volumeScale, -30, SWT.LEFT);
         muteButton.setLayoutData(muteButtonData);
-        // Image speakerImg = new Image(display,
-        // "C:\\Users\\waivers\\SSworkspace\\SportSync\\src\\edu\\unc\\cs\\sportsync\\main\\ui\\application\\speaker.png");
-        // muteButton.setBackgroundImage(speakerImg);
-        muteButton.setText("Mute");
+        try {
+            muteOnImg = new Image(display, ApplicationView.class.getResourceAsStream("mute3.gif"));
+            muteOffImg = new Image(display, ApplicationView.class.getResourceAsStream("mute4.gif"));
+            muteButton.setImage(muteOnImg);
+        } catch (Exception e) {
+            muteButton.setText("Mute");
+        }
+        muteButton.setToolTipText("Mute");
 
-        volumeLabelData.top = new FormAttachment(volumeScale, -40, SWT.TOP);
-        volumeLabelData.left = new FormAttachment(volumeScale, 0, SWT.LEFT);
+        volumeLabelData.bottom = new FormAttachment(volumeScale, 30, SWT.BOTTOM);
+        volumeLabelData.left = new FormAttachment(volumeScale, 25, SWT.LEFT);
         volumeLabel.setLayoutData(volumeLabelData);
-        volumeLabel.setText("Volume Control");
-
-        // On/Off Button
-        OnOffButtonData.top = new FormAttachment(20);
-        OnOffButtonData.left = new FormAttachment(25);
-        OnOffButton.setLayoutData(OnOffButtonData);
-        OnOffButton.setText("ON/Off");
+        try {
+            volumeImg = new Image(display, ApplicationView.class.getResourceAsStream("volume.gif"));
+            volumeLabel.setImage(volumeImg);
+        } catch (Exception e) {
+            volumeLabel.setText("");
+        }
+        volumeLabel.setToolTipText("Volume");
 
         // Slider
 
@@ -146,10 +159,6 @@ public class ApplicationView implements IView {
         muteButton.addListener(SWT.Selection, listener);
     }
 
-    public void addOnOffButtonListener(Listener listener) {
-        OnOffButton.addListener(SWT.Selection, listener);
-    }
-
     public void addSettingsButtonListener(Listener listener) {
         settingsButton.addListener(SWT.Selection, listener);
     }
@@ -193,26 +202,23 @@ public class ApplicationView implements IView {
 
     public void init() {
         display = new Display();
-        application = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
+        application = new Shell(display, SWT.MIN | SWT.TITLE | SWT.CLOSE);
+        // application.setSize(300, 100);
 
         layout = new FormLayout();
         settingsButton = new Button(application, SWT.PUSH);
-
-        OnOffButton = new Button(application, SWT.TOGGLE);
-        OnOffButtonData = new FormData(70, 30);
+        settingsButtonData = new FormData(40, 40);
 
         muteButton = new Button(application, SWT.TOGGLE);
-        muteButtonData = new FormData(50, 30);
-        volumeScale = new Scale(application, SWT.VERTICAL);
-        volumeScaleData = new FormData(40, 100);
-        volumeLabel = new Label(application, SWT.VERTICAL);
-        volumeLabelData = new FormData(100, 40);
+        muteButtonData = new FormData(35, 35);
+        volumeScale = new Scale(application, SWT.HORIZONTAL);
+        volumeScaleData = new FormData(100, 40);
+        volumeLabel = new Label(application, SWT.HORIZONTAL);
+        volumeLabelData = new FormData(50, 30);
 
         scaleValue = new Label(application, SWT.LEFT);
         endScale = new Label(application, SWT.LEFT);
         startScale = new Label(application, SWT.LEFT);
-
-        settingsButtonData = new FormData(60, 25);
 
         menuBar = new Menu(application, SWT.BAR);
         cascadeFileMenu = new MenuItem(menuBar, SWT.CASCADE);
@@ -256,5 +262,14 @@ public class ApplicationView implements IView {
     public void updateDelayTime() {
         endScale.setText(settings.getDelayTime() + " sec");
         scale.setMaximum(settings.getDelayTime() * 10);
+    }
+
+    public void updateMuteButton() {
+        boolean isPressed = muteButton.getSelection();
+        if (isPressed) {
+            muteButton.setImage(muteOffImg);
+        } else {
+            muteButton.setImage(muteOnImg);
+        }
     }
 }

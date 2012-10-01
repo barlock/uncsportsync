@@ -73,6 +73,7 @@ public class ApplicationPresenter implements IPresenter {
             @Override
             public void handleEvent(Event event) {
                 AudioControl.toggleMute();
+                view.updateMuteButton();
             }
         };
         sliderListener = new Listener() {
