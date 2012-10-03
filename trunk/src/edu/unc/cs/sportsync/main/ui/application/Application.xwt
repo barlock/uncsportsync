@@ -1,0 +1,40 @@
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.application.Application">
+	<Composite.layout>
+		<GridLayout numColumns="3"/>
+	</Composite.layout>
+	<Button text="Start"/>
+	<Label/>
+	<Button toolTipText="settings" image="settingsIcon.gif">
+		<Button.layoutData>
+			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true" verticalAlignment="TOP"/>
+		</Button.layoutData>
+	</Button>
+	<Label text="Delayed: 20 seconds">
+		<Label.layoutData>
+			<GridData horizontalAlignment="CENTER" horizontalSpan="3"/>
+		</Label.layoutData>
+	</Label>
+	<Label text="Live"/>
+	<Label/>
+	<Label text="60 seconds">
+		<Label.layoutData>
+			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true"/>
+		</Label.layoutData>
+	</Label>
+	<Scale>
+		<Scale.layoutData>
+			<GridData horizontalAlignment="FILL" horizontalSpan="3"/>
+		</Scale.layoutData>
+	</Scale>
+	<Button image="mute1.gif" toolTipText="mute"/>
+	<Scale>
+		<Scale.layoutData>
+			<GridData widthHint="85"/>
+		</Scale.layoutData>
+	</Scale>
+	<ProgressBar>
+		<ProgressBar.layoutData>
+			<GridData horizontalAlignment="RIGHT"/>
+		</ProgressBar.layoutData>
+	</ProgressBar>>
+</Composite>
