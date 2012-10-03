@@ -1,0 +1,23 @@
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab">
+	<Composite.layout>
+		<GridLayout numColumns="2"/>
+	</Composite.layout>
+	<Label text="Input device:" x:Name="inputDeviceLabel"/>
+	<Combo x:Name="inputDeviceCombo">
+		<Combo.layoutData>
+			<GridData horizontalAlignment="FILL" grabExcessHorizontalSpace="true"/>
+		</Combo.layoutData>
+	</Combo>
+	<Label text="Output device:" x:Name="outputDeviceLabel"/>
+	<Combo x:Name="outputDeviceCombo">
+		<Combo.layoutData>
+			<GridData horizontalAlignment="FILL" grabExcessHorizontalSpace="true"/>
+		</Combo.layoutData>
+	</Combo>
+	<Label text="Max delay (seconds):" x:Name="maxDelayLabel"/>
+	<Spinner x:Style="BORDER" x:Name="maxDelaySpinner">
+		<Spinner.layoutData>
+			<GridData grabExcessHorizontalSpace="true"/>
+		</Spinner.layoutData>
+	</Spinner>
+</Composite>
