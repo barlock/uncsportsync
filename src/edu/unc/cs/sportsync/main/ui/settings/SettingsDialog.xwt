@@ -1,0 +1,33 @@
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.SettingsDialog" xmlns:p1="clr-namespace:java.lang">
+	<Composite.layout>
+		<GridLayout numColumns="3"/>
+	</Composite.layout>
+	<List x:Style="BORDER" x:Name="selectList" SelectionEvent="onSelectListSelection">
+		<List.layoutData>
+			<GridData grabExcessVerticalSpace="true" horizontalAlignment="FILL" verticalAlignment="FILL" widthHint="80"/>
+		</List.layoutData>
+		<List.items>
+			<p1:String>Audio</p1:String>
+		</List.items>
+	</List>
+	<Composite x:Name="settingsBox" x:Style="BORDER">
+		<Composite.layout>
+			<StackLayout/>
+		</Composite.layout>
+		<Composite.layoutData>
+			<GridData horizontalSpan="2" horizontalAlignment="FILL" verticalAlignment="FILL"/>
+		</Composite.layoutData>
+		<Composite x:Name="audioSettingsTab" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab"/>
+	</Composite>
+	<Label/>
+	<Button text="Cancel" x:Name="cancelButton" SelectionEvent="onCancelButtonSelection">
+		<Button.layoutData>
+			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="RIGHT"/>
+		</Button.layoutData>
+	</Button>
+	<Button text="Save" x:Name="saveButton">
+		<Button.layoutData>
+			<GridData horizontalAlignment="RIGHT"/>
+		</Button.layoutData>
+	</Button>
+</Composite>

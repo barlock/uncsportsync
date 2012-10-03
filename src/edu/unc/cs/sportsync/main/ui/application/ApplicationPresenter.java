@@ -1,14 +1,17 @@
 package edu.unc.cs.sportsync.main.ui.application;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
 import edu.unc.cs.sportsync.main.ui.IPresenter;
-import edu.unc.cs.sportsync.main.ui.settings.SettingsDialogPresenter;
+import edu.unc.cs.sportsync.main.ui.settings.SettingsDialog;
 
 public class ApplicationPresenter implements IPresenter {
     private final ApplicationView view;
@@ -18,7 +21,7 @@ public class ApplicationPresenter implements IPresenter {
     private Listener muteButtonListener;
     private Listener sliderListener;
     private Listener volumeSliderListener;
-    private Listener applyButtonListeners;
+    private Listener applyButtonListener;
     private SelectionAdapter exitAdapter;
 
     private boolean isRecording = false;
@@ -26,7 +29,8 @@ public class ApplicationPresenter implements IPresenter {
 
     private final Settings settings;
 
-    private SettingsDialogPresenter settingsPresenter;
+    private SettingsDialog settingsComposite;
+    private Shell settingsDialog;
 
     public ApplicationPresenter() {
         settings = new Settings();
@@ -54,29 +58,50 @@ public class ApplicationPresenter implements IPresenter {
 
     @Override
     public void initListners() {
-        applyButtonListeners = new Listener() {
+        applyButtonListener = new Listener() {
             @Override
             public void handleEvent(Event event) {
-                settingsPresenter.updateSettings();
+                settingsComposite.updateSettings();
                 view.updateDelayTime();
                 settings.save();
-                settingsPresenter.close();
+                settingsDialog.close();
             }
         };
 
+//        settingsButtonListener = new Listener() {
+//            @Override
+//            public void handleEvent(Event event) {
+//                if (settingsPresenter == null || settingsPresenter.isDisposed()) {
+//                    settingsPresenter = new SettingsDialogPresenter(view.getApplication(), view.getSettings(), applyButtonListeners);
+//                    if (isRecording) {
+//                        AudioControl.stopRecording();
+//                        isRecording = false;
+//                    }
+//                    settingsPresenter.open();
+//                }
+//            }
+//        };
+        
         settingsButtonListener = new Listener() {
+
             @Override
             public void handleEvent(Event event) {
-                if (settingsPresenter == null || settingsPresenter.isDisposed()) {
-                    settingsPresenter = new SettingsDialogPresenter(view.getApplication(), view.getSettings(), applyButtonListeners);
-                    if (isRecording) {
-                        AudioControl.stopRecording();
-                        isRecording = false;
-                    }
-                    settingsPresenter.open();
+                if(settingsDialog == null || settingsDialog.isDisposed()) {
+                    settingsDialog= new Shell(view.getApplication());
+                    FillLayout layout = new FillLayout();
+                    settingsDialog.setText("Settings");
+                    settingsDialog.setLayout(layout);
+                    settingsDialog.setSize(400, 500);
+                    
+                    settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener);
+                    
+                    settingsDialog.open();
                 }
             }
+            
         };
+        
+        
         onoffButtonListener = new Listener() {
             @Override
             public void handleEvent(Event event) {
