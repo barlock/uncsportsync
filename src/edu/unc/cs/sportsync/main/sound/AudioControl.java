@@ -93,6 +93,10 @@ public class AudioControl {
         return sourceMixers;
     }
 
+    public static void setDelayAmount(int delayAmount) {
+        mySoundCheck.setDelayAmount(delayAmount);
+    }
+
     public static void setVolume(double percentLevel) {
         mySoundCheck.setVolume(percentLevel);
     }
