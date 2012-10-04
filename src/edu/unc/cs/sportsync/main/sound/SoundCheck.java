@@ -100,7 +100,7 @@ public class SoundCheck extends Thread {
 
             delayVar = Math.round((4 * delayAmount) / 10);
 
-            if (flag) {
+            if (flag || delayVar < count) {
                 outputLine.write(outputBufferQueue[(count + cachingAmount - 1 - delayVar) % cachingAmount], 0, BUFFER_SIZE);
             }
         }
