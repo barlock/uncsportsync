@@ -21,6 +21,7 @@ public class SoundCheck extends Thread {
     private final Mixer inputMixer;
     private final Mixer outputMixer;
     private final AudioFormat SOUND_FORMAT;
+    private int delayAmount;
 
     private static final Settings settings = new Settings();
 
@@ -32,7 +33,6 @@ public class SoundCheck extends Thread {
         /*
          * Get the input/output lines
          */
-
         BUFFER_SIZE = bufferSize;
         SOUND_FORMAT = format;
         inputMixer = AudioSystem.getMixer(settings.getInputMixer());
@@ -75,18 +75,39 @@ public class SoundCheck extends Thread {
     @Override
     public void run() {
         byte[] myBuffer = new byte[BUFFER_SIZE];
+        int cachingAmount = Math.round(4 * settings.getDelayTime() + 1);
+        byte[][] outputBufferQueue = new byte[cachingAmount][BUFFER_SIZE];
+        int count = 0;
+        int delayVar;
+        boolean flag = false;
         while (isRecording) {
             /*
              * read data from input line
              */
 
+            @SuppressWarnings("unused")
             int numBytesCaptured = inputLine.read(myBuffer, 0, myBuffer.length);
 
             /*
              * write data to output line
              */
-            outputLine.write(myBuffer, 0, numBytesCaptured);
+            outputBufferQueue[count] = myBuffer.clone();
+
+            if (count == cachingAmount - 1) {
+                flag = true;
+            }
+            count = (count + 1) % cachingAmount;
+
+            delayVar = Math.round((4 * delayAmount) / 10);
+
+            if (flag) {
+                outputLine.write(outputBufferQueue[(count + cachingAmount - 1 - delayVar) % cachingAmount], 0, BUFFER_SIZE);
+            }
         }
+    }
+
+    public void setDelayAmount(int amount) {
+        delayAmount = amount;
     }
 
     public void setVolume(double percentLevel) {
