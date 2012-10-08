@@ -2,37 +2,37 @@
 	<Composite.layout>
 		<GridLayout numColumns="3"/>
 	</Composite.layout>
-	<Button text="Start"/>
+	<Button text="Start" x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onMuteButtonSelection"/>
 	<Label/>
-	<Button toolTipText="settings" image="settingsIcon.gif">
+	<Button toolTipText="settings" image="settingsIcon.gif" x:Name="settingsButton" SelectionEvent="onSettingsButtonSelection">
 		<Button.layoutData>
 			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true" verticalAlignment="TOP"/>
 		</Button.layoutData>
 	</Button>
-	<Label text="Delayed: 20 seconds">
+	<Label text="Delayed: 20 seconds" x:Name="delayValueLabel">
 		<Label.layoutData>
 			<GridData horizontalAlignment="CENTER" horizontalSpan="3"/>
 		</Label.layoutData>
 	</Label>
 	<Label text="Live"/>
 	<Label/>
-	<Label text="60 seconds">
+	<Label text="60 seconds" x:Name="maxDelayLabel">
 		<Label.layoutData>
 			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
 	</Label>
-	<Scale>
+	<Scale x:Name="delayScale" DragDetectEvent="onDelayScaleDragDetect">
 		<Scale.layoutData>
 			<GridData horizontalAlignment="FILL" horizontalSpan="3"/>
 		</Scale.layoutData>
 	</Scale>
-	<Button image="mute1.gif" toolTipText="mute"/>
-	<Scale>
+	<Button image="mute1.gif" toolTipText="mute" x:Name="muteButton" x:Style="TOGGLE" SelectionEvent="onMuteButtonSelection"/>
+	<Scale x:Name="volumeScale" DragDetectEvent="onVolumeScaleDragDetect">
 		<Scale.layoutData>
 			<GridData widthHint="85"/>
 		</Scale.layoutData>
 	</Scale>
-	<ProgressBar>
+	<ProgressBar x:Name="audioBar">
 		<ProgressBar.layoutData>
 			<GridData horizontalAlignment="RIGHT"/>
 		</ProgressBar.layoutData>

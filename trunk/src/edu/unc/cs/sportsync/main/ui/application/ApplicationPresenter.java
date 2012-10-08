@@ -93,7 +93,7 @@ public class ApplicationPresenter implements IPresenter {
                     FillLayout layout = new FillLayout();
                     settingsDialog.setText("Settings");
                     settingsDialog.setLayout(layout);
-                    settingsDialog.setSize(400, 500);
+                    settingsDialog.setSize(500, 500);
 
                     settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener);
 
