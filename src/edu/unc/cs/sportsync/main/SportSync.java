@@ -27,7 +27,7 @@ public class SportSync {
         FillLayout layout = new FillLayout();
 
         application.setLayout(layout);
-        application.setSize(400, 180);
+        application.setSize(450, 250);
         application.setLocation(500, 500);
         application.setText("UNC SportSync");
 
