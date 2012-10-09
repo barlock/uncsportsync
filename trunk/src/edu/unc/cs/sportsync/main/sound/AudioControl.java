@@ -16,7 +16,6 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
 public class AudioControl {
-    private static SoundCheck mySoundCheck;
 
     @SuppressWarnings("unused")
     private static String AnalyzeControl(Control thisControl) {
@@ -93,15 +92,21 @@ public class AudioControl {
         return sourceMixers;
     }
 
-    public static void setDelayAmount(int delayAmount) {
+    private SoundCheck mySoundCheck;
+
+    public AudioControl() {
+
+    }
+
+    public void setDelayAmount(int delayAmount) {
         mySoundCheck.setDelayAmount(delayAmount);
     }
 
-    public static void setVolume(double percentLevel) {
+    public void setVolume(double percentLevel) {
         mySoundCheck.setVolume(percentLevel);
     }
 
-    public static void start() {
+    public void start() {
         float frameRate = (float) 44100.0;
         int BUFFER_SIZE = 40960;
 
@@ -112,14 +117,15 @@ public class AudioControl {
         } catch (LineUnavailableException e) {
             System.exit(1);
         }
+
         mySoundCheck.start();
     }
 
-    public static void stopRecording() {
+    public void stopRecording() {
         mySoundCheck.stopRecording();
     }
 
-    public static void toggleMute() {
+    public void toggleMute() {
         mySoundCheck.toggleMute();
     }
 }

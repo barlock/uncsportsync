@@ -28,7 +28,7 @@ public class SportSync {
 
         application.setLayout(layout);
         application.setSize(450, 250);
-        application.setLocation(500, 500);
+        application.setLocation(400, 200);
         application.setText("UNC SportSync");
 
         Composite appComposite = new Application(application, SWT.None);
@@ -40,5 +40,7 @@ public class SportSync {
                 display.sleep();
             }
         }
+
+        application.dispose();
     }
 }
