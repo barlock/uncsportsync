@@ -101,7 +101,7 @@ public class SoundCheck extends Thread {
             }
             count = (count + 1) % cachingAmount;
 
-            delayVar = (delayAmount * 163840) / 10;
+            delayVar = (delayAmount * delayParam) / 10;
 
             if (fullyCached || delayVar < (count - 1) * BUFFER_SIZE) {
                 // outputLine.write(outputBufferQueue[(count + cachingAmount - 1
