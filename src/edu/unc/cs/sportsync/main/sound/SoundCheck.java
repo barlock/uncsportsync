@@ -75,33 +75,40 @@ public class SoundCheck extends Thread {
     @Override
     public void run() {
         byte[] myBuffer = new byte[BUFFER_SIZE];
-        int cachingAmount = Math.round(4 * settings.getDelayTime() + 1);
-        byte[][] outputBufferQueue = new byte[cachingAmount][BUFFER_SIZE];
-        int count = 0;
+        int delayParam = 170000;
+        int cachingAmount = (int) (Math.ceil(delayParam / BUFFER_SIZE) * settings.getDelayTime() + 1);
+        // byte[][] outputBufferQueue = new byte[cachingAmount][BUFFER_SIZE];
+        byte[] outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
+        int count = 0, offset;
         int delayVar;
-        boolean flag = false;
+        boolean fullyCached = false;
         while (isRecording) {
             /*
              * read data from input line
              */
 
-            @SuppressWarnings("unused")
-            int numBytesCaptured = inputLine.read(myBuffer, 0, myBuffer.length);
+            inputLine.read(myBuffer, 0, myBuffer.length);
 
             /*
              * write data to output line
              */
-            outputBufferQueue[count] = myBuffer.clone();
+
+            // outputBufferQueue[count] = myBuffer.clone();
+            System.arraycopy(myBuffer, 0, outputBufferQueue, count * BUFFER_SIZE, BUFFER_SIZE);
 
             if (count == cachingAmount - 1) {
-                flag = true;
+                fullyCached = true;
             }
             count = (count + 1) % cachingAmount;
 
-            delayVar = Math.round((4 * delayAmount) / 10);
+            delayVar = (delayAmount * 163840) / 10;
 
-            if (flag || delayVar < count) {
-                outputLine.write(outputBufferQueue[(count + cachingAmount - 1 - delayVar) % cachingAmount], 0, BUFFER_SIZE);
+            if (fullyCached || delayVar < (count - 1) * BUFFER_SIZE) {
+                // outputLine.write(outputBufferQueue[(count + cachingAmount - 1
+                // - delayVar) % cachingAmount], 0, BUFFER_SIZE);
+                offset = ((count + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
+                outputLine.write(outputBufferQueue, offset, BUFFER_SIZE);
+
             }
         }
     }
