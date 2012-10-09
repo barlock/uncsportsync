@@ -1,10 +1,10 @@
-<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.application.Application">
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.application.Application" DisposeEvent="onDispose">
 	<Composite.layout>
-		<GridLayout numColumns="3"/>
+		<GridLayout numColumns="3" marginLeft="10" marginRight="10" marginTop="5" marginBottom="5"/>
 	</Composite.layout>
-	<Button text="Start" x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onMuteButtonSelection">
+	<Button text="Start" x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onStartButtonSelection">
 		<Button.layoutData>
-			<GridData grabExcessVerticalSpace="true"/>
+			<GridData grabExcessVerticalSpace="true" verticalAlignment="TOP"/>
 		</Button.layoutData>
 	</Button>
 	<Label/>
@@ -13,19 +13,19 @@
 			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true" verticalAlignment="TOP" grabExcessVerticalSpace="true"/>
 		</Button.layoutData>
 	</Button>
-	<Label text="Delayed: 20 seconds" x:Name="delayValueLabel">
+	<Label text="Delay: 0.0 seconds" x:Name="delayValueLabel">
 		<Label.layoutData>
-			<GridData horizontalAlignment="CENTER" horizontalSpan="3"/>
+			<GridData horizontalAlignment="CENTER" horizontalSpan="3" grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
 	</Label>
 	<Label text="Live"/>
 	<Label/>
-	<Label text="60 seconds" x:Name="maxDelayLabel">
+	<Label text="60 sec" x:Name="maxDelayLabel">
 		<Label.layoutData>
 			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
 	</Label>
-	<Scale x:Name="delayScale" DragDetectEvent="onDelayScaleDragDetect">
+	<Scale x:Name="delayScale" SelectionEvent="onDelayScaleDragDetect" pageIncrement="20">
 		<Scale.layoutData>
 			<GridData horizontalAlignment="FILL" horizontalSpan="3" grabExcessVerticalSpace="true"/>
 		</Scale.layoutData>
@@ -35,9 +35,9 @@
 			<GridData grabExcessVerticalSpace="true"/>
 		</Button.layoutData>
 	</Button>
-	<Scale x:Name="volumeScale" DragDetectEvent="onVolumeScaleDragDetect">
+	<Scale x:Name="volumeScale" SelectionEvent="onVolumeScaleDragDetect" pageIncrement="10">
 		<Scale.layoutData>
-			<GridData widthHint="85" grabExcessVerticalSpace="true"/>
+			<GridData widthHint="85" grabExcessVerticalSpace="true" grabExcessHorizontalSpace="true"/>
 		</Scale.layoutData>
 	</Scale>
 	<ProgressBar x:Name="audioBar">

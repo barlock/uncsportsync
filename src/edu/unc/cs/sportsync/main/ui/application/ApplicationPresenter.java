@@ -28,12 +28,14 @@ public class ApplicationPresenter implements IPresenter {
     private boolean isMuted = false;
 
     private final Settings settings;
+    private final AudioControl audioControl;
 
     private SettingsDialog settingsComposite;
     private Shell settingsDialog;
 
     public ApplicationPresenter() {
         settings = new Settings();
+        audioControl = new AudioControl();
         view = new ApplicationView(settings);
         initListners();
     }
@@ -52,7 +54,7 @@ public class ApplicationPresenter implements IPresenter {
         settings.save();
         view.dispose();
         if (isRecording) {
-            AudioControl.stopRecording();
+            audioControl.stopRecording();
         }
     }
 
@@ -97,6 +99,10 @@ public class ApplicationPresenter implements IPresenter {
 
                     settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener);
 
+                    if (isRecording) {
+                        audioControl.stopRecording();
+                        isRecording = false;
+                    }
                     settingsDialog.open();
 
                 }
@@ -108,11 +114,11 @@ public class ApplicationPresenter implements IPresenter {
             @Override
             public void handleEvent(Event event) {
                 if (!isRecording) {
-                    AudioControl.start();
-                    AudioControl.setVolume(settings.getVolume());
-                    AudioControl.setDelayAmount(view.getScale().getSelection());
+                    audioControl.start();
+                    audioControl.setVolume(settings.getVolume());
+                    audioControl.setDelayAmount(view.getScale().getSelection());
                     if (isMuted) {
-                        AudioControl.toggleMute();
+                        audioControl.toggleMute();
                     }
                     isRecording = true;
                 }
@@ -124,7 +130,7 @@ public class ApplicationPresenter implements IPresenter {
             public void handleEvent(Event event) {
                 isMuted = !isMuted;
                 if (isRecording) {
-                    AudioControl.toggleMute();
+                    audioControl.toggleMute();
                 }
             }
         };
@@ -133,7 +139,7 @@ public class ApplicationPresenter implements IPresenter {
             public void handleEvent(Event event) {
                 view.setDelayAmountText(view.getScale().getSelection() / 10.0);
                 if (isRecording) {
-                    AudioControl.setDelayAmount(view.getScale().getSelection());
+                    audioControl.setDelayAmount(view.getScale().getSelection());
                 }
             }
         };
@@ -142,7 +148,7 @@ public class ApplicationPresenter implements IPresenter {
             public void handleEvent(Event event) {
                 int volume = view.getVolumeScale().getSelection();
                 if (isRecording) {
-                    AudioControl.setVolume(volume);
+                    audioControl.setVolume(volume);
                     settings.setVolume(volume);
                 }
             }
