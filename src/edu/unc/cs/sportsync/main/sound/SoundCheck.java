@@ -23,6 +23,10 @@ public class SoundCheck extends Thread {
     private final AudioFormat SOUND_FORMAT;
     private int delayAmount;
 
+    private boolean fullyCached;
+    private int bufferCacheCount;
+    private int cachingAmount;
+
     private static final Settings settings = new Settings();
 
     /*
@@ -72,15 +76,26 @@ public class SoundCheck extends Thread {
         outputLine.open(SOUND_FORMAT, BUFFER_SIZE);
     }
 
+    public int getBufferPercentage() {
+        if (fullyCached) {
+            return 100;
+        }
+
+        double percent = ((double) bufferCacheCount / cachingAmount) * 100;
+        return (int) percent;
+
+    }
+
     @Override
     public void run() {
         byte[] myBuffer = new byte[BUFFER_SIZE];
         int delayParam = 170000;
-        int cachingAmount = (int) (Math.ceil((float) delayParam / BUFFER_SIZE) * settings.getDelayTime() + 1);
+        cachingAmount = (int) (Math.ceil((float) delayParam / BUFFER_SIZE) * settings.getDelayTime() + 1);
         byte[] outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
-        int count = 0, offset;
+        bufferCacheCount = 0;
+        int offset;
         int delayVar;
-        boolean fullyCached = false;
+        fullyCached = false;
         while (isRecording) {
             /*
              * read data from input line
@@ -93,17 +108,17 @@ public class SoundCheck extends Thread {
              */
 
             // outputBufferQueue[count] = myBuffer.clone();
-            System.arraycopy(myBuffer, 0, outputBufferQueue, count * BUFFER_SIZE, BUFFER_SIZE);
+            System.arraycopy(myBuffer, 0, outputBufferQueue, bufferCacheCount * BUFFER_SIZE, BUFFER_SIZE);
 
-            if (count == cachingAmount - 1) {
+            if (bufferCacheCount == cachingAmount - 1) {
                 fullyCached = true;
             }
-            count = (count + 1) % cachingAmount;
+            bufferCacheCount = (bufferCacheCount + 1) % cachingAmount;
 
             delayVar = (delayAmount * delayParam) / 10;
 
-            if (fullyCached || delayVar < (count - 1) * BUFFER_SIZE) {
-                offset = ((count + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
+            if (fullyCached || delayVar < (bufferCacheCount - 1) * BUFFER_SIZE) {
+                offset = ((bufferCacheCount + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
                 // System.out.printf("count = %d offset = %d cachingAmount = %d delayVar = %d bufferSize = %d outputBufferSize = %d\n",
                 // count, offset, cachingAmount, delayVar, BUFFER_SIZE,
                 // outputBufferQueue.length);

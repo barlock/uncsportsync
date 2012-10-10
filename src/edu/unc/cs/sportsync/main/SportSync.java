@@ -2,7 +2,6 @@ package edu.unc.cs.sportsync.main;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -27,11 +26,11 @@ public class SportSync {
         FillLayout layout = new FillLayout();
 
         application.setLayout(layout);
-        application.setSize(450, 250);
-        application.setLocation(400, 200);
+        application.setSize(450, 280);
+        application.setLocation(400, 300);
         application.setText("UNC SportSync");
 
-        Composite appComposite = new Application(application, SWT.None);
+        Application appComposite = new Application(application, SWT.None);
 
         application.open();
 

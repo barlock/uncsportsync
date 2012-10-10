@@ -1,38 +1,41 @@
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets">
 	<Composite.layout>
-		<GridLayout numColumns="3"/>
+		<p1:TableWrapLayout numColumns="2"/>
 	</Composite.layout>
 	<Label text="Input device:" x:Name="inputDeviceLabel">
 		<Label.layoutData>
-			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="RIGHT"/>
-		</Label.layoutData>
-	</Label>
-	<Label>
-		<Label.layoutData>
-			<GridData horizontalAlignment="RIGHT"/>
+			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
 		</Label.layoutData>
 	</Label>
 	<Combo x:Name="inputDeviceCombo">
 		<Combo.layoutData>
-			<GridData widthHint="175"/>
+			<p1:TableWrapData grabHorizontal="true" align="(org.eclipse.ui.forms.widgets.TableWrapData).FILL" valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
 		</Combo.layoutData>
 	</Combo>
+	<Label/>
+	<ProgressBar>
+		<ProgressBar.layoutData>
+			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE" heightHint="8"/>
+		</ProgressBar.layoutData>
+	</ProgressBar>
 	<Label text="Output device:" x:Name="outputDeviceLabel">
 		<Label.layoutData>
-			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="RIGHT"/>
+			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
 		</Label.layoutData>
 	</Label>
-	<Label/>
 	<Combo x:Name="outputDeviceCombo">
 		<Combo.layoutData>
-			<GridData widthHint="175"/>
+			<p1:TableWrapData grabHorizontal="true" align="(org.eclipse.ui.forms.widgets.TableWrapData).FILL" valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
 		</Combo.layoutData>
 	</Combo>
 	<Label text="Max delay (seconds):" x:Name="maxDelayLabel">
 		<Label.layoutData>
-			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="RIGHT"/>
+			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
 		</Label.layoutData>
 	</Label>
-	<Label/>
-	<Spinner x:Style="BORDER" x:Name="maxDelaySpinner"/>
+	<Spinner x:Style="BORDER" x:Name="maxDelaySpinner">
+		<Spinner.layoutData>
+			<p1:TableWrapData grabHorizontal="true" valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
+		</Spinner.layoutData>
+	</Spinner>
 </Composite>
