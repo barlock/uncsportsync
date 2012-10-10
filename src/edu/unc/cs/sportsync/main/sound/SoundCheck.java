@@ -76,8 +76,7 @@ public class SoundCheck extends Thread {
     public void run() {
         byte[] myBuffer = new byte[BUFFER_SIZE];
         int delayParam = 170000;
-        int cachingAmount = (int) (Math.ceil(delayParam / BUFFER_SIZE) * settings.getDelayTime() + 1);
-        // byte[][] outputBufferQueue = new byte[cachingAmount][BUFFER_SIZE];
+        int cachingAmount = (int) (Math.ceil((float) delayParam / BUFFER_SIZE) * settings.getDelayTime() + 1);
         byte[] outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
         int count = 0, offset;
         int delayVar;
@@ -104,10 +103,16 @@ public class SoundCheck extends Thread {
             delayVar = (delayAmount * delayParam) / 10;
 
             if (fullyCached || delayVar < (count - 1) * BUFFER_SIZE) {
-                // outputLine.write(outputBufferQueue[(count + cachingAmount - 1
-                // - delayVar) % cachingAmount], 0, BUFFER_SIZE);
                 offset = ((count + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
-                outputLine.write(outputBufferQueue, offset, BUFFER_SIZE);
+                // System.out.printf("count = %d offset = %d cachingAmount = %d delayVar = %d bufferSize = %d outputBufferSize = %d\n",
+                // count, offset, cachingAmount, delayVar, BUFFER_SIZE,
+                // outputBufferQueue.length);
+                if ((BUFFER_SIZE * cachingAmount - offset) < BUFFER_SIZE) {
+                    outputLine.write(outputBufferQueue, offset, (BUFFER_SIZE * cachingAmount - offset));
+                    outputLine.write(outputBufferQueue, 0, BUFFER_SIZE - (BUFFER_SIZE * cachingAmount - offset));
+                } else {
+                    outputLine.write(outputBufferQueue, offset, BUFFER_SIZE);
+                }
 
             }
         }
