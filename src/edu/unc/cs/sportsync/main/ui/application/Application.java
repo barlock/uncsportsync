@@ -121,7 +121,9 @@ public class Application extends Composite {
                         return;
                     }
 
-                    getDisplay().asyncExec(new ProgressBarUpdater(bufferProgressBar, audioControl.getBufferPercentage()));
+                    int percent = audioControl.getBufferPercentage();
+
+                    getDisplay().asyncExec(new ProgressBarUpdater(bufferProgressBar, percent, isRecording));
                 }
             }
         }.start();
@@ -161,6 +163,7 @@ public class Application extends Composite {
             settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener);
 
             if (isRecording) {
+                startButton.setSelection(false);
                 audioControl.stopRecording();
                 isRecording = false;
                 startButton.setText("Start");
@@ -182,6 +185,7 @@ public class Application extends Composite {
 
             startButton.setText("Stop");
         } else {
+            isRecording = false;
             audioControl.stopRecording();
             startButton.setText("Start");
         }

@@ -2,7 +2,7 @@
 	<Composite.layout>
 		<GridLayout numColumns="3" marginLeft="10" marginRight="10" marginTop="5" marginBottom="5"/>
 	</Composite.layout>
-	<Button x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onStartButtonSelection" toolTipText="" text="Start/Stop">
+	<Button x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onStartButtonSelection" toolTipText="" text="Start">
 		<Button.layoutData>
 			<GridData verticalAlignment="TOP" horizontalSpan="2"/>
 		</Button.layoutData>
@@ -33,12 +33,12 @@
 			<GridData horizontalAlignment="FILL" horizontalSpan="3"/>
 		</Scale.layoutData>
 	</Scale>
-	<ProgressBar x:Name="bufferProgressBar" x:Style="SMOOTH">
+	<ProgressBar x:Name="bufferProgressBar" x:Style="SMOOTH" visible="false">
 		<ProgressBar.layoutData>
-			<GridData horizontalAlignment="FILL" widthHint="395" heightHint="3" horizontalSpan="3" grabExcessVerticalSpace="true"/>
+			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" grabExcessVerticalSpace="true" horizontalIndent="10"/>
 		</ProgressBar.layoutData>
 	</ProgressBar>
-	<Button image="volume.png" toolTipText="mute" x:Name="muteButton" x:Style="TOGGLE" SelectionEvent="onMuteButtonSelection">
+	<Button image="volume.png" toolTipText="mute" x:Name="muteButton" SelectionEvent="onMuteButtonSelection" x:Style="TOGGLE">
 		<Button.layoutData>
 			<GridData heightHint="42" horizontalAlignment="RIGHT"/>
 		</Button.layoutData>

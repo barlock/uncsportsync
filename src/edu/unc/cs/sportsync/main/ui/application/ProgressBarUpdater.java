@@ -6,15 +6,22 @@ public class ProgressBarUpdater implements Runnable {
 
     private final ProgressBar bufferProgressBar;
     private final int percent;
+    private final boolean isRecording;
 
-    public ProgressBarUpdater(ProgressBar bar, int p) {
+    public ProgressBarUpdater(ProgressBar bar, int p, boolean recording) {
         bufferProgressBar = bar;
         percent = p;
+        isRecording = recording;
     }
 
     @Override
     public void run() {
-        bufferProgressBar.setSelection(percent);
+        if (!isRecording || percent == 100) {
+            bufferProgressBar.setVisible(false);
+        } else {
+            bufferProgressBar.setVisible(true);
+            bufferProgressBar.setSelection(percent);
+        }
     }
 
 }
