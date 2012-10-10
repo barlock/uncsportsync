@@ -50,6 +50,9 @@ public class Application extends Composite {
     @UI
     ProgressBar audioBar;
 
+    @UI
+    ProgressBar bufferProgressBar;
+
     private boolean isRecording = false;
     private boolean isMuted = false;
 
@@ -92,15 +95,36 @@ public class Application extends Composite {
         }
 
         try {
-            muteOnImg = new Image(getDisplay(), Application.class.getResourceAsStream("mute3.gif"));
-            muteOffImg = new Image(getDisplay(), Application.class.getResourceAsStream("mute4.gif"));
+            muteOnImg = new Image(getDisplay(), Application.class.getResourceAsStream("volume.png"));
+            muteOffImg = new Image(getDisplay(), Application.class.getResourceAsStream("mute.png"));
             muteButton.setImage(muteOnImg);
         } catch (Exception e) {
             muteButton.setText("Mute");
         }
 
+        bufferProgressBarRun();
+
         updateDelayTime();
         volumeScale.setSelection(settings.getVolume());
+    }
+
+    private void bufferProgressBarRun() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Throwable th) {
+                    }
+                    if (isDisposed()) {
+                        return;
+                    }
+
+                    getDisplay().asyncExec(new ProgressBarUpdater(bufferProgressBar, audioControl.getBufferPercentage()));
+                }
+            }
+        }.start();
     }
 
     public void onDelayScaleDragDetect(Event event) {

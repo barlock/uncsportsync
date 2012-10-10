@@ -98,6 +98,14 @@ public class AudioControl {
 
     }
 
+    public int getBufferPercentage() {
+        if (mySoundCheck != null) {
+            return mySoundCheck.getBufferPercentage();
+        } else {
+            return 0;
+        }
+    }
+
     public void setDelayAmount(int delayAmount) {
         mySoundCheck.setDelayAmount(delayAmount);
     }
