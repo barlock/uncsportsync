@@ -19,12 +19,11 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
+import edu.unc.cs.sportsync.main.sound.AudioControl;
 
 public class SettingsDialog extends Composite {
 
     private final StackLayout settingsBoxLayout;
-    private Settings settings;
-
     @UI
     List selectList;
 
@@ -37,7 +36,7 @@ public class SettingsDialog extends Composite {
     @UI
     Button saveButton;
 
-    public SettingsDialog(Composite parent, int style, Settings settings, Listener applyButtonListener) {
+    public SettingsDialog(Composite parent, int style, Settings settings, Listener applyButtonListener, AudioControl audioControl) {
         super(parent, style);
         setLayout(new FillLayout());
         // load XWT
@@ -56,6 +55,7 @@ public class SettingsDialog extends Composite {
         saveButton.addListener(SWT.Selection, applyButtonListener);
 
         audioSettingsTab.setSettings(settings);
+        audioSettingsTab.setAudioControl(audioControl);
 
         settingsBoxLayout = (StackLayout) settingsBox.getLayout();
 

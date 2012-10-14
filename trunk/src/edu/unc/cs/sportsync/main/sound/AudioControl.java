@@ -106,6 +106,14 @@ public class AudioControl {
         }
     }
 
+    public double getInputLevel() {
+        return mySoundCheck.getInputLevel();
+    }
+
+    public double getOutputLevel() {
+        return mySoundCheck.getOutputLevel();
+    }
+
     public void setDelayAmount(int delayAmount) {
         mySoundCheck.setDelayAmount(delayAmount);
     }

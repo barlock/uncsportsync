@@ -86,6 +86,14 @@ public class SoundCheck extends Thread {
 
     }
 
+    public double getInputLevel() {
+        return inputLine.getLevel();
+    }
+
+    public double getOutputLevel() {
+        return outputLine.getLevel();
+    }
+
     @Override
     public void run() {
         byte[] myBuffer = new byte[BUFFER_SIZE];
