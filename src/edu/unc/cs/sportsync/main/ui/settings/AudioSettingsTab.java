@@ -16,32 +16,40 @@ import org.eclipse.e4.xwt.annotation.UI;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Spinner;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
 
 public class AudioSettingsTab extends Composite {
-    
+
     private ArrayList<Mixer.Info> inputMixerInfo;
     private ArrayList<Mixer.Info> outputMixerInfo;
     private Settings settings;
-    
+    private AudioControl audioControl;
+
     private final int MAX_DELAY = 120;
-    
+
     @UI
     Combo inputDeviceCombo;
-    
+
     @UI
     Combo outputDeviceCombo;
-    
+
     @UI
     Spinner maxDelaySpinner;
+
+    @UI
+    ProgressBar inputLevelBar;
+
+    @UI
+    ProgressBar outputLevelBar;
 
     public AudioSettingsTab(Composite parent, int style) {
         super(parent, style);
         setLayout(new FillLayout());
-        
+
         // load XWT
         String name = AudioSettingsTab.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
         try {
@@ -54,14 +62,10 @@ public class AudioSettingsTab extends Composite {
         } catch (Throwable e) {
             throw new Error("Unable to load " + name, e);
         }
+
+        updateDeviceLevels();
     }
-    
-    public void updateSettings() {
-        settings.setDelayTime(maxDelaySpinner.getSelection());
-        settings.setInputMixer(inputMixerInfo.get(inputDeviceCombo.getSelectionIndex()));
-        settings.setOutputMixer(outputMixerInfo.get(outputDeviceCombo.getSelectionIndex()));
-    }
-    
+
     private String[] getInputDeviceNames() {
         inputMixerInfo = new ArrayList<Info>(AudioControl.getInputDevices());
         String[] names = new String[inputMixerInfo.size()];
@@ -84,17 +88,56 @@ public class AudioSettingsTab extends Composite {
         return names;
     }
 
+    public void setAudioControl(AudioControl control) {
+        audioControl = control;
+    }
+
     public void setSettings(Settings settings) {
         this.settings = settings;
-        
+
         inputDeviceCombo.setItems(getInputDeviceNames());
         inputDeviceCombo.select(inputMixerInfo.indexOf(settings.getInputMixer()));
-        
+
         outputDeviceCombo.setItems(getOutputDeviceNames());
         outputDeviceCombo.select(outputMixerInfo.indexOf(settings.getOutputMixer()));
-        
+
         maxDelaySpinner.setMaximum(MAX_DELAY);
         maxDelaySpinner.setSelection(settings.getDelayTime());
+    }
+
+    public void updateDeviceLevels() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Throwable th) {
+                    }
+                    if (isDisposed()) {
+                        return;
+                    }
+
+                    getDisplay().asyncExec(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            // inputLevelBar.setSelection((int)
+                            // audioControl.getInputLevel() * 100);
+                            // outputLevelBar.setSelection((int)
+                            // audioControl.getOutputLevel() * 100);
+                        }
+
+                    });
+                }
+            }
+        }.start();
+    }
+
+    public void updateSettings() {
+        settings.setDelayTime(maxDelaySpinner.getSelection());
+        settings.setInputMixer(inputMixerInfo.get(inputDeviceCombo.getSelectionIndex()));
+        settings.setOutputMixer(outputMixerInfo.get(outputDeviceCombo.getSelectionIndex()));
     }
 
 }

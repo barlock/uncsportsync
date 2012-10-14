@@ -4,49 +4,57 @@
 	</Composite.layout>
 	<Button x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onStartButtonSelection" toolTipText="" text="Start">
 		<Button.layoutData>
-			<GridData verticalAlignment="TOP" horizontalSpan="2"/>
+			<GridData verticalAlignment="TOP" grabExcessHorizontalSpace="true"/>
 		</Button.layoutData>
 	</Button>
+	<Label text="Delay: 0.0 seconds" x:Name="delayValueLabel">
+		<Label.layoutData>
+			<GridData horizontalAlignment="CENTER" grabExcessVerticalSpace="true" verticalAlignment="BOTTOM"/>
+		</Label.layoutData>
+	</Label>
 	<Button toolTipText="settings" image="settings.png" x:Name="settingsButton" SelectionEvent="onSettingsButtonSelection">
 		<Button.layoutData>
 			<GridData horizontalAlignment="RIGHT" verticalAlignment="TOP" grabExcessHorizontalSpace="true"/>
 		</Button.layoutData>
 	</Button>
-	<Label text="Delay: 0.0 seconds" x:Name="delayValueLabel">
-		<Label.layoutData>
-			<GridData horizontalAlignment="CENTER" horizontalSpan="3" grabExcessVerticalSpace="true"/>
-		</Label.layoutData>
-	</Label>
 	<Label text="Live">
 		<Label.layoutData>
-			<GridData grabExcessVerticalSpace="true"/>
+			<GridData grabExcessVerticalSpace="true" grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
 	</Label>
 	<Label/>
 	<Label text="60 sec" x:Name="maxDelayLabel">
 		<Label.layoutData>
-			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true"/>
+			<GridData horizontalAlignment="RIGHT" grabExcessVerticalSpace="true" grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
 	</Label>
 	<Scale x:Name="delayScale" SelectionEvent="onDelayScaleDragDetect" pageIncrement="20">
 		<Scale.layoutData>
-			<GridData horizontalAlignment="FILL" horizontalSpan="3"/>
+			<GridData horizontalAlignment="FILL" horizontalSpan="3" grabExcessHorizontalSpace="true"/>
 		</Scale.layoutData>
 	</Scale>
 	<ProgressBar x:Name="bufferProgressBar" x:Style="SMOOTH" visible="false">
 		<ProgressBar.layoutData>
-			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" grabExcessVerticalSpace="true" horizontalIndent="10"/>
+			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" grabExcessVerticalSpace="true" horizontalIndent="10" grabExcessHorizontalSpace="true"/>
 		</ProgressBar.layoutData>
 	</ProgressBar>
-	<Button image="volume.png" toolTipText="mute" x:Name="muteButton" SelectionEvent="onMuteButtonSelection" x:Style="TOGGLE">
-		<Button.layoutData>
-			<GridData heightHint="42" horizontalAlignment="RIGHT"/>
-		</Button.layoutData>
-	</Button>
-	<Scale x:Name="volumeScale" SelectionEvent="onVolumeScaleDragDetect" pageIncrement="10">
-		<Scale.layoutData>
-			<GridData widthHint="85" grabExcessHorizontalSpace="true"/>
-		</Scale.layoutData>
-	</Scale>
-	<Label/>>
+	<Composite visible="true">
+		<Composite.layoutData>
+			<GridData widthHint="168" horizontalAlignment="FILL" horizontalSpan="2" grabExcessHorizontalSpace="true"/>
+		</Composite.layoutData>
+		<Composite.layout>
+			<GridLayout numColumns="2"/>
+		</Composite.layout>
+		<Button image="volume.png" toolTipText="mute" x:Name="muteButton" SelectionEvent="onMuteButtonSelection" x:Style="TOGGLE">
+			<Button.layoutData>
+				<GridData horizontalAlignment="RIGHT"/>
+			</Button.layoutData>
+		</Button>
+		<Scale x:Name="volumeScale" SelectionEvent="onVolumeScaleDragDetect" pageIncrement="10">
+			<Scale.layoutData>
+				<GridData widthHint="100" grabExcessHorizontalSpace="true"/>
+			</Scale.layoutData>
+		</Scale>
+	</Composite>
+	<Label/>
 </Composite>

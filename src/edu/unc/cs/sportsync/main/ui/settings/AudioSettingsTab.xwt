@@ -1,41 +1,53 @@
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets">
 	<Composite.layout>
-		<p1:TableWrapLayout numColumns="2"/>
+		<GridLayout numColumns="2" horizontalSpacing="25" marginWidth="10" marginHeight="10"/>
 	</Composite.layout>
 	<Label text="Input device:" x:Name="inputDeviceLabel">
 		<Label.layoutData>
-			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
+			<GridData horizontalAlignment="RIGHT"/>
 		</Label.layoutData>
 	</Label>
 	<Combo x:Name="inputDeviceCombo">
 		<Combo.layoutData>
-			<p1:TableWrapData grabHorizontal="true" align="(org.eclipse.ui.forms.widgets.TableWrapData).FILL" valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
+			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
 		</Combo.layoutData>
 	</Combo>
 	<Label/>
-	<ProgressBar>
+	<ProgressBar x:Name="inputLevelBar">
 		<ProgressBar.layoutData>
-			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE" heightHint="8"/>
+			<GridData grabExcessHorizontalSpace="true" verticalAlignment="TOP" heightHint="7"/>
 		</ProgressBar.layoutData>
 	</ProgressBar>
 	<Label text="Output device:" x:Name="outputDeviceLabel">
 		<Label.layoutData>
-			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
+			<GridData horizontalAlignment="RIGHT"/>
 		</Label.layoutData>
 	</Label>
 	<Combo x:Name="outputDeviceCombo">
 		<Combo.layoutData>
-			<p1:TableWrapData grabHorizontal="true" align="(org.eclipse.ui.forms.widgets.TableWrapData).FILL" valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
+			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
 		</Combo.layoutData>
 	</Combo>
+	<Label/>
+	<ProgressBar x:Name="outputLevelBar">
+		<ProgressBar.layoutData>
+			<GridData grabExcessHorizontalSpace="true" verticalAlignment="TOP" heightHint="7"/>
+		</ProgressBar.layoutData>
+	</ProgressBar>
 	<Label text="Max delay (seconds):" x:Name="maxDelayLabel">
 		<Label.layoutData>
-			<p1:TableWrapData valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
+			<GridData horizontalAlignment="RIGHT"/>
 		</Label.layoutData>
 	</Label>
 	<Spinner x:Style="BORDER" x:Name="maxDelaySpinner">
 		<Spinner.layoutData>
-			<p1:TableWrapData grabHorizontal="true" valign="(org.eclipse.ui.forms.widgets.TableWrapData).MIDDLE"/>
+			<GridData grabExcessHorizontalSpace="true"/>
 		</Spinner.layoutData>
 	</Spinner>
+	<Label/>
+	<Button text="Apply" x:Name="applyButton&#10;">
+		<Button.layoutData>
+			<GridData horizontalAlignment="RIGHT" verticalAlignment="BOTTOM" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true"/>
+		</Button.layoutData>
+	</Button>
 </Composite>

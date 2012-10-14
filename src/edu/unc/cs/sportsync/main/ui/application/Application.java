@@ -160,7 +160,7 @@ public class Application extends Composite {
             settingsDialog.setLayout(layout);
             settingsDialog.setSize(500, 500);
 
-            settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener);
+            settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener, audioControl);
 
             if (isRecording) {
                 startButton.setSelection(false);
