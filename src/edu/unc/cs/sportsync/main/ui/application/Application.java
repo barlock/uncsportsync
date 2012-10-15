@@ -67,6 +67,7 @@ public class Application extends Composite {
 		public void handleEvent(Event event) {
 			settingsComposite.updateSettings();
 			updateDelayTime();
+			setDelayAmountText(delayScale.getSelection() / 10.0);
 			settings.save();
 			settingsDialog.close();
 		}

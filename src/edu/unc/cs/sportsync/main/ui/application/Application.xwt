@@ -35,7 +35,7 @@
 	</Scale>
 	<ProgressBar x:Name="bufferProgressBar" x:Style="SMOOTH" visible="false">
 		<ProgressBar.layoutData>
-			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" horizontalIndent="10" grabExcessHorizontalSpace="true"/>
+			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" grabExcessHorizontalSpace="true" horizontalIndent="10"/>
 		</ProgressBar.layoutData>
 	</ProgressBar>
 	<Composite visible="true">
