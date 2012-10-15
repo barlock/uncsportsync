@@ -27,8 +27,8 @@ public class SportSync {
 
         application.setLayout(layout);
         application.setSize(400, 250);
-        application.setLocation(400, 300);
         application.setText("UNC SportSync");
+        application.setMinimumSize(400, 250);
 
         Application appComposite = new Application(application, SWT.None);
 
