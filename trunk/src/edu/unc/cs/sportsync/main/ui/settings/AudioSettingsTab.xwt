@@ -38,10 +38,4 @@
 			<GridData grabExcessHorizontalSpace="true"/>
 		</Spinner.layoutData>
 	</Spinner>
-	<Label/>
-	<Button text="Apply" x:Name="applyButton&#10;">
-		<Button.layoutData>
-			<GridData horizontalAlignment="RIGHT" verticalAlignment="BOTTOM" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true"/>
-		</Button.layoutData>
-	</Button>
 </Composite>
