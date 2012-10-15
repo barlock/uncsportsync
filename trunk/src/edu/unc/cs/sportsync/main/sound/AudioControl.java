@@ -17,131 +17,154 @@ import javax.sound.sampled.TargetDataLine;
 
 public class AudioControl {
 
-    @SuppressWarnings("unused")
-    private static String AnalyzeControl(Control thisControl) {
-        String type = thisControl.getType().toString();
+	private boolean isRecording;
+	private boolean isMuted;
 
-        if (thisControl instanceof BooleanControl) {
-            return "\tControl: " + type + " (boolean)";
-        }
+	private SoundCheck mySoundCheck;
 
-        if (thisControl instanceof CompoundControl) {
-            System.out.println("\tControl: " + type + " (compound - values below)");
-            String toReturn = "";
-            for (Control children : ((CompoundControl) thisControl).getMemberControls()) {
-                toReturn += "  " + AnalyzeControl(children) + "\n";
-            }
-            return toReturn.substring(0, toReturn.length() - 1);
-        }
+	public AudioControl() {
+		isRecording = false;
+		isMuted = false;
+	}
 
-        if (thisControl instanceof EnumControl) {
-            return "\tControl:" + type + " (enum: " + thisControl.toString() + ")";
-        }
+	@SuppressWarnings("unused")
+	private static String AnalyzeControl(Control thisControl) {
+		String type = thisControl.getType().toString();
 
-        if (thisControl instanceof FloatControl) {
-            return "\tControl: " + type + " (float: from " + ((FloatControl) thisControl).getMinimum() + " to " + ((FloatControl) thisControl).getMaximum() + ")";
-        }
-        return "\tControl: unknown type";
-    }
+		if (thisControl instanceof BooleanControl) {
+			return "\tControl: " + type + " (boolean)";
+		}
 
-    public static ArrayList<Mixer.Info> getInputDevices() {
-        ArrayList<Mixer.Info> targetMixers = new ArrayList<Mixer.Info>();
+		if (thisControl instanceof CompoundControl) {
+			System.out.println("\tControl: " + type + " (compound - values below)");
+			String toReturn = "";
+			for (Control children : ((CompoundControl) thisControl).getMemberControls()) {
+				toReturn += "  " + AnalyzeControl(children) + "\n";
+			}
+			return toReturn.substring(0, toReturn.length() - 1);
+		}
 
-        Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
+		if (thisControl instanceof EnumControl) {
+			return "\tControl:" + type + " (enum: " + thisControl.toString() + ")";
+		}
 
-        for (int i = 0; i < mixerInfos.length; i++) {
-            Mixer mixer = AudioSystem.getMixer(mixerInfos[i]);
-            try {
-                mixer.open();
-            } catch (LineUnavailableException e) {
-                e.printStackTrace();
-            }
-            Line.Info[] targetLines = mixer.getTargetLineInfo();
-            for (Line.Info info : targetLines) {
-                if (info.getLineClass() == TargetDataLine.class) {
-                    targetMixers.add(mixerInfos[i]);
-                }
-            }
-            mixer.close();
-        }
+		if (thisControl instanceof FloatControl) {
+			return "\tControl: " + type + " (float: from " + ((FloatControl) thisControl).getMinimum() + " to " + ((FloatControl) thisControl).getMaximum() + ")";
+		}
+		return "\tControl: unknown type";
+	}
 
-        return targetMixers;
-    }
+	public static ArrayList<Mixer.Info> getInputDevices() {
+		ArrayList<Mixer.Info> targetMixers = new ArrayList<Mixer.Info>();
 
-    public static ArrayList<Mixer.Info> getOutputDevices() {
-        ArrayList<Mixer.Info> sourceMixers = new ArrayList<Mixer.Info>();
+		Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
 
-        Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
+		for (int i = 0; i < mixerInfos.length; i++) {
+			Mixer mixer = AudioSystem.getMixer(mixerInfos[i]);
+			try {
+				mixer.open();
+			} catch (LineUnavailableException e) {
+				e.printStackTrace();
+			}
+			Line.Info[] targetLines = mixer.getTargetLineInfo();
+			for (Line.Info info : targetLines) {
+				if (info.getLineClass() == TargetDataLine.class) {
+					targetMixers.add(mixerInfos[i]);
+				}
+			}
+			mixer.close();
+		}
 
-        for (int i = 0; i < mixerInfos.length; i++) {
-            Mixer mixer = AudioSystem.getMixer(mixerInfos[i]);
-            try {
-                mixer.open();
-            } catch (LineUnavailableException e) {
-                e.printStackTrace();
-            }
-            Line.Info[] sourceLines = mixer.getSourceLineInfo();
-            for (Line.Info info : sourceLines) {
-                if (info.getLineClass() == SourceDataLine.class) {
-                    sourceMixers.add(mixerInfos[i]);
-                }
-            }
-            mixer.close();
-        }
+		return targetMixers;
+	}
 
-        return sourceMixers;
-    }
+	public static ArrayList<Mixer.Info> getOutputDevices() {
+		ArrayList<Mixer.Info> sourceMixers = new ArrayList<Mixer.Info>();
 
-    private SoundCheck mySoundCheck;
+		Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
 
-    public AudioControl() {
+		for (int i = 0; i < mixerInfos.length; i++) {
+			Mixer mixer = AudioSystem.getMixer(mixerInfos[i]);
+			try {
+				mixer.open();
+			} catch (LineUnavailableException e) {
+				e.printStackTrace();
+			}
+			Line.Info[] sourceLines = mixer.getSourceLineInfo();
+			for (Line.Info info : sourceLines) {
+				if (info.getLineClass() == SourceDataLine.class) {
+					sourceMixers.add(mixerInfos[i]);
+				}
+			}
+			mixer.close();
+		}
 
-    }
+		return sourceMixers;
+	}
 
-    public int getBufferPercentage() {
-        if (mySoundCheck != null) {
-            return mySoundCheck.getBufferPercentage();
-        } else {
-            return 0;
-        }
-    }
+	public int getBufferPercentage() {
+		if (mySoundCheck != null) {
+			return mySoundCheck.getBufferPercentage();
+		} else {
+			return 0;
+		}
+	}
 
-    public double getInputLevel() {
-        return mySoundCheck.getInputLevel();
-    }
+	public int getInputLevel() {
+		return mySoundCheck.getInputLevel();
+	}
 
-    public double getOutputLevel() {
-        return mySoundCheck.getOutputLevel();
-    }
+	public double getOutputLevel() {
+		return mySoundCheck.getOutputLevel();
+	}
 
-    public void setDelayAmount(int delayAmount) {
-        mySoundCheck.setDelayAmount(delayAmount);
-    }
+	public boolean isRecording() {
+		return isRecording;
+	}
 
-    public void setVolume(double percentLevel) {
-        mySoundCheck.setVolume(percentLevel);
-    }
+	public void setDelayAmount(int delayAmount) {
+		if (isRecording)
+			mySoundCheck.setDelayAmount(delayAmount);
+	}
 
-    public void start() {
-        float frameRate = (float) 44100.0;
-        int BUFFER_SIZE = 40960;
+	public void setVolume(double percentLevel) {
+		if (isRecording)
+			mySoundCheck.setVolume(percentLevel);
+	}
 
-        AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
-        mySoundCheck = null;
-        try {
-            mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE);
-        } catch (LineUnavailableException e) {
-            System.exit(1);
-        }
+	public void start() {
+		float frameRate = (float) 44100.0;
+		int BUFFER_SIZE = 40960;
 
-        mySoundCheck.start();
-    }
+		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
+		mySoundCheck = null;
+		try {
+			mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE);
+		} catch (LineUnavailableException e) {
+			System.exit(1);
+		}
 
-    public void stopRecording() {
-        mySoundCheck.stopRecording();
-    }
+		isRecording = true;
+		mySoundCheck.start();
+	}
 
-    public void toggleMute() {
-        mySoundCheck.toggleMute();
-    }
+	public void stopRecording() {
+		if (isRecording) {
+			mySoundCheck.stopRecording();
+			isRecording = false;
+		}
+	}
+
+	public void toggleMute() {
+		isMuted = !isMuted;
+
+		if (isRecording) {
+			mySoundCheck.toggleMute();
+		}
+
+	}
+
+	public boolean isMuted() {
+		return isMuted;
+	}
 }

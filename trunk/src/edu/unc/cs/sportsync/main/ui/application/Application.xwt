@@ -1,6 +1,6 @@
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.application.Application" DisposeEvent="onDispose">
 	<Composite.layout>
-		<GridLayout numColumns="3" marginLeft="10" marginRight="10" marginTop="5" marginBottom="5"/>
+		<GridLayout numColumns="3" marginLeft="10" marginRight="10" marginTop="5" marginBottom="5" makeColumnsEqualWidth="true"/>
 	</Composite.layout>
 	<Button x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onStartButtonSelection" toolTipText="" text="Start">
 		<Button.layoutData>
@@ -12,7 +12,7 @@
 			<GridData horizontalAlignment="CENTER" grabExcessVerticalSpace="true" verticalAlignment="BOTTOM"/>
 		</Label.layoutData>
 	</Label>
-	<Button toolTipText="settings" image="settings.png" x:Name="settingsButton" SelectionEvent="onSettingsButtonSelection">
+	<Button toolTipText="settings" image="settings.png" x:Name="settingsButton" SelectionEvent="onSettingsButtonSelection" x:Style="FLAT">
 		<Button.layoutData>
 			<GridData horizontalAlignment="RIGHT" verticalAlignment="TOP" grabExcessHorizontalSpace="true"/>
 		</Button.layoutData>
@@ -35,12 +35,12 @@
 	</Scale>
 	<ProgressBar x:Name="bufferProgressBar" x:Style="SMOOTH" visible="false">
 		<ProgressBar.layoutData>
-			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" grabExcessVerticalSpace="true" horizontalIndent="10" grabExcessHorizontalSpace="true"/>
+			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" horizontalIndent="10" grabExcessHorizontalSpace="true"/>
 		</ProgressBar.layoutData>
 	</ProgressBar>
 	<Composite visible="true">
 		<Composite.layoutData>
-			<GridData widthHint="168" horizontalAlignment="FILL" horizontalSpan="2" grabExcessHorizontalSpace="true"/>
+			<GridData widthHint="168" horizontalAlignment="FILL" horizontalSpan="2" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true"/>
 		</Composite.layoutData>
 		<Composite.layout>
 			<GridLayout numColumns="2"/>
