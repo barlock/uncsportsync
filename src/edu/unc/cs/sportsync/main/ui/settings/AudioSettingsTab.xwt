@@ -28,12 +28,6 @@
 			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
 		</Combo.layoutData>
 	</Combo>
-	<Label/>
-	<ProgressBar x:Name="outputLevelBar">
-		<ProgressBar.layoutData>
-			<GridData grabExcessHorizontalSpace="true" verticalAlignment="TOP" heightHint="7"/>
-		</ProgressBar.layoutData>
-	</ProgressBar>
 	<Label text="Max delay (seconds):" x:Name="maxDelayLabel">
 		<Label.layoutData>
 			<GridData horizontalAlignment="RIGHT"/>

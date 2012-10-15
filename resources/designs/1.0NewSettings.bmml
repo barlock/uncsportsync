@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="971" measuredH="393" mockupW="904" mockupH="368">
+<mockup version="1.0" skin="sketch" measuredW="972" measuredH="393" mockupW="905" mockupH="368">
   <controls>
     <control controlID="8" controlTypeID="com.balsamiq.mockups::TitleWindow" x="57" y="48" w="335" h="190" measuredW="450" measuredH="400" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
@@ -33,7 +33,7 @@
         <text>Delayed%3A%2015%20sec</text>
       </controlProperties>
     </control>
-    <control controlID="20" controlTypeID="com.balsamiq.mockups::TitleWindow" x="530" y="15" w="431" h="340" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::TitleWindow" x="530" y="15" w="432" h="368" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Settings</text>
       </controlProperties>
@@ -48,12 +48,12 @@
         <text>mute</text>
       </controlProperties>
     </control>
-    <control controlID="30" controlTypeID="com.balsamiq.mockups::Button" x="792" y="355" w="-1" h="-1" measuredW="54" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Button" x="886" y="327" w="-1" h="-1" measuredW="54" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Save</text>
       </controlProperties>
     </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::Button" x="714" y="355" w="-1" h="-1" measuredW="65" measuredH="28" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Button" x="806" y="327" w="-1" h="-1" measuredW="65" measuredH="28" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Cancel</text>
       </controlProperties>
@@ -105,13 +105,13 @@
     <control controlID="36" controlTypeID="com.balsamiq.mockups::Canvas" x="545" y="48" w="98" h="267" measuredW="100" measuredH="70" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties/>
     </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::Label" x="558" y="58" w="-1" h="-1" measuredW="38" measuredH="25" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Label" x="558" y="58" w="-1" h="-1" measuredW="69" measuredH="25" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties/>
     </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::Label" x="558" y="85" w="-1" h="-1" measuredW="40" measuredH="25" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::Label" x="558" y="85" w="-1" h="-1" measuredW="69" measuredH="25" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties/>
     </control>
-    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="558" y="118" w="-1" h="-1" measuredW="52" measuredH="25" zOrder="19" locked="false" isInGroup="-1">
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="558" y="118" w="-1" h="-1" measuredW="69" measuredH="25" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties/>
     </control>
     <control controlID="40" controlTypeID="com.balsamiq.mockups::Canvas" x="660" y="49" w="280" h="266" measuredW="100" measuredH="70" zOrder="13" locked="false" isInGroup="-1"/>
