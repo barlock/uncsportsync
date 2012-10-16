@@ -17,6 +17,10 @@ import javax.sound.sampled.TargetDataLine;
 
 public class AudioControl {
 
+    private static ArrayList<Mixer.Info> targetMixers = new ArrayList<Mixer.Info>();
+
+    private static ArrayList<Mixer.Info> sourceMixers = new ArrayList<Mixer.Info>();
+
     @SuppressWarnings("unused")
     private static String AnalyzeControl(Control thisControl) {
         String type = thisControl.getType().toString();
@@ -92,6 +96,16 @@ public class AudioControl {
         return sourceMixers;
     }
 
+    public static ArrayList<Mixer.Info> getSourceMixers() {
+        return sourceMixers;
+    }
+
+    public static ArrayList<Mixer.Info> getTargetMixers() {
+        return targetMixers;
+    }
+
+    private int maxDelayAmount = -1;
+
     private boolean isRecording;
 
     private boolean isMuted;
@@ -127,9 +141,29 @@ public class AudioControl {
         return isRecording;
     }
 
+    public void prepareMixerList() {
+        targetMixers = getInputDevices();
+        sourceMixers = getOutputDevices();
+        if (mySoundCheck != null) {
+            try {
+                mySoundCheck.openLines();
+            } catch (LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void setDelayAmount(int delayAmount) {
         if (isRecording) {
             mySoundCheck.setDelayAmount(delayAmount);
+        }
+    }
+
+    public void setMaxDelay(int theMaxDelayAmount) {
+        if (theMaxDelayAmount != mySoundCheck.getMaxDelay()) {
+            maxDelayAmount = theMaxDelayAmount;
+            stopRecording();
+            start();
         }
     }
 
@@ -145,7 +179,7 @@ public class AudioControl {
         AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
         mySoundCheck = null;
         try {
-            mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE);
+            mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE, maxDelayAmount);
         } catch (LineUnavailableException e) {
             System.exit(1);
         }
@@ -156,6 +190,7 @@ public class AudioControl {
 
     public void stopRecording() {
         if (isRecording) {
+
             mySoundCheck.stopRecording();
             isRecording = false;
         }
