@@ -79,8 +79,8 @@ public class Settings {
     private void setDefaultSettings() {
         delayTime = 60;
         volume = 50;
-        inputMixer = AudioControl.getInputDevices().iterator().next();
-        outputMixer = AudioControl.getOutputDevices().iterator().next();
+        inputMixer = AudioControl.getTargetMixers().iterator().next();
+        outputMixer = AudioControl.getSourceMixers().iterator().next();
     }
 
     public void setDelayTime(int delayTime) {

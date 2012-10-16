@@ -51,12 +51,9 @@ public class SettingsDialog extends Composite {
         } catch (Throwable e) {
             throw new Error("Unable to load " + name, e);
         }
-
         saveButton.addListener(SWT.Selection, applyButtonListener);
-
         audioSettingsTab.setSettings(settings);
         audioSettingsTab.setAudioControl(audioControl);
-
         settingsBoxLayout = (StackLayout) settingsBox.getLayout();
 
         settingsBoxLayout.topControl = audioSettingsTab;
