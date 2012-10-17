@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <delayTime>30</delayTime>
+    <volume>100</volume>
+    <inputMixer>
+        <name>Primary Sound Capture Driver</name>
+        <description>Direct Audio Device: DirectSound Capture</description>
+        <vendor>Unknown Vendor</vendor>
+        <version>Unknown Version</version>
+    </inputMixer>
+    <outputMixer>
+        <name>Primary Sound Driver</name>
+        <description>Direct Audio Device: DirectSound Playback</description>
+        <vendor>Unknown Vendor</vendor>
+        <version>Unknown Version</version>
+    </outputMixer>
+</settings>

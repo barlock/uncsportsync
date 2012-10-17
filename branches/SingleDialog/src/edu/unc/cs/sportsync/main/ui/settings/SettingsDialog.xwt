@@ -1,0 +1,22 @@
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.SettingsDialog" xmlns:p1="clr-namespace:java.lang">
+	<Composite.layout>
+		<GridLayout numColumns="3"/>
+	</Composite.layout>
+	<ToolBar x:Style="FLAT | RIGHT | VERTICAL" background="COLOR_LIST_BACKGROUND">
+		<ToolBar.layoutData>
+			<GridData verticalSpan="2" horizontalAlignment="CENTER" verticalAlignment="FILL"/>
+		</ToolBar.layoutData>
+		<ToolItem image="back.png" toolTipText="back" x:Name="backButton" width="100" text="Back"/>
+		<ToolItem x:Style="SEPARATOR"/>
+		<ToolItem text="Audio" x:Name="audioButton" image="clef.png"/>
+	</ToolBar>
+	<Composite x:Name="settingsBox" x:Style="BORDER">
+		<Composite.layout>
+			<StackLayout/>
+		</Composite.layout>
+		<Composite.layoutData>
+			<GridData horizontalSpan="2" horizontalAlignment="FILL" verticalAlignment="FILL" verticalSpan="2" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true"/>
+		</Composite.layoutData>
+		<Composite x:Name="audioSettingsTab" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab"/>
+	</Composite>
+</Composite>
