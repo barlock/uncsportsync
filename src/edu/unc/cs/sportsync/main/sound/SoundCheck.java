@@ -144,12 +144,11 @@ public class SoundCheck extends Thread {
         myBuffer = new byte[BUFFER_SIZE];
         int delayParam = 170000;
         cachingAmount = (int) (Math.ceil((float) delayParam / BUFFER_SIZE) * maxDelayAmount + 1);
-        System.out.printf("delay time: %d", maxDelayAmount);
         byte[] outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
         bufferCacheCount = 0;
         int offset;
         int delayVar;
-        int k = 1;
+        int k;
         fullyCached = false;
         while (isRecording) {
             /*
