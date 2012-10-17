@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ToolItem;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
@@ -34,9 +35,9 @@ public class SettingsDialog extends Composite {
     AudioSettingsTab audioSettingsTab;
 
     @UI
-    Button saveButton;
+    ToolItem backButton;
 
-    public SettingsDialog(Composite parent, int style, Settings settings, Listener applyButtonListener, AudioControl audioControl) {
+    public SettingsDialog(Composite parent, int style, Settings settings, Listener backButtonListener, AudioControl audioControl) {
         super(parent, style);
         setLayout(new FillLayout());
         // load XWT
@@ -51,23 +52,18 @@ public class SettingsDialog extends Composite {
         } catch (Throwable e) {
             throw new Error("Unable to load " + name, e);
         }
-        saveButton.addListener(SWT.Selection, applyButtonListener);
+
+        backButton.addListener(SWT.Selection, backButtonListener);
+
         audioSettingsTab.setSettings(settings);
         audioSettingsTab.setAudioControl(audioControl);
+
         settingsBoxLayout = (StackLayout) settingsBox.getLayout();
 
         settingsBoxLayout.topControl = audioSettingsTab;
         settingsBox.layout();
 
-        selectList.select(0);
-    }
-
-    public void onCancelButtonSelection(Event event) {
-        getShell().close();
-    }
-
-    public void onSelectListSelection(Event event) {
-        // Do Nothing for now...Eventually switch tabs
+        //selectList.select(0);
     }
 
     public void updateSettings() {

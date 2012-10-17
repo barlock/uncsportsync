@@ -1,0 +1,5 @@
+<Shell xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.SportSyncUI" text="SportSync UI" xmlns:p1="clr-namespace:edu.unc.cs.sportsync.main.ui.application" xmlns:p2="clr-namespace:edu.unc.cs.sportsync.main.ui.settings">
+	<Shell.layout>
+		<StackLayout/>
+	</Shell.layout>
+</Shell>

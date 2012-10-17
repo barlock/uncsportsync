@@ -1,60 +1,57 @@
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.application.Application" DisposeEvent="onDispose">
 	<Composite.layout>
-		<GridLayout numColumns="3" marginLeft="10" marginRight="10" marginTop="5" marginBottom="5" makeColumnsEqualWidth="true"/>
+		<GridLayout numColumns="3" marginBottom="5" makeColumnsEqualWidth="true" marginWidth="0" marginHeight="0" marginRight="10"/>
 	</Composite.layout>
-	<Button x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onStartButtonSelection" toolTipText="" text="Start">
-		<Button.layoutData>
-			<GridData verticalAlignment="TOP" grabExcessHorizontalSpace="true"/>
-		</Button.layoutData>
-	</Button>
+	<ToolBar>
+		<ToolBar.layoutData>
+			<GridData verticalAlignment="TOP" horizontalSpan="3" horizontalAlignment="FILL"/>
+		</ToolBar.layoutData>
+		<ToolItem toolTipText="settings" image="cogs.png" x:Name="settingsButton"/>
+	</ToolBar>
+	<Label/>
 	<Label text="Delay: 0.0 seconds" x:Name="delayValueLabel">
 		<Label.layoutData>
-			<GridData horizontalAlignment="CENTER" grabExcessVerticalSpace="true" verticalAlignment="BOTTOM"/>
+			<GridData horizontalAlignment="CENTER" verticalAlignment="BOTTOM" grabExcessVerticalSpace="true" horizontalIndent="10"/>
 		</Label.layoutData>
 	</Label>
-	<Button toolTipText="settings" image="settings.png" x:Name="settingsButton" SelectionEvent="onSettingsButtonSelection" x:Style="FLAT">
-		<Button.layoutData>
-			<GridData horizontalAlignment="RIGHT" verticalAlignment="TOP" grabExcessHorizontalSpace="true"/>
-		</Button.layoutData>
-	</Button>
+	<Label/>
 	<Label text="Live">
 		<Label.layoutData>
-			<GridData grabExcessVerticalSpace="true" grabExcessHorizontalSpace="true"/>
+			<GridData grabExcessHorizontalSpace="true" verticalAlignment="BOTTOM" horizontalIndent="10"/>
 		</Label.layoutData>
 	</Label>
 	<Label/>
 	<Label text="60 sec" x:Name="maxDelayLabel">
 		<Label.layoutData>
-			<GridData horizontalAlignment="RIGHT" grabExcessVerticalSpace="true" grabExcessHorizontalSpace="true"/>
+			<GridData horizontalAlignment="RIGHT" grabExcessHorizontalSpace="true" verticalAlignment="BOTTOM"/>
 		</Label.layoutData>
 	</Label>
 	<Scale x:Name="delayScale" SelectionEvent="onDelayScaleDragDetect" pageIncrement="20">
 		<Scale.layoutData>
-			<GridData horizontalAlignment="FILL" horizontalSpan="3" grabExcessHorizontalSpace="true"/>
+			<GridData horizontalAlignment="FILL" horizontalSpan="3" grabExcessHorizontalSpace="true" horizontalIndent="10"/>
 		</Scale.layoutData>
 	</Scale>
 	<ProgressBar x:Name="bufferProgressBar" x:Style="SMOOTH" visible="false">
 		<ProgressBar.layoutData>
-			<GridData horizontalAlignment="FILL" heightHint="3" horizontalSpan="3" grabExcessHorizontalSpace="true" horizontalIndent="10"/>
+			<GridData horizontalAlignment="FILL" heightHint="3" grabExcessHorizontalSpace="true" horizontalIndent="10" horizontalSpan="3"/>
 		</ProgressBar.layoutData>
 	</ProgressBar>
 	<Composite visible="true">
 		<Composite.layoutData>
-			<GridData widthHint="168" horizontalAlignment="FILL" horizontalSpan="2" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true"/>
+			<GridData widthHint="168" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true" horizontalIndent="10" verticalAlignment="BOTTOM" horizontalAlignment="FILL"/>
 		</Composite.layoutData>
 		<Composite.layout>
-			<GridLayout numColumns="2"/>
+			<GridLayout numColumns="3"/>
 		</Composite.layout>
-		<Button image="volume.png" toolTipText="mute" x:Name="muteButton" SelectionEvent="onMuteButtonSelection" x:Style="TOGGLE">
-			<Button.layoutData>
-				<GridData horizontalAlignment="RIGHT"/>
-			</Button.layoutData>
-		</Button>
+		<ToolBar x:Style="FLAT | RIGHT">
+			<ToolItem x:Name="muteButton" toolTipText="mute" image="volume.png" SelectionEvent="onMuteButtonSelection" x:Style="CHECK"/>
+		</ToolBar>
 		<Scale x:Name="volumeScale" SelectionEvent="onVolumeScaleDragDetect" pageIncrement="10">
 			<Scale.layoutData>
 				<GridData widthHint="100" grabExcessHorizontalSpace="true"/>
 			</Scale.layoutData>
 		</Scale>
 	</Composite>
+	<Label/>
 	<Label/>
 </Composite>

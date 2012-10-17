@@ -2,33 +2,21 @@
 	<Composite.layout>
 		<GridLayout numColumns="3"/>
 	</Composite.layout>
-	<List x:Style="BORDER" x:Name="selectList" SelectionEvent="onSelectListSelection" touchEnabled="true">
-		<List.layoutData>
-			<GridData grabExcessVerticalSpace="true" horizontalAlignment="FILL" verticalAlignment="FILL" widthHint="80"/>
-		</List.layoutData>
-		<List.items>
-			<p1:String>Audio</p1:String>
-			<p1:String>Twitter</p1:String>
-		</List.items>
-	</List>
+	<ToolBar x:Style="FLAT | RIGHT | VERTICAL" background="COLOR_LIST_BACKGROUND">
+		<ToolBar.layoutData>
+			<GridData verticalSpan="2" horizontalAlignment="CENTER" verticalAlignment="FILL"/>
+		</ToolBar.layoutData>
+		<ToolItem image="back.png" toolTipText="back" x:Name="backButton" width="100" text="Back"/>
+		<ToolItem x:Style="SEPARATOR"/>
+		<ToolItem text="Audio" x:Name="audioButton" image="clef.png"/>
+	</ToolBar>
 	<Composite x:Name="settingsBox" x:Style="BORDER">
 		<Composite.layout>
 			<StackLayout/>
 		</Composite.layout>
 		<Composite.layoutData>
-			<GridData horizontalSpan="2" horizontalAlignment="FILL" verticalAlignment="FILL"/>
+			<GridData horizontalSpan="2" horizontalAlignment="FILL" verticalAlignment="FILL" verticalSpan="2" grabExcessHorizontalSpace="true" grabExcessVerticalSpace="true"/>
 		</Composite.layoutData>
 		<Composite x:Name="audioSettingsTab" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab"/>
 	</Composite>
-	<Label/>
-	<Button text="Cancel" x:Name="cancelButton" SelectionEvent="onCancelButtonSelection">
-		<Button.layoutData>
-			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="RIGHT"/>
-		</Button.layoutData>
-	</Button>
-	<Button text="Save" x:Name="saveButton">
-		<Button.layoutData>
-			<GridData horizontalAlignment="RIGHT"/>
-		</Button.layoutData>
-	</Button>
 </Composite>
