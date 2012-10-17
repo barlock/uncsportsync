@@ -26,178 +26,166 @@ import edu.unc.cs.sportsync.main.sound.AudioControl;
 import edu.unc.cs.sportsync.main.ui.settings.SettingsDialog;
 
 public class Application extends Composite {
-    @UI
-    Button startButton;
+	@UI
+	Button startButton;
 
-    @UI
-    Button settingsButton;
+	@UI
+	Button settingsButton;
 
-    @UI
-    Button muteButton;
+	@UI
+	Button muteButton;
 
-    @UI
-    Label delayValueLabel;
+	@UI
+	Label delayValueLabel;
 
-    @UI
-    Scale volumeScale;
+	@UI
+	Scale volumeScale;
 
-    @UI
-    Scale delayScale;
+	@UI
+	Scale delayScale;
 
-    @UI
-    Label maxDelayLabel;
+	@UI
+	Label maxDelayLabel;
 
-    @UI
-    ProgressBar audioBar;
+	@UI
+	ProgressBar audioBar;
 
-    @UI
-    ProgressBar bufferProgressBar;
+	@UI
+	ProgressBar bufferProgressBar;
 
-    private final Settings settings;
-    private final AudioControl audioControl;
+	private final Settings settings;
+	private final AudioControl audioControl;
 
-    private SettingsDialog settingsComposite;
-    private Shell settingsDialog;
+	private SettingsDialog settingsComposite;
+	private Shell settingsDialog;
 
-    private Image muteOnImg;
-    private Image muteOffImg;
+	private Image muteOnImg;
+	private Image muteOffImg;
 
-    private final Listener applyButtonListener = new Listener() {
-        @Override
-        public void handleEvent(Event event) {
-            settingsComposite.updateSettings();
-            updateDelayTime();
-            setDelayAmountText(delayScale.getSelection() / 10.0);
-            settings.save();
-            settingsDialog.close();
-        }
-    };
+	private final Listener applyButtonListener = new Listener() {
+		@Override
+		public void handleEvent(Event event) {
+			if (settingsComposite.hasMaxDelayChanged()) {
+				delayScale.setSelection(0);
+			}
 
-    public Application(Composite parent, int style) {
-        super(parent, style);
-        audioControl = new AudioControl();
-        audioControl.prepareMixerList();
-        settings = new Settings();
-        setLayout(new FillLayout());
+			settingsComposite.updateSettings();
+			updateDelayTime();
+			setDelayAmountText(delayScale.getSelection() / 10.0);
+			settings.save();
+			settingsDialog.close();
+		}
+	};
 
-        // load XWT
-        String name = Application.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
-        try {
-            URL url = Application.class.getResource(name);
-            Map<String, Object> options = new HashMap<String, Object>();
-            options.put(IXWTLoader.CLASS_PROPERTY, this);
-            options.put(IXWTLoader.CONTAINER_PROPERTY, this);
-            XWT.setLoadingContext(new DefaultLoadingContext(this.getClass().getClassLoader()));
-            XWT.loadWithOptions(url, options);
-        } catch (Throwable e) {
-            throw new Error("Unable to load " + name, e);
-        }
+	public Application(Composite parent, int style) {
+		super(parent, style);
+		audioControl = new AudioControl();
+		audioControl.prepareMixerList();
+		settings = new Settings();
+		setLayout(new FillLayout());
 
-        try {
-            muteOnImg = new Image(getDisplay(), Application.class.getResourceAsStream("volume.png"));
-            muteOffImg = new Image(getDisplay(), Application.class.getResourceAsStream("mute.png"));
-            muteButton.setImage(muteOnImg);
-        } catch (Exception e) {
-            muteButton.setText("Mute");
-        }
+		// load XWT
+		String name = Application.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
+		try {
+			URL url = Application.class.getResource(name);
+			Map<String, Object> options = new HashMap<String, Object>();
+			options.put(IXWTLoader.CLASS_PROPERTY, this);
+			options.put(IXWTLoader.CONTAINER_PROPERTY, this);
+			XWT.setLoadingContext(new DefaultLoadingContext(this.getClass().getClassLoader()));
+			XWT.loadWithOptions(url, options);
+		} catch (Throwable e) {
+			throw new Error("Unable to load " + name, e);
+		}
 
-        bufferProgressBarRun();
+		try {
+			muteOnImg = new Image(getDisplay(), Application.class.getResourceAsStream("volume.png"));
+			muteOffImg = new Image(getDisplay(), Application.class.getResourceAsStream("mute.png"));
+			muteButton.setImage(muteOnImg);
+		} catch (Exception e) {
+			muteButton.setText("Mute");
+		}
 
-        updateDelayTime();
-        audioControl.start();
-        audioControl.setVolume(settings.getVolume());
-        audioControl.setDelayAmount(delayScale.getSelection());
-        volumeScale.setSelection(settings.getVolume());
-    }
+		bufferProgressBarRun();
 
-    private void bufferProgressBarRun() {
-        new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Throwable th) {
-                    }
-                    if (isDisposed()) {
-                        return;
-                    }
+		updateDelayTime();
+		audioControl.start();
+		audioControl.setVolume(settings.getVolume());
+		audioControl.setDelayAmount(delayScale.getSelection());
+		volumeScale.setSelection(settings.getVolume());
+	}
 
-                    int percent = audioControl.getBufferPercentage();
+	private void bufferProgressBarRun() {
+		new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(1000);
+					} catch (Throwable th) {
+					}
+					if (isDisposed()) {
+						return;
+					}
 
-                    getDisplay().asyncExec(new ProgressBarUpdater(bufferProgressBar, percent, audioControl.isRecording()));
-                }
-            }
-        }.start();
-    }
+					int percent = audioControl.getBufferPercentage();
 
-    public void onDelayScaleDragDetect(Event event) {
-        setDelayAmountText(delayScale.getSelection() / 10.0);
-        audioControl.setDelayAmount(delayScale.getSelection());
-    }
+					getDisplay().asyncExec(new ProgressBarUpdater(bufferProgressBar, percent, audioControl.isRecording()));
+				}
+			}
+		}.start();
+	}
 
-    public void onDispose(Event event) {
-        settings.save();
+	public void onDelayScaleDragDetect(Event event) {
+		setDelayAmountText(delayScale.getSelection() / 10.0);
+		audioControl.setDelayAmount(delayScale.getSelection());
+	}
 
-        audioControl.stopRecording();
-    }
+	public void onDispose(Event event) {
+		settings.save();
 
-    public void onMuteButtonSelection(Event event) {
-        audioControl.toggleMute();
-        updateMuteButton();
-    }
+		audioControl.stopRecording();
+	}
 
-    public void onSettingsButtonSelection(Event event) {
-        if (settingsDialog == null || settingsDialog.isDisposed()) {
-            settingsDialog = new Shell(getShell());
-            FillLayout layout = new FillLayout();
-            settingsDialog.setText("Settings");
-            settingsDialog.setLayout(layout);
-            settingsDialog.setSize(500, 500);
-            settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener, audioControl);
+	public void onMuteButtonSelection(Event event) {
+		audioControl.toggleMute();
+		updateMuteButton();
+	}
 
-            settingsDialog.open();
-        }
-    }
+	public void onSettingsButtonSelection(Event event) {
+		if (settingsDialog == null || settingsDialog.isDisposed()) {
+			settingsDialog = new Shell(getShell());
+			FillLayout layout = new FillLayout();
+			settingsDialog.setText("Settings");
+			settingsDialog.setLayout(layout);
+			settingsDialog.setSize(500, 500);
+			settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener, audioControl);
 
-    public void onStartButtonSelection(Event event) {
-        if (!audioControl.isRecording()) {
-            audioControl.start();
-            audioControl.setVolume(settings.getVolume());
-            audioControl.setDelayAmount(delayScale.getSelection());
-            if (audioControl.isMuted()) {
-                audioControl.toggleMute();
-            }
+			settingsDialog.open();
+		}
+	}
 
-            startButton.setText("Stop");
-        } else {
-            audioControl.stopRecording();
-            startButton.setText("Start");
-        }
-    }
+	public void onVolumeScaleDragDetect(Event event) {
+		int volume = volumeScale.getSelection();
+		audioControl.setVolume(volume);
+		settings.setVolume(volume);
+	}
 
-    public void onVolumeScaleDragDetect(Event event) {
-        int volume = volumeScale.getSelection();
-        audioControl.setVolume(volume);
-        settings.setVolume(volume);
-    }
+	public void setDelayAmountText(double amount) {
+		delayValueLabel.setText("Delay: " + amount + " seconds");
+		delayValueLabel.pack();
+	}
 
-    public void setDelayAmountText(double amount) {
-        delayValueLabel.setText("Delay: " + amount + " seconds");
-        delayValueLabel.pack();
-    }
+	private void updateDelayTime() {
+		maxDelayLabel.setText(settings.getDelayTime() + " sec");
+		delayScale.setMaximum(settings.getDelayTime() * 10);
+	}
 
-    private void updateDelayTime() {
-        maxDelayLabel.setText(settings.getDelayTime() + " sec");
-        delayScale.setMaximum(settings.getDelayTime() * 10);
-    }
-
-    private void updateMuteButton() {
-        boolean isPressed = muteButton.getSelection();
-        if (isPressed) {
-            muteButton.setImage(muteOffImg);
-        } else {
-            muteButton.setImage(muteOnImg);
-        }
-    }
+	private void updateMuteButton() {
+		boolean isPressed = muteButton.getSelection();
+		if (isPressed) {
+			muteButton.setImage(muteOffImg);
+		} else {
+			muteButton.setImage(muteOnImg);
+		}
+	}
 }

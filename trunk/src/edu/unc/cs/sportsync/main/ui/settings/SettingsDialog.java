@@ -23,54 +23,58 @@ import edu.unc.cs.sportsync.main.sound.AudioControl;
 
 public class SettingsDialog extends Composite {
 
-    private final StackLayout settingsBoxLayout;
-    @UI
-    List selectList;
+	private final StackLayout settingsBoxLayout;
+	@UI
+	List selectList;
 
-    @UI
-    Composite settingsBox;
+	@UI
+	Composite settingsBox;
 
-    @UI
-    AudioSettingsTab audioSettingsTab;
+	@UI
+	AudioSettingsTab audioSettingsTab;
 
-    @UI
-    Button saveButton;
+	@UI
+	Button saveButton;
 
-    public SettingsDialog(Composite parent, int style, Settings settings, Listener applyButtonListener, AudioControl audioControl) {
-        super(parent, style);
-        setLayout(new FillLayout());
-        // load XWT
-        String name = SettingsDialog.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
-        try {
-            URL url = SettingsDialog.class.getResource(name);
-            Map<String, Object> options = new HashMap<String, Object>();
-            options.put(IXWTLoader.CLASS_PROPERTY, this);
-            options.put(IXWTLoader.CONTAINER_PROPERTY, this);
-            XWT.setLoadingContext(new DefaultLoadingContext(this.getClass().getClassLoader()));
-            XWT.loadWithOptions(url, options);
-        } catch (Throwable e) {
-            throw new Error("Unable to load " + name, e);
-        }
-        saveButton.addListener(SWT.Selection, applyButtonListener);
-        audioSettingsTab.setSettings(settings);
-        audioSettingsTab.setAudioControl(audioControl);
-        settingsBoxLayout = (StackLayout) settingsBox.getLayout();
+	public SettingsDialog(Composite parent, int style, Settings settings, Listener applyButtonListener, AudioControl audioControl) {
+		super(parent, style);
+		setLayout(new FillLayout());
+		// load XWT
+		String name = SettingsDialog.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
+		try {
+			URL url = SettingsDialog.class.getResource(name);
+			Map<String, Object> options = new HashMap<String, Object>();
+			options.put(IXWTLoader.CLASS_PROPERTY, this);
+			options.put(IXWTLoader.CONTAINER_PROPERTY, this);
+			XWT.setLoadingContext(new DefaultLoadingContext(this.getClass().getClassLoader()));
+			XWT.loadWithOptions(url, options);
+		} catch (Throwable e) {
+			throw new Error("Unable to load " + name, e);
+		}
+		saveButton.addListener(SWT.Selection, applyButtonListener);
+		audioSettingsTab.setSettings(settings);
+		audioSettingsTab.setAudioControl(audioControl);
+		settingsBoxLayout = (StackLayout) settingsBox.getLayout();
 
-        settingsBoxLayout.topControl = audioSettingsTab;
-        settingsBox.layout();
+		settingsBoxLayout.topControl = audioSettingsTab;
+		settingsBox.layout();
 
-        selectList.select(0);
-    }
+		selectList.select(0);
+	}
 
-    public void onCancelButtonSelection(Event event) {
-        getShell().close();
-    }
+	public boolean hasMaxDelayChanged() {
+		return audioSettingsTab.hasMaxDelaySpinnerChanged();
+	}
 
-    public void onSelectListSelection(Event event) {
-        // Do Nothing for now...Eventually switch tabs
-    }
+	public void onCancelButtonSelection(Event event) {
+		getShell().close();
+	}
 
-    public void updateSettings() {
-        audioSettingsTab.updateSettings();
-    }
+	public void onSelectListSelection(Event event) {
+		// Do Nothing for now...Eventually switch tabs
+	}
+
+	public void updateSettings() {
+		audioSettingsTab.updateSettings();
+	}
 }

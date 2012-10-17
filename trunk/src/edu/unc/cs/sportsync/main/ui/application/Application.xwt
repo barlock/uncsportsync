@@ -2,11 +2,7 @@
 	<Composite.layout>
 		<GridLayout numColumns="3" marginLeft="10" marginRight="10" marginTop="5" marginBottom="5" makeColumnsEqualWidth="true"/>
 	</Composite.layout>
-	<Button x:Name="startButton" x:Style="TOGGLE" SelectionEvent="onStartButtonSelection" toolTipText="" text="Start">
-		<Button.layoutData>
-			<GridData verticalAlignment="TOP" grabExcessHorizontalSpace="true"/>
-		</Button.layoutData>
-	</Button>
+	<Label/>
 	<Label text="Delay: 0.0 seconds" x:Name="delayValueLabel">
 		<Label.layoutData>
 			<GridData horizontalAlignment="CENTER" grabExcessVerticalSpace="true" verticalAlignment="BOTTOM"/>
