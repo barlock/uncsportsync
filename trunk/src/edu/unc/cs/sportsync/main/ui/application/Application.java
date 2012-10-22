@@ -74,6 +74,7 @@ public class Application extends Composite {
 			setDelayAmountText(delayScale.getSelection() / 10.0);
 			settings.save();
 			settingsDialog.close();
+			audioControl.openLines();
 		}
 	};
 
@@ -83,6 +84,8 @@ public class Application extends Composite {
 		audioControl.prepareMixerList();
 		settings = new Settings();
 		setLayout(new FillLayout());
+
+		audioControl.setSettings(settings);
 
 		// load XWT
 		String name = Application.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
