@@ -178,6 +178,8 @@ public class Application extends Composite {
 	private void updateDelayTime() {
 		maxDelayLabel.setText(settings.getDelayTime() + " sec");
 		delayScale.setMaximum(settings.getDelayTime() * 10);
+
+		maxDelayLabel.pack();
 	}
 
 	private void updateMuteButton() {

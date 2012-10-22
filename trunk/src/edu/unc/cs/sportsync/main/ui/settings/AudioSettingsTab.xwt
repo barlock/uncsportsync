@@ -1,6 +1,6 @@
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets">
 	<Composite.layout>
-		<GridLayout numColumns="2" horizontalSpacing="25" marginWidth="10" marginHeight="10"/>
+		<GridLayout numColumns="3" horizontalSpacing="25" marginWidth="10" marginHeight="10"/>
 	</Composite.layout>
 	<Label text="Input device:" x:Name="inputDeviceLabel">
 		<Label.layoutData>
@@ -9,13 +9,13 @@
 	</Label>
 	<Combo x:Name="inputDeviceCombo">
 		<Combo.layoutData>
-			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
+			<GridData horizontalAlignment="FILL" horizontalSpan="2"/>
 		</Combo.layoutData>
 	</Combo>
 	<Label/>
 	<ProgressBar x:Name="inputLevelBar">
 		<ProgressBar.layoutData>
-			<GridData grabExcessHorizontalSpace="true" verticalAlignment="TOP" heightHint="7"/>
+			<GridData verticalAlignment="TOP" heightHint="7" horizontalSpan="2"/>
 		</ProgressBar.layoutData>
 	</ProgressBar>
 	<Label text="Output device:" x:Name="outputDeviceLabel">
@@ -25,7 +25,7 @@
 	</Label>
 	<Combo x:Name="outputDeviceCombo">
 		<Combo.layoutData>
-			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
+			<GridData horizontalAlignment="FILL" horizontalSpan="2"/>
 		</Combo.layoutData>
 	</Combo>
 	<Label text="Max delay (seconds):" x:Name="maxDelayLabel">
@@ -35,7 +35,12 @@
 	</Label>
 	<Spinner x:Style="BORDER" x:Name="maxDelaySpinner">
 		<Spinner.layoutData>
-			<GridData grabExcessHorizontalSpace="true"/>
+			<GridData widthHint="50"/>
 		</Spinner.layoutData>
 	</Spinner>
+	<Label text="(This will reset the buffer)">
+		<Label.layoutData>
+			<GridData grabExcessHorizontalSpace="true"/>
+		</Label.layoutData>
+	</Label>
 </Composite>
