@@ -1,45 +1,43 @@
 package edu.unc.cs.sportsync.main;
 
+import java.net.URL;
+
+import org.eclipse.e4.xwt.IConstants;
+import org.eclipse.e4.xwt.XWT;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.unc.cs.sportsync.main.ui.application.Application;
 
 public class SportSync {
+	public static void main(String args[]) throws Exception {
+		URL url = SportSync.class.getResource(SportSync.class.getSimpleName()
+				+ IConstants.XWT_EXTENSION_SUFFIX);
+		Control control = XWT.load(url);
+		Shell shell = control.getShell();
+		shell.layout();
+		centerInDisplay(shell);
+		// run events loop
 
-    /**
-     * @param args
-     * @throws Exception
-     */
-    public static void main(String[] args) throws Exception {
-        // ApplicationPresenter app = new ApplicationPresenter();
-        // app.open();
-        // app.dispose();
+		shell.setSize(400, 250);
+		shell.setMinimumSize(400, 250);
+		Application appComposite = new Application(shell, SWT.None);
 
-        // Uncomment below and comment above to switch from XWT to our previous
-        // MVP
+		shell.open();
+		while (!shell.isDisposed()) {
+			if (!shell.getDisplay().readAndDispatch()) {
+				shell.getDisplay().sleep();
+			}
+		}
 
-        Display display = new Display();
-        Shell application = new Shell(display);
-        FillLayout layout = new FillLayout();
+		appComposite.dispose();
+	}
 
-        application.setLayout(layout);
-        application.setSize(400, 250);
-        application.setText("UNC SportSync");
-        application.setMinimumSize(400, 250);
-
-        Application appComposite = new Application(application, SWT.None);
-
-        application.open();
-
-        while (!application.isDisposed()) {
-            if (!display.readAndDispatch()) {
-                display.sleep();
-            }
-        }
-
-        application.dispose();
-    }
+	private static void centerInDisplay(Shell shell) {
+		Rectangle displayArea = shell.getDisplay().getClientArea();
+		shell.setBounds(displayArea.width / 4, displayArea.height / 4,
+				displayArea.width / 2, displayArea.height / 2);
+	}
 }
