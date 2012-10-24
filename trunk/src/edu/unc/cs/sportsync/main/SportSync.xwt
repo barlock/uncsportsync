@@ -1,0 +1,5 @@
+<Shell xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.SportSync" text="UNC SportSync" xmlns:p1="clr-namespace:edu.unc.cs.sportsync.main.ui.application" image="sportsync.png">
+	<Shell.layout>
+		<FillLayout/>
+	</Shell.layout>
+</Shell>
