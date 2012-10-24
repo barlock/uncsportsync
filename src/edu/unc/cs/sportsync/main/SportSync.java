@@ -5,6 +5,8 @@ import java.net.URL;
 import org.eclipse.e4.xwt.IConstants;
 import org.eclipse.e4.xwt.XWT;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -21,8 +23,21 @@ public class SportSync {
 		centerInDisplay(shell);
 		// run events loop
 
+		Image logo498 = new Image(shell.getDisplay(), new ImageData(
+				SportSync.class.getResourceAsStream("sportSync498.png")));
+		Image logo256 = new Image(shell.getDisplay(), new ImageData(
+				SportSync.class.getResourceAsStream("sportSync256.png")));
+		Image logo48 = new Image(shell.getDisplay(), new ImageData(
+				SportSync.class.getResourceAsStream("sportSync48.png")));
+		Image logo32 = new Image(shell.getDisplay(), new ImageData(
+				SportSync.class.getResourceAsStream("sportSync32.png")));
+		Image logo16 = new Image(shell.getDisplay(), new ImageData(
+				SportSync.class.getResourceAsStream("sportSync16.png")));
+		Image[] images = { logo498, logo256, logo48, logo32, logo16 };
+
 		shell.setSize(400, 250);
 		shell.setMinimumSize(400, 250);
+		shell.setImages(images);
 		Application appComposite = new Application(shell, SWT.None);
 
 		shell.open();
