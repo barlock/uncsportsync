@@ -15,24 +15,18 @@ import edu.unc.cs.sportsync.main.ui.application.Application;
 
 public class SportSync {
 	public static void main(String args[]) throws Exception {
-		URL url = SportSync.class.getResource(SportSync.class.getSimpleName()
-				+ IConstants.XWT_EXTENSION_SUFFIX);
+		URL url = SportSync.class.getResource(SportSync.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX);
 		Control control = XWT.load(url);
 		Shell shell = control.getShell();
 		shell.layout();
 		centerInDisplay(shell);
 		// run events loop
 
-		Image logo498 = new Image(shell.getDisplay(), new ImageData(
-				SportSync.class.getResourceAsStream("sportSync498.png")));
-		Image logo256 = new Image(shell.getDisplay(), new ImageData(
-				SportSync.class.getResourceAsStream("sportSync256.png")));
-		Image logo48 = new Image(shell.getDisplay(), new ImageData(
-				SportSync.class.getResourceAsStream("sportSync48.png")));
-		Image logo32 = new Image(shell.getDisplay(), new ImageData(
-				SportSync.class.getResourceAsStream("sportSync32.png")));
-		Image logo16 = new Image(shell.getDisplay(), new ImageData(
-				SportSync.class.getResourceAsStream("sportSync16.png")));
+		Image logo498 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync512.png")));
+		Image logo256 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync256.png")));
+		Image logo48 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync48.png")));
+		Image logo32 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync32.png")));
+		Image logo16 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync16.ico")));
 		Image[] images = { logo498, logo256, logo48, logo32, logo16 };
 
 		shell.setSize(400, 250);
@@ -52,7 +46,6 @@ public class SportSync {
 
 	private static void centerInDisplay(Shell shell) {
 		Rectangle displayArea = shell.getDisplay().getClientArea();
-		shell.setBounds(displayArea.width / 4, displayArea.height / 4,
-				displayArea.width / 2, displayArea.height / 2);
+		shell.setBounds(displayArea.width / 4, displayArea.height / 4, displayArea.width / 2, displayArea.height / 2);
 	}
 }
