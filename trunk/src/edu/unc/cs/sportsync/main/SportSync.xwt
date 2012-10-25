@@ -1,4 +1,4 @@
-<Shell xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.SportSync" text="UNC SportSync" xmlns:p1="clr-namespace:edu.unc.cs.sportsync.main.ui.application" image="sportsync256.png">
+<Shell xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.SportSync" text="UNC SportSync" xmlns:p1="clr-namespace:edu.unc.cs.sportsync.main.ui.application" image="sportsync256.png" x:Style="SHELL_TRIM">
 	<Shell.layout>
 		<FillLayout/>
 	</Shell.layout>

@@ -1,34 +1,46 @@
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.SettingsDialog" xmlns:p1="clr-namespace:java.lang">
 	<Composite.layout>
-		<GridLayout numColumns="3"/>
+		<GridLayout numColumns="3" marginWidth="0" marginHeight="0" verticalSpacing="0" horizontalSpacing="0"/>
 	</Composite.layout>
-	<List x:Style="BORDER" x:Name="selectList" SelectionEvent="onSelectListSelection" touchEnabled="true">
-		<List.layoutData>
-			<GridData grabExcessVerticalSpace="true" horizontalAlignment="FILL" verticalAlignment="FILL" widthHint="80"/>
-		</List.layoutData>
-		<List.items>
-			<p1:String>Audio</p1:String>
-			<p1:String>Twitter</p1:String>
-		</List.items>
-	</List>
-	<Composite x:Name="settingsBox" x:Style="BORDER">
+	<ToolBar x:Style="FLAT | VERTICAL" background="COLOR_LIST_BACKGROUND">
+		<ToolBar.layoutData>
+			<GridData grabExcessVerticalSpace="true" horizontalAlignment="FILL" verticalAlignment="FILL"/>
+		</ToolBar.layoutData>
+		<ToolItem text="Audio" x:Style="RADIO" x:Name="audioButton" SelectionEvent="onAudioButtonSelection"/>
+		<ToolItem text="Help" x:Style="RADIO" x:Name="helpButton" SelectionEvent="onHelpButtonSelection"/>
+		<ToolItem text="About" x:Style="RADIO" x:Name="aboutButton" SelectionEvent="onAboutButtonSelection"/>
+	</ToolBar>
+	<Label x:Style="SEPARATOR | VERTICAL">
+		<Label.layoutData>
+			<GridData verticalAlignment="FILL"/>
+		</Label.layoutData>
+	</Label>
+	<Composite x:Name="settingsBox">
 		<Composite.layout>
 			<StackLayout/>
 		</Composite.layout>
 		<Composite.layoutData>
-			<GridData horizontalSpan="2" horizontalAlignment="FILL" verticalAlignment="FILL"/>
+			<GridData horizontalAlignment="FILL" verticalAlignment="FILL" grabExcessVerticalSpace="true" grabExcessHorizontalSpace="true"/>
 		</Composite.layoutData>
 		<Composite x:Name="audioSettingsTab" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab"/>
+		<Composite x:Name="aboutPageTab" x:Class="edu.unc.cs.sportsync.main.ui.settings.AboutPageTab"/>
+		<Composite x:Name="helpPageTab" x:Class="edu.unc.cs.sportsync.main.ui.settings.HelpPageTab"/>
 	</Composite>
+	<Label x:Style="SEPARATOR | HORIZONTAL">
+		<Label.layoutData>
+			<GridData horizontalAlignment="FILL" horizontalSpan="3"/>
+		</Label.layoutData>
+	</Label>
 	<Label/>
-	<Button text="Cancel" x:Name="cancelButton" SelectionEvent="onCancelButtonSelection">
-		<Button.layoutData>
-			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="RIGHT"/>
-		</Button.layoutData>
-	</Button>
-	<Button text="Save" x:Name="saveButton">
-		<Button.layoutData>
+	<Label/>
+	<Composite>
+		<Composite.layoutData>
 			<GridData horizontalAlignment="RIGHT"/>
-		</Button.layoutData>
-	</Button>
+		</Composite.layoutData>
+		<Composite.layout>
+			<RowLayout spacing="5" marginLeft="5" marginRight="5" marginTop="5" marginBottom="5"/>
+		</Composite.layout>
+		<Button text="Save" x:Name="saveButton"/>
+		<Button text="Cancel" x:Name="cancelButton" SelectionEvent="onCancelButtonSelection"/>
+	</Composite>
 </Composite>

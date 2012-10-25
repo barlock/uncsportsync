@@ -15,8 +15,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ToolItem;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
@@ -24,8 +24,6 @@ import edu.unc.cs.sportsync.main.sound.AudioControl;
 public class SettingsDialog extends Composite {
 
 	private final StackLayout settingsBoxLayout;
-	@UI
-	List selectList;
 
 	@UI
 	Composite settingsBox;
@@ -34,7 +32,22 @@ public class SettingsDialog extends Composite {
 	AudioSettingsTab audioSettingsTab;
 
 	@UI
+	AboutPageTab aboutPageTab;
+
+	@UI
+	HelpPageTab helpPageTab;
+
+	@UI
 	Button saveButton;
+
+	@UI
+	ToolItem audioButton;
+
+	@UI
+	ToolItem helpButton;
+
+	@UI
+	ToolItem aboutButton;
 
 	public SettingsDialog(Composite parent, int style, Settings settings, Listener applyButtonListener, AudioControl audioControl) {
 		super(parent, style);
@@ -59,7 +72,7 @@ public class SettingsDialog extends Composite {
 		settingsBoxLayout.topControl = audioSettingsTab;
 		settingsBox.layout();
 
-		selectList.select(0);
+		audioButton.setSelection(true);
 	}
 
 	public boolean hasMaxDelayChanged() {
@@ -70,8 +83,19 @@ public class SettingsDialog extends Composite {
 		getShell().close();
 	}
 
-	public void onSelectListSelection(Event event) {
-		// Do Nothing for now...Eventually switch tabs
+	public void onAboutButtonSelection(Event event) {
+		settingsBoxLayout.topControl = aboutPageTab;
+		settingsBox.layout();
+	}
+
+	public void onAudioButtonSelection(Event event) {
+		settingsBoxLayout.topControl = audioSettingsTab;
+		settingsBox.layout();
+	}
+
+	public void onHelpButtonSelection(Event event) {
+		settingsBoxLayout.topControl = helpPageTab;
+		settingsBox.layout();
 	}
 
 	public void updateSettings() {

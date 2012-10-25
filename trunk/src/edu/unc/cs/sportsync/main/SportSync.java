@@ -22,12 +22,12 @@ public class SportSync {
 		centerInDisplay(shell);
 		// run events loop
 
-		Image logo498 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync512.png")));
+		Image logo512 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync512.png")));
 		Image logo256 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync256.png")));
 		Image logo48 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync48.png")));
 		Image logo32 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync32.png")));
 		Image logo16 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync16.ico")));
-		Image[] images = { logo498, logo256, logo48, logo32, logo16 };
+		Image[] images = { logo512, logo256, logo48, logo32, logo16 };
 
 		shell.setSize(400, 250);
 		shell.setMinimumSize(400, 250);

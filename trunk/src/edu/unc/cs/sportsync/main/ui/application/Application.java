@@ -11,6 +11,7 @@ import org.eclipse.e4.xwt.XWT;
 import org.eclipse.e4.xwt.annotation.UI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -59,8 +60,8 @@ public class Application extends Composite {
 	private SettingsDialog settingsComposite;
 	private Shell settingsDialog;
 
-	private Image muteOnImg;
-	private Image muteOffImg;
+	private final Image muteOnImg;
+	private final Image muteOffImg;
 
 	private final Listener applyButtonListener = new Listener() {
 		@Override
@@ -100,17 +101,14 @@ public class Application extends Composite {
 			throw new Error("Unable to load " + name, e);
 		}
 
-		try {
-			muteOnImg = new Image(getDisplay(), Application.class.getResourceAsStream("volume.png"));
-			muteOffImg = new Image(getDisplay(), Application.class.getResourceAsStream("mute.png"));
-			muteButton.setImage(muteOnImg);
-		} catch (Exception e) {
-			muteButton.setText("Mute");
-		}
+		muteOnImg = new Image(getDisplay(), new ImageData(Application.class.getResourceAsStream("volume.png")));
+		muteOffImg = new Image(getDisplay(), new ImageData(Application.class.getResourceAsStream("mute.png")));
+		muteButton.setImage(muteOnImg);
 
 		bufferProgressBarRun();
 
 		updateDelayTime();
+
 		audioControl.start();
 		audioControl.setVolume(settings.getVolume());
 		audioControl.setDelayAmount(delayScale.getSelection());
@@ -156,12 +154,12 @@ public class Application extends Composite {
 
 	public void onSettingsButtonSelection(Event event) {
 		if (settingsDialog == null || settingsDialog.isDisposed()) {
-			settingsDialog = new Shell(getShell());
+			settingsDialog = new Shell(getShell(), SWT.DIALOG_TRIM);
 			FillLayout layout = new FillLayout();
 			settingsDialog.setText("Settings");
 			settingsDialog.setLayout(layout);
-			settingsDialog.setSize(500, 500);
-			settingsComposite = new SettingsDialog(settingsDialog, SWT.DIALOG_TRIM, settings, applyButtonListener, audioControl);
+			settingsDialog.setSize(450, 300);
+			settingsComposite = new SettingsDialog(settingsDialog, SWT.NONE, settings, applyButtonListener, audioControl);
 
 			settingsDialog.open();
 		}
@@ -181,8 +179,8 @@ public class Application extends Composite {
 	private void updateDelayTime() {
 		maxDelayLabel.setText(settings.getDelayTime() + " sec");
 		delayScale.setMaximum(settings.getDelayTime() * 10);
-
 		maxDelayLabel.pack();
+
 	}
 
 	private void updateMuteButton() {

@@ -19,7 +19,7 @@
 		</Label.layoutData>
 	</Label>
 	<Label/>
-	<Label text="60 sec" x:Name="maxDelayLabel">
+	<Label x:Name="maxDelayLabel" text="120 sec">
 		<Label.layoutData>
 			<GridData horizontalAlignment="RIGHT" grabExcessVerticalSpace="true" grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
