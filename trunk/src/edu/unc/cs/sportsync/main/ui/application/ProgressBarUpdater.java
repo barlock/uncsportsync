@@ -4,24 +4,22 @@ import org.eclipse.swt.widgets.ProgressBar;
 
 public class ProgressBarUpdater implements Runnable {
 
-    private final ProgressBar bufferProgressBar;
-    private final int percent;
-    private final boolean isRecording;
+	private final ProgressBar bufferProgressBar;
+	private final int percent;
 
-    public ProgressBarUpdater(ProgressBar bar, int p, boolean recording) {
-        bufferProgressBar = bar;
-        percent = p;
-        isRecording = recording;
-    }
+	public ProgressBarUpdater(ProgressBar bar, int p) {
+		bufferProgressBar = bar;
+		percent = p;
+	}
 
-    @Override
-    public void run() {
-        if (!isRecording || percent == 100) {
-            bufferProgressBar.setVisible(false);
-        } else {
-            bufferProgressBar.setVisible(true);
-            bufferProgressBar.setSelection(percent);
-        }
-    }
+	@Override
+	public void run() {
+		if (percent == 100) {
+			bufferProgressBar.setVisible(false);
+		} else {
+			bufferProgressBar.setVisible(true);
+			bufferProgressBar.setSelection(percent);
+		}
+	}
 
 }

@@ -23,6 +23,111 @@ public class AudioControl {
 
 	private static ArrayList<Mixer.Info> sourceMixers = new ArrayList<Mixer.Info>();
 
+	private Settings settings;
+
+	// private boolean isRecording;
+
+	private boolean isMuted;
+
+	private SoundCheck mySoundCheck;
+
+	public AudioControl() {
+		isMuted = false;
+		settings = null;
+	}
+
+	public int getBufferPercentage() {
+		if (mySoundCheck != null) {
+			return mySoundCheck.getBufferPercentage();
+		} else {
+			return 0;
+		}
+	}
+
+	public int getInputLevel() {
+		return mySoundCheck.getInputLevel();
+	}
+
+	public double getOutputLevel() {
+		return mySoundCheck.getOutputLevel();
+	}
+
+	public boolean isMuted() {
+		return isMuted;
+	}
+
+	public void updateLines() {
+		try {
+			mySoundCheck.openLines();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void prepareMixerList() {
+		targetMixers = getInputDevices();
+		sourceMixers = getOutputDevices();
+		if (mySoundCheck != null) {
+			try {
+				mySoundCheck.openLines();
+			} catch (LineUnavailableException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void setDelayAmount(int delayAmount) {
+		mySoundCheck.setDelayAmount(delayAmount);
+	}
+
+	// public void setMaxDelay(int maxDelay) {
+	// settings.setDelayTime(maxDelay);
+	//
+	// if (maxDelay != mySoundCheck.getMaxDelay()) {
+	// System.out.println(mySoundCheck.getMaxDelay());
+	// mySoundCheck.resetBuffer();
+	// }
+	//
+	// mySoundCheck.updateMaxDelay();
+	// }
+
+	public void resetBuffer() {
+		mySoundCheck.resetBuffer();
+	}
+
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
+
+	public void setVolume(double percentLevel) {
+		mySoundCheck.setVolume(percentLevel);
+	}
+
+	public void start() {
+		float frameRate = (float) 44100.0;
+		int BUFFER_SIZE = 40960;
+		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
+		mySoundCheck = null;
+		try {
+			mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE, settings);
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+		mySoundCheck.start();
+
+	}
+
+	public void closeLines() {
+		mySoundCheck.dispose();
+	}
+
+	public void toggleMute() {
+		isMuted = !isMuted;
+
+		mySoundCheck.toggleMute();
+	}
+
 	@SuppressWarnings("unused")
 	private static String AnalyzeControl(Control thisControl) {
 		String type = thisControl.getType().toString();
@@ -104,118 +209,5 @@ public class AudioControl {
 
 	public static ArrayList<Mixer.Info> getTargetMixers() {
 		return targetMixers;
-	}
-
-	private Settings settings;
-
-	private int maxDelayAmount = -1;
-
-	private boolean isRecording;
-
-	private boolean isMuted;
-
-	private SoundCheck mySoundCheck;
-
-	public AudioControl() {
-		isRecording = false;
-		isMuted = false;
-		settings = null;
-	}
-
-	public int getBufferPercentage() {
-		if (mySoundCheck != null) {
-			return mySoundCheck.getBufferPercentage();
-		} else {
-			return 0;
-		}
-	}
-
-	public int getInputLevel() {
-		return mySoundCheck.getInputLevel();
-	}
-
-	public double getOutputLevel() {
-		return mySoundCheck.getOutputLevel();
-	}
-
-	public boolean isMuted() {
-		return isMuted;
-	}
-
-	public boolean isRecording() {
-		return isRecording;
-	}
-
-	public void openLines() {
-		stopRecording();
-		start();
-	}
-
-	public void prepareMixerList() {
-		targetMixers = getInputDevices();
-		sourceMixers = getOutputDevices();
-		if (mySoundCheck != null) {
-			try {
-				mySoundCheck.openLines();
-			} catch (LineUnavailableException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void setDelayAmount(int delayAmount) {
-		if (isRecording) {
-			mySoundCheck.setDelayAmount(delayAmount);
-		}
-	}
-
-	public void setMaxDelay(int theMaxDelayAmount) {
-		if (theMaxDelayAmount != mySoundCheck.getMaxDelay()) {
-			maxDelayAmount = theMaxDelayAmount;
-			stopRecording();
-			start();
-		}
-	}
-
-	public void setSettings(Settings settings) {
-		this.settings = settings;
-	}
-
-	public void setVolume(double percentLevel) {
-		if (isRecording) {
-			mySoundCheck.setVolume(percentLevel);
-		}
-	}
-
-	public void start() {
-		float frameRate = (float) 44100.0;
-		int BUFFER_SIZE = 40960;
-		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
-		mySoundCheck = null;
-		try {
-			mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE, maxDelayAmount, settings);
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
-		}
-		isRecording = true;
-		mySoundCheck.start();
-
-	}
-
-	public void stopRecording() {
-		if (isRecording) {
-
-			mySoundCheck.stopRecording();
-			isRecording = false;
-		}
-	}
-
-	public void toggleMute() {
-		isMuted = !isMuted;
-
-		if (isRecording) {
-			mySoundCheck.toggleMute();
-		}
-
 	}
 }

@@ -49,7 +49,7 @@ public class SettingsDialog extends Composite {
 	@UI
 	ToolItem aboutButton;
 
-	public SettingsDialog(Composite parent, int style, Settings settings, Listener applyButtonListener, AudioControl audioControl) {
+	public SettingsDialog(Composite parent, int style, Settings settings, Listener audioApplyButtonListener, Listener saveButtonListener, AudioControl audioControl) {
 		super(parent, style);
 		setLayout(new FillLayout());
 		// load XWT
@@ -64,9 +64,10 @@ public class SettingsDialog extends Composite {
 		} catch (Throwable e) {
 			throw new Error("Unable to load " + name, e);
 		}
-		saveButton.addListener(SWT.Selection, applyButtonListener);
+		saveButton.addListener(SWT.Selection, saveButtonListener);
 		audioSettingsTab.setSettings(settings);
 		audioSettingsTab.setAudioControl(audioControl);
+		audioSettingsTab.setApplyButtonListener(audioApplyButtonListener);
 		settingsBoxLayout = (StackLayout) settingsBox.getLayout();
 
 		settingsBoxLayout.topControl = audioSettingsTab;

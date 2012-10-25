@@ -12,9 +12,12 @@ import org.eclipse.e4.xwt.IConstants;
 import org.eclipse.e4.xwt.IXWTLoader;
 import org.eclipse.e4.xwt.XWT;
 import org.eclipse.e4.xwt.annotation.UI;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -41,6 +44,12 @@ public class AudioSettingsTab extends Composite {
 
 	@UI
 	ProgressBar inputLevelBar;
+
+	@UI
+	Button testButton;
+
+	@UI
+	Button applyButton;
 
 	public AudioSettingsTab(Composite parent, int style) {
 		super(parent, style);
@@ -95,7 +104,7 @@ public class AudioSettingsTab extends Composite {
 	}
 
 	public boolean hasMaxDelaySpinnerChanged() {
-		return settings.getDelayTime() != maxDelaySpinner.getSelection();
+		return settings.getMaxDelay() != maxDelaySpinner.getSelection();
 	}
 
 	public void setAudioControl(AudioControl control) {
@@ -111,7 +120,7 @@ public class AudioSettingsTab extends Composite {
 		outputDeviceCombo.select(outputMixerInfo.indexOf(settings.getOutputMixer()));
 
 		maxDelaySpinner.setMaximum(MAX_DELAY);
-		maxDelaySpinner.setSelection(settings.getDelayTime());
+		maxDelaySpinner.setSelection(settings.getMaxDelay());
 	}
 
 	public void updateDeviceLevels() {
@@ -131,7 +140,7 @@ public class AudioSettingsTab extends Composite {
 
 						@Override
 						public void run() {
-							if (audioControl.isRecording() & !isDisposed()) {
+							if (!isDisposed()) {
 								inputLevelBar.setSelection(audioControl.getInputLevel());
 							}
 						}
@@ -143,10 +152,13 @@ public class AudioSettingsTab extends Composite {
 	}
 
 	public void updateSettings() {
-		settings.setDelayTime(maxDelaySpinner.getSelection());
-		audioControl.setMaxDelay(maxDelaySpinner.getSelection());
+		settings.setMaxDelay(maxDelaySpinner.getSelection());
 		settings.setInputMixer(inputMixerInfo.get(inputDeviceCombo.getSelectionIndex()));
 		settings.setOutputMixer(outputMixerInfo.get(outputDeviceCombo.getSelectionIndex()));
+	}
+
+	public void setApplyButtonListener(Listener audioApplyButtonListener) {
+		applyButton.addListener(SWT.Selection, audioApplyButtonListener);
 	}
 
 }
