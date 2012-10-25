@@ -63,21 +63,33 @@ public class Application extends Composite {
 	private final Image muteOnImg;
 	private final Image muteOffImg;
 
-	private final Listener applyButtonListener = new Listener() {
+	private final Listener saveButtonListener = new Listener() {
 		@Override
 		public void handleEvent(Event event) {
-			if (settingsComposite.hasMaxDelayChanged()) {
-				delayScale.setSelection(0);
-			}
-
-			settingsComposite.updateSettings();
-			updateDelayTime();
-			setDelayAmountText(delayScale.getSelection() / 10.0);
-			settings.save();
+			updateUI();
 			settingsDialog.close();
-			audioControl.openLines();
 		}
 	};
+
+	private final Listener audioApplyButtonListner = new Listener() {
+		@Override
+		public void handleEvent(Event event) {
+			updateUI();
+		}
+	};
+
+	private void updateUI() {
+		if (settingsComposite.hasMaxDelayChanged()) {
+			delayScale.setSelection(0);
+			audioControl.resetBuffer();
+		}
+
+		settingsComposite.updateSettings();
+		updateDelayTime();
+		setDelayAmountText(delayScale.getSelection() / 10.0);
+		settings.save();
+		audioControl.updateLines();
+	}
 
 	public Application(Composite parent, int style) {
 		super(parent, style);
@@ -130,7 +142,7 @@ public class Application extends Composite {
 
 					int percent = audioControl.getBufferPercentage();
 
-					getDisplay().asyncExec(new ProgressBarUpdater(bufferProgressBar, percent, audioControl.isRecording()));
+					getDisplay().asyncExec(new ProgressBarUpdater(bufferProgressBar, percent));
 				}
 			}
 		}.start();
@@ -144,7 +156,7 @@ public class Application extends Composite {
 	public void onDispose(Event event) {
 		settings.save();
 
-		audioControl.stopRecording();
+		audioControl.closeLines();
 	}
 
 	public void onMuteButtonSelection(Event event) {
@@ -159,7 +171,7 @@ public class Application extends Composite {
 			settingsDialog.setText("Settings");
 			settingsDialog.setLayout(layout);
 			settingsDialog.setSize(450, 300);
-			settingsComposite = new SettingsDialog(settingsDialog, SWT.NONE, settings, applyButtonListener, audioControl);
+			settingsComposite = new SettingsDialog(settingsDialog, SWT.NONE, settings, audioApplyButtonListner, saveButtonListener, audioControl);
 
 			settingsDialog.open();
 		}
@@ -177,8 +189,8 @@ public class Application extends Composite {
 	}
 
 	private void updateDelayTime() {
-		maxDelayLabel.setText(settings.getDelayTime() + " sec");
-		delayScale.setMaximum(settings.getDelayTime() * 10);
+		maxDelayLabel.setText(settings.getMaxDelay() + " sec");
+		delayScale.setMaximum(settings.getMaxDelay() * 10);
 		maxDelayLabel.pack();
 
 	}

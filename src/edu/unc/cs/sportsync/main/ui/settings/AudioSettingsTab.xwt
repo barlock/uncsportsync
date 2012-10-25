@@ -1,4 +1,4 @@
-<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets">
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets" x:Name="testButton">
 	<Composite.layout>
 		<GridLayout numColumns="3" horizontalSpacing="25" marginWidth="10" marginHeight="10"/>
 	</Composite.layout>
@@ -13,7 +13,7 @@
 		</Combo.layoutData>
 	</Combo>
 	<Label/>
-	<ProgressBar x:Name="inputLevelBar">
+	<ProgressBar x:Name="inputLevelBar" maximum="10">
 		<ProgressBar.layoutData>
 			<GridData verticalAlignment="TOP" heightHint="7" horizontalSpan="2"/>
 		</ProgressBar.layoutData>
@@ -28,6 +28,9 @@
 			<GridData horizontalAlignment="FILL" horizontalSpan="2"/>
 		</Combo.layoutData>
 	</Combo>
+	<Label/>
+	<Button text="Test"/>
+	<Label/>
 	<Label text="Max delay (seconds):" x:Name="maxDelayLabel">
 		<Label.layoutData>
 			<GridData horizontalAlignment="RIGHT"/>
@@ -43,4 +46,11 @@
 			<GridData grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
 	</Label>
+	<Label/>
+	<Label/>
+	<Button text="Apply" x:Name="applyButton">
+		<Button.layoutData>
+			<GridData grabExcessVerticalSpace="true" horizontalAlignment="RIGHT" verticalAlignment="BOTTOM"/>
+		</Button.layoutData>
+	</Button>
 </Composite>

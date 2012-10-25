@@ -1,5 +1,7 @@
 package edu.unc.cs.sportsync.main.sound;
 
+import java.text.DecimalFormat;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.BooleanControl;
@@ -13,11 +15,11 @@ import javax.sound.sampled.TargetDataLine;
 import edu.unc.cs.sportsync.main.settings.Settings;
 
 public class SoundCheck extends Thread {
+	private final int DELAY_PARAM = 170000;
+
 	private final int BUFFER_SIZE;
 	private TargetDataLine inputLine;
 	private SourceDataLine outputLine;
-	private boolean isRecording = false;
-	private boolean isMuted = false;
 	private Mixer inputMixer;
 	private Mixer outputMixer;
 	private final AudioFormat SOUND_FORMAT;
@@ -29,65 +31,43 @@ public class SoundCheck extends Thread {
 	private int maxDelayAmount;
 
 	private byte[] myBuffer;
+	private byte[] outputBufferQueue;
 
+	private boolean disposed;
 	private final Settings settings;
 
 	/*
 	 * AudioFormat tells the format in which the data is recorded/played
 	 */
-	public SoundCheck(AudioFormat format, int bufferSize, int theMaxDelayAmount, Settings settings) throws LineUnavailableException {
+	public SoundCheck(AudioFormat format, int bufferSize, Settings settings) throws LineUnavailableException {
 		this.settings = settings;
 		/*
 		 * Get the input/output lines
 		 */
 		BUFFER_SIZE = bufferSize;
 		SOUND_FORMAT = format;
-		maxDelayAmount = theMaxDelayAmount;
-		if (maxDelayAmount == -1) {
-			maxDelayAmount = settings.getDelayTime();
-		}
+		maxDelayAmount = settings.getMaxDelay();
+		disposed = false;
+
 		openLines();
-		/*
-		 * inputLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
-		 * outputLine = (SourceDataLine) AudioSystem.getLine(sourceInfo);
-		 * DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class,
-		 * format, bufferSize); DataLine.Info sourceInfo = new
-		 * DataLine.Info(SourceDataLine.class, format, bufferSize);
-		 */
-
-		/*
-		 * Open the input/output lines
-		 */
-		inputLine.open(SOUND_FORMAT, BUFFER_SIZE);
-		outputLine.open(SOUND_FORMAT, BUFFER_SIZE);
-
 	}
 
-	protected int calculateRMSLevel(byte[] audioData) {
-		long lSum = 0;
-		for (int i = 0; i < audioData.length; i++) {
-			lSum = lSum + audioData[i];
+	protected int calculateRMSLevel(byte[] chunk) {
+		DecimalFormat df = new DecimalFormat("##");
+		float audioVal = 0;
+		for (int i = 0; i < chunk.length - 1; i++) {
+			audioVal = (float) (((chunk[i + 1] << 8) | (chunk[i] & 0xff)) / 32768.0);
 		}
 
-		double dAvg = lSum / audioData.length;
+		int percent = Integer.valueOf(df.format(Math.abs(audioVal) * 1000));
+		// System.out.println(percent);
 
-		double sumMeanSquare = 0d;
-		for (int j = 0; j < audioData.length; j++) {
-			sumMeanSquare = sumMeanSquare + Math.pow(audioData[j] - dAvg, 2d);
-		}
-
-		double averageMeanSquare = sumMeanSquare / audioData.length;
-		return (int) (Math.pow(averageMeanSquare, 0.5d) + 0.5);
+		return percent;
 	}
 
 	public int getBufferPercentage() {
-		if (fullyCached) {
-			return 100;
-		}
-
-		double percent = ((double) bufferCacheCount / cachingAmount) * 100;
+		double percent = fullyCached ? 100 : ((double) bufferCacheCount / cachingAmount) * 100;
 		return (int) percent;
-
 	}
 
 	public int getInputLevel() {
@@ -102,7 +82,7 @@ public class SoundCheck extends Thread {
 		return outputLine.getLevel();
 	}
 
-	public void openLines() throws LineUnavailableException {
+	public synchronized void openLines() throws LineUnavailableException {
 		if (inputLine != null && inputLine.isOpen()) {
 			inputLine.close();
 		}
@@ -145,66 +125,77 @@ public class SoundCheck extends Thread {
 
 		inputLine.open(SOUND_FORMAT, BUFFER_SIZE);
 		outputLine.open(SOUND_FORMAT, BUFFER_SIZE);
+
+		inputLine.start();
+		outputLine.start();
 	}
 
 	@Override
 	public void run() {
-		myBuffer = new byte[BUFFER_SIZE];
-		int delayParam = 170000;
-		cachingAmount = (int) (Math.ceil((float) delayParam / BUFFER_SIZE) * maxDelayAmount + 1);
-		byte[] outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
-		bufferCacheCount = 0;
 		int offset;
 		int delayVar;
-		int k;
-		fullyCached = false;
-		while (isRecording) {
-			/*
-			 * read data from input line
-			 */
 
-			k = inputLine.read(myBuffer, 0, myBuffer.length);
+		myBuffer = new byte[BUFFER_SIZE];
+		resetBuffer();
+
+		while (!disposed) {
+			// read data from input line
+			read(myBuffer, 0, myBuffer.length);
 
 			// System.out.printf("numbytesread = %d\n", k);
-			/*
-			 * write data to output line
-			 */
 
+			// write to output line
 			// outputBufferQueue[count] = myBuffer.clone();
 			System.arraycopy(myBuffer, 0, outputBufferQueue, bufferCacheCount * BUFFER_SIZE, BUFFER_SIZE);
 
 			if (bufferCacheCount == cachingAmount - 1) {
 				fullyCached = true;
 			}
+
 			bufferCacheCount = (bufferCacheCount + 1) % cachingAmount;
 
-			delayVar = (delayAmount * delayParam) / 10;
+			delayVar = (delayAmount * DELAY_PARAM) / 10;
 
 			if (fullyCached || delayVar < (bufferCacheCount - 1) * BUFFER_SIZE) {
 				offset = ((bufferCacheCount + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
 
-				/*
-				 * System.out.printf(
-				 * "count = %d offset = %d cachingAmount = %d delayVar = %d bufferSize = %d outputBufferSize = %d\n"
-				 * , bufferCacheCount, offset, cachingAmount, delayVar,
-				 * BUFFER_SIZE, outputBufferQueue.length);
-				 */
+				// System.out.printf("count = %d offset = %d cachingAmount = %d delayVar = %d bufferSize = %d outputBufferSize = %d\n",
+				// bufferCacheCount, offset, cachingAmount, delayVar,
+				// BUFFER_SIZE,
+				// outputBufferQueue.length);
 
 				if ((BUFFER_SIZE * cachingAmount - offset) < BUFFER_SIZE) {
-					outputLine.write(outputBufferQueue, offset, (BUFFER_SIZE * cachingAmount - offset));
-					outputLine.write(outputBufferQueue, 0, BUFFER_SIZE - (BUFFER_SIZE * cachingAmount - offset));
+					write(outputBufferQueue, offset, (BUFFER_SIZE * cachingAmount - offset));
+					write(outputBufferQueue, 0, BUFFER_SIZE - (BUFFER_SIZE * cachingAmount - offset));
 				} else {
-					outputLine.write(outputBufferQueue, offset, BUFFER_SIZE);
+					write(outputBufferQueue, offset, BUFFER_SIZE);
 				}
 
 			}
 		}
+	}
+
+	public synchronized void dispose() {
 		inputLine.close();
 		outputLine.close();
+		disposed = true;
+	}
+
+	private synchronized int read(byte[] buffer, int offset, int length) {
+		return inputLine.read(buffer, offset, length);
+	}
+
+	// possibly synchronized?
+	public void write(byte[] buffer, int offset, int length) {
+		outputLine.write(buffer, offset, length);
 	}
 
 	public void setDelayAmount(int amount) {
 		delayAmount = amount;
+	}
+
+	public void updateMaxDelay() {
+		maxDelayAmount = settings.getMaxDelay();
 	}
 
 	public void setVolume(double percentLevel) {
@@ -219,22 +210,21 @@ public class SoundCheck extends Thread {
 
 	@Override
 	public void start() {
-		inputLine.start();
-		outputLine.start();
-		isRecording = true;
 		super.start();
 	}
 
-	public void stopRecording() {
-		isRecording = false;
-	}
-
-	public void toggleMute() {
-		isMuted = !isMuted;
+	public synchronized void toggleMute() {
 		BooleanControl bc = (BooleanControl) outputLine.getControl(BooleanControl.Type.MUTE);
 		if (bc != null) {
-			bc.setValue(isMuted);
+			bc.setValue(!bc.getValue());
 		}
 	}
 
+	public synchronized void resetBuffer() {
+		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * maxDelayAmount + 1);
+		outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
+		bufferCacheCount = 0;
+		fullyCached = false;
+		delayAmount = 0;
+	}
 }
