@@ -29,7 +29,7 @@
 		</Combo.layoutData>
 	</Combo>
 	<Label/>
-	<Button text="Test"/>
+	<Button text="Test" x:Name="testButton" SelectionEvent="onTestButtonSelection"/>
 	<Label/>
 	<Label text="Max delay (seconds):" x:Name="maxDelayLabel">
 		<Label.layoutData>

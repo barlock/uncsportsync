@@ -19,16 +19,14 @@ import edu.unc.cs.sportsync.main.settings.Settings;
 
 public class AudioControl {
 
-	private static ArrayList<Mixer.Info> targetMixers = new ArrayList<Mixer.Info>();
+	public final static int BUFFER_SIZE = 40960;
+	private final float frameRate = (float) 44100.0;
 
+	private static ArrayList<Mixer.Info> targetMixers = new ArrayList<Mixer.Info>();
 	private static ArrayList<Mixer.Info> sourceMixers = new ArrayList<Mixer.Info>();
 
 	private Settings settings;
-
-	// private boolean isRecording;
-
 	private boolean isMuted;
-
 	private SoundCheck mySoundCheck;
 
 	public AudioControl() {
@@ -81,17 +79,6 @@ public class AudioControl {
 		mySoundCheck.setDelayAmount(delayAmount);
 	}
 
-	// public void setMaxDelay(int maxDelay) {
-	// settings.setDelayTime(maxDelay);
-	//
-	// if (maxDelay != mySoundCheck.getMaxDelay()) {
-	// System.out.println(mySoundCheck.getMaxDelay());
-	// mySoundCheck.resetBuffer();
-	// }
-	//
-	// mySoundCheck.updateMaxDelay();
-	// }
-
 	public void resetBuffer() {
 		mySoundCheck.resetBuffer();
 	}
@@ -105,8 +92,7 @@ public class AudioControl {
 	}
 
 	public void start() {
-		float frameRate = (float) 44100.0;
-		int BUFFER_SIZE = 40960;
+
 		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
 		mySoundCheck = null;
 		try {
@@ -209,5 +195,13 @@ public class AudioControl {
 
 	public static ArrayList<Mixer.Info> getTargetMixers() {
 		return targetMixers;
+	}
+
+	public void write(byte[] buff, int offset, int length) {
+		mySoundCheck.write(buff, offset, length);
+	}
+
+	public AudioFormat getAudioFormat() {
+		return mySoundCheck.getAudioFormat();
 	}
 }
