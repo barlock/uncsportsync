@@ -24,6 +24,10 @@ public class Settings {
 		if (file.exists()) {
 			failed = !parseSettingsFile(file);
 		}
+
+		if (failed) {
+			throw new IllegalStateException();
+		}
 	}
 
 	public int getMaxDelay() {

@@ -18,11 +18,13 @@ public class SoundCheck extends Thread {
 	private final int DELAY_PARAM = 170000;
 
 	private final int BUFFER_SIZE;
+	private final AudioFormat SOUND_FORMAT;
+
 	private TargetDataLine inputLine;
 	private SourceDataLine outputLine;
 	private Mixer inputMixer;
 	private Mixer outputMixer;
-	private final AudioFormat SOUND_FORMAT;
+
 	private int delayAmount;
 
 	private boolean fullyCached;
@@ -208,11 +210,6 @@ public class SoundCheck extends Thread {
 		}
 	}
 
-	@Override
-	public void start() {
-		super.start();
-	}
-
 	public synchronized void toggleMute() {
 		BooleanControl bc = (BooleanControl) outputLine.getControl(BooleanControl.Type.MUTE);
 		if (bc != null) {
@@ -226,5 +223,9 @@ public class SoundCheck extends Thread {
 		bufferCacheCount = 0;
 		fullyCached = false;
 		delayAmount = 0;
+	}
+
+	public AudioFormat getAudioFormat() {
+		return SOUND_FORMAT;
 	}
 }

@@ -17,12 +17,14 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Spinner;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
+import edu.unc.cs.sportsync.main.sound.TestLine;
 
 public class AudioSettingsTab extends Composite {
 
@@ -161,4 +163,9 @@ public class AudioSettingsTab extends Composite {
 		applyButton.addListener(SWT.Selection, audioApplyButtonListener);
 	}
 
+	public void onTestButtonSelection(Event event) {
+		TestLine testLine = new TestLine(outputMixerInfo.get(outputDeviceCombo.getSelectionIndex()), audioControl);
+		// getDisplay().asyncExec(testLine);
+		testLine.outputTestWav();
+	}
 }
