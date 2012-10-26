@@ -23,83 +23,84 @@ import edu.unc.cs.sportsync.main.sound.AudioControl;
 
 public class SettingsDialog extends Composite {
 
-	private final StackLayout settingsBoxLayout;
+    private final StackLayout settingsBoxLayout;
 
-	@UI
-	Composite settingsBox;
+    @UI
+    Composite settingsBox;
 
-	@UI
-	AudioSettingsTab audioSettingsTab;
+    @UI
+    AudioSettingsTab audioSettingsTab;
 
-	@UI
-	AboutPageTab aboutPageTab;
+    @UI
+    AboutPageTab aboutPageTab;
 
-	@UI
-	HelpPageTab helpPageTab;
+    @UI
+    HelpPageTab helpPageTab;
 
-	@UI
-	Button saveButton;
+    @UI
+    Button saveButton;
 
-	@UI
-	ToolItem audioButton;
+    @UI
+    ToolItem audioButton;
 
-	@UI
-	ToolItem helpButton;
+    @UI
+    ToolItem helpButton;
 
-	@UI
-	ToolItem aboutButton;
+    @UI
+    ToolItem aboutButton;
 
-	public SettingsDialog(Composite parent, int style, Settings settings, Listener audioApplyButtonListener, Listener saveButtonListener, AudioControl audioControl) {
-		super(parent, style);
-		setLayout(new FillLayout());
-		// load XWT
-		String name = SettingsDialog.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
-		try {
-			URL url = SettingsDialog.class.getResource(name);
-			Map<String, Object> options = new HashMap<String, Object>();
-			options.put(IXWTLoader.CLASS_PROPERTY, this);
-			options.put(IXWTLoader.CONTAINER_PROPERTY, this);
-			XWT.setLoadingContext(new DefaultLoadingContext(this.getClass().getClassLoader()));
-			XWT.loadWithOptions(url, options);
-		} catch (Throwable e) {
-			throw new Error("Unable to load " + name, e);
-		}
-		saveButton.addListener(SWT.Selection, saveButtonListener);
-		audioSettingsTab.setSettings(settings);
-		audioSettingsTab.setAudioControl(audioControl);
-		audioSettingsTab.setApplyButtonListener(audioApplyButtonListener);
-		settingsBoxLayout = (StackLayout) settingsBox.getLayout();
+    public SettingsDialog(Composite parent, int style, Settings settings, Listener audioTestButtonListener, Listener audioApplyButtonListener, Listener saveButtonListener, AudioControl audioControl) {
+        super(parent, style);
+        setLayout(new FillLayout());
+        // load XWT
+        String name = SettingsDialog.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX;
+        try {
+            URL url = SettingsDialog.class.getResource(name);
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put(IXWTLoader.CLASS_PROPERTY, this);
+            options.put(IXWTLoader.CONTAINER_PROPERTY, this);
+            XWT.setLoadingContext(new DefaultLoadingContext(this.getClass().getClassLoader()));
+            XWT.loadWithOptions(url, options);
+        } catch (Throwable e) {
+            throw new Error("Unable to load " + name, e);
+        }
+        saveButton.addListener(SWT.Selection, saveButtonListener);
+        audioSettingsTab.setSettings(settings);
+        audioSettingsTab.setAudioControl(audioControl);
+        audioSettingsTab.setApplyButtonListener(audioApplyButtonListener);
+        audioSettingsTab.setTestButtonListener(audioTestButtonListener);
+        settingsBoxLayout = (StackLayout) settingsBox.getLayout();
 
-		settingsBoxLayout.topControl = audioSettingsTab;
-		settingsBox.layout();
+        settingsBoxLayout.topControl = audioSettingsTab;
+        settingsBox.layout();
 
-		audioButton.setSelection(true);
-	}
+        audioButton.setSelection(true);
+    }
 
-	public boolean hasMaxDelayChanged() {
-		return audioSettingsTab.hasMaxDelaySpinnerChanged();
-	}
+    public boolean hasMaxDelayChanged() {
+        return audioSettingsTab.hasMaxDelaySpinnerChanged();
+    }
 
-	public void onCancelButtonSelection(Event event) {
-		getShell().close();
-	}
+    public void onAboutButtonSelection(Event event) {
+        settingsBoxLayout.topControl = aboutPageTab;
+        settingsBox.layout();
+    }
 
-	public void onAboutButtonSelection(Event event) {
-		settingsBoxLayout.topControl = aboutPageTab;
-		settingsBox.layout();
-	}
+    public void onAudioButtonSelection(Event event) {
+        settingsBoxLayout.topControl = audioSettingsTab;
+        settingsBox.layout();
+    }
 
-	public void onAudioButtonSelection(Event event) {
-		settingsBoxLayout.topControl = audioSettingsTab;
-		settingsBox.layout();
-	}
+    public void onCancelButtonSelection(Event event) {
+        getShell().close();
+    }
 
-	public void onHelpButtonSelection(Event event) {
-		settingsBoxLayout.topControl = helpPageTab;
-		settingsBox.layout();
-	}
+    public void onHelpButtonSelection(Event event) {
+        settingsBoxLayout.topControl = helpPageTab;
+        settingsBox.layout();
+    }
 
-	public void updateSettings() {
-		audioSettingsTab.updateSettings();
-	}
+    public void updateSettings() {
+        audioSettingsTab.updateSettings();
+    }
 }
