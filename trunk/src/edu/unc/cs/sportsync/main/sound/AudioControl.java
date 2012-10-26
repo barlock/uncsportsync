@@ -223,7 +223,6 @@ public class AudioControl {
             mySoundCheck.stopTestOutput();
         }
         isPlayingTestAudio = !isPlayingTestAudio;
-        System.out.println(isPlayingTestAudio);
     }
 
     public void toggleMute() {
