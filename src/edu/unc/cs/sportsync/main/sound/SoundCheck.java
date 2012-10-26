@@ -172,7 +172,6 @@ public class SoundCheck extends Thread {
             e.printStackTrace();
         }
         myClip.addLineListener(testAudioListener);
-        System.out.println(myClip.getLineInfo().toString());
         myClip.start();
         setVolume();
 
