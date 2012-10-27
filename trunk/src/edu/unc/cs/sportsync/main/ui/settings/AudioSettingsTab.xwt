@@ -1,4 +1,4 @@
-<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets" x:Name="testButton">
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets" x:Name="testButton"  DisposeEvent="onDispose">
 	<Composite.layout>
 		<GridLayout numColumns="3" horizontalSpacing="25" marginWidth="10" marginHeight="10"/>
 	</Composite.layout>
@@ -29,7 +29,7 @@
 		</Combo.layoutData>
 	</Combo>
 	<Label/>
-	<Button text="Test" x:Name="testButton" />
+	<Button text="Test" x:Name="testButton" SelectionEvent="onTestButtonSelection" x:Style="TOGGLE" />
 	<Label/>
 	<Label text="Max delay (seconds):" x:Name="maxDelayLabel">
 		<Label.layoutData>
