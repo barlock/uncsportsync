@@ -21,280 +21,273 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import edu.unc.cs.sportsync.main.settings.Settings;
 
 public class SoundCheck extends Thread {
-    private final int DELAY_PARAM = 170000;
+	private final int DELAY_PARAM = 170000;
 
-    private final int BUFFER_SIZE;
-    private TargetDataLine inputLine;
-    private SourceDataLine outputLine;
-    private Mixer inputMixer;
-    private Mixer outputMixer;
-    private final AudioFormat SOUND_FORMAT;
-    private int delayAmount;
+	private final int BUFFER_SIZE;
+	private TargetDataLine inputLine;
+	private SourceDataLine outputLine;
+	private Mixer inputMixer;
+	private Mixer outputMixer;
+	private final AudioFormat SOUND_FORMAT;
+	private int delayAmount;
 
-    private boolean fullyCached;
-    private int bufferCacheCount;
-    private int cachingAmount;
-    private int maxDelayAmount;
+	private boolean fullyCached;
+	private int bufferCacheCount;
+	private int cachingAmount;
+	private int maxDelayAmount;
 
-    private byte[] myBuffer;
-    private byte[] outputBufferQueue;
+	private byte[] myBuffer;
+	private byte[] outputBufferQueue;
 
-    private boolean disposed;
-    private final Settings settings;
-    private final File fightSong = new File("resources//music//UNCFightSong.wav");
+	private boolean disposed;
+	private final Settings settings;
+	private final File fightSong = new File("resources//music//UNCFightSong.wav");
 
-    private double percentLevelVolume;
+	private double percentLevelVolume;
 
-    private Clip myClip = null;
-    private final LineListener testAudioListener;
+	private Clip myClip = null;
+	private final LineListener testAudioListener;
 
-    /*
-     * AudioFormat tells the format in which the data is recorded/played
-     */
-    public SoundCheck(AudioFormat format, int bufferSize, Settings settings, LineListener tAudioListener) throws LineUnavailableException {
-        this.settings = settings;
-        /*
-         * Get the input/output lines
-         */
-        BUFFER_SIZE = bufferSize;
-        SOUND_FORMAT = format;
-        maxDelayAmount = settings.getMaxDelay();
-        disposed = false;
-        testAudioListener = tAudioListener;
+	/*
+	 * AudioFormat tells the format in which the data is recorded/played
+	 */
+	public SoundCheck(AudioFormat format, int bufferSize, Settings settings, LineListener tAudioListener) throws LineUnavailableException {
+		this.settings = settings;
+		/*
+		 * Get the input/output lines
+		 */
+		BUFFER_SIZE = bufferSize;
+		SOUND_FORMAT = format;
+		maxDelayAmount = settings.getMaxDelay();
+		disposed = false;
+		testAudioListener = tAudioListener;
 
-        openLines();
-    }
+		openLines();
+	}
 
-    protected int calculateRMSLevel(byte[] chunk) {
-        DecimalFormat df = new DecimalFormat("##");
-        float audioVal = 0;
-        for (int i = 0; i < chunk.length - 1; i++) {
-            audioVal = (float) (((chunk[i + 1] << 8) | (chunk[i] & 0xff)) / 32768.0);
-        }
+	protected int calculateRMSLevel(byte[] chunk) {
+		DecimalFormat df = new DecimalFormat("##");
+		float audioVal = 0;
+		for (int i = 0; i < chunk.length - 1; i++) {
+			audioVal = (float) (((chunk[i + 1] << 8) | (chunk[i] & 0xff)) / 32768.0);
+		}
 
-        int percent = Integer.valueOf(df.format(Math.abs(audioVal) * 1000));
-        // System.out.println(percent);
+		int percent = Integer.valueOf(df.format(Math.abs(audioVal) * 1000));
+		// System.out.println(percent);
 
-        return percent;
-    }
+		return percent;
+	}
 
-    public synchronized void dispose() {
-        inputLine.close();
-        outputLine.close();
-        disposed = true;
-    }
+	public synchronized void dispose() {
+		inputLine.close();
+		outputLine.close();
+		disposed = true;
+	}
 
-    public int getBufferPercentage() {
-        double percent = fullyCached ? 100 : ((double) bufferCacheCount / cachingAmount) * 100;
-        return (int) percent;
-    }
+	public int getBufferPercentage() {
+		double percent = fullyCached ? 100 : ((double) bufferCacheCount / cachingAmount) * 100;
+		return (int) percent;
+	}
 
-    public int getInputLevel() {
-        return calculateRMSLevel(myBuffer);
-    }
+	public int getInputLevel() {
+		return calculateRMSLevel(myBuffer);
+	}
 
-    public int getMaxDelay() {
-        return maxDelayAmount;
-    }
+	public int getMaxDelay() {
+		return maxDelayAmount;
+	}
 
-    public double getOutputLevel() {
-        return outputLine.getLevel();
-    }
+	public double getOutputLevel() {
+		return outputLine.getLevel();
+	}
 
-    public synchronized void openLines() throws LineUnavailableException {
-        if (inputLine != null && inputLine.isOpen()) {
-            inputLine.close();
-        }
+	public synchronized void openLines() throws LineUnavailableException {
+		if (inputLine != null && inputLine.isOpen()) {
+			inputLine.close();
+		}
 
-        if (outputLine != null && outputLine.isOpen()) {
-            outputLine.close();
-        }
+		if (outputLine != null && outputLine.isOpen()) {
+			outputLine.close();
+		}
 
-        inputLine = null;
-        outputLine = null;
+		inputLine = null;
+		outputLine = null;
 
-        inputMixer = AudioSystem.getMixer(settings.getInputMixer());
-        outputMixer = AudioSystem.getMixer(settings.getOutputMixer());
+		inputMixer = AudioSystem.getMixer(settings.getInputMixer());
+		outputMixer = AudioSystem.getMixer(settings.getOutputMixer());
 
-        inputMixer.open();
-        outputMixer.open();
+		inputMixer.open();
+		outputMixer.open();
 
-        Line.Info[] targetlineinfos = inputMixer.getTargetLineInfo();
-        for (int i = 0; i < targetlineinfos.length; i++) {
-            if (targetlineinfos[i].getLineClass() == TargetDataLine.class) {
-                inputLine = (TargetDataLine) AudioSystem.getLine(targetlineinfos[i]);
-                break;
-            }
-        }
+		Line.Info[] targetlineinfos = inputMixer.getTargetLineInfo();
+		for (int i = 0; i < targetlineinfos.length; i++) {
+			if (targetlineinfos[i].getLineClass() == TargetDataLine.class) {
+				inputLine = (TargetDataLine) AudioSystem.getLine(targetlineinfos[i]);
+				break;
+			}
+		}
 
-        Line.Info[] sourcelineinfos = outputMixer.getSourceLineInfo();
-        for (int i = 0; i < sourcelineinfos.length; i++) {
-            if (sourcelineinfos[i].getLineClass() == SourceDataLine.class) {
-                outputLine = (SourceDataLine) AudioSystem.getLine(sourcelineinfos[i]);
-                break;
-            }
-        }
+		Line.Info[] sourcelineinfos = outputMixer.getSourceLineInfo();
+		for (int i = 0; i < sourcelineinfos.length; i++) {
+			if (sourcelineinfos[i].getLineClass() == SourceDataLine.class) {
+				outputLine = (SourceDataLine) AudioSystem.getLine(sourcelineinfos[i]);
+				break;
+			}
+		}
 
-        inputMixer.close();
-        outputMixer.close();
+		inputMixer.close();
+		outputMixer.close();
 
-        if (inputLine == null || outputLine == null) {
-            throw new LineUnavailableException();
-        }
+		if (inputLine == null || outputLine == null) {
+			throw new LineUnavailableException();
+		}
 
-        inputLine.open(SOUND_FORMAT, BUFFER_SIZE);
-        outputLine.open(SOUND_FORMAT, BUFFER_SIZE);
+		inputLine.open(SOUND_FORMAT, BUFFER_SIZE);
+		outputLine.open(SOUND_FORMAT, BUFFER_SIZE);
 
-        inputLine.start();
-        outputLine.start();
-    }
+		inputLine.start();
+		outputLine.start();
+	}
 
-    public void playTestOutput() {
-        AudioInputStream testFileInputStream = null;
-        Mixer.Info mixer = settings.getOutputMixer();
-        try {
-            testFileInputStream = AudioSystem.getAudioInputStream(fightSong);
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            myClip = AudioSystem.getClip(mixer);
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
-        try {
-            myClip.open(testFileInputStream);
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        myClip.addLineListener(testAudioListener);
-        myClip.start();
-        setVolume();
+	public void playTestOutput() {
+		AudioInputStream testFileInputStream = null;
+		Mixer.Info mixer = settings.getOutputMixer();
 
-    }
+		try {
+			testFileInputStream = AudioSystem.getAudioInputStream(fightSong);
+			myClip = AudioSystem.getClip(mixer);
+			myClip.open(testFileInputStream);
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
 
-    private synchronized int read(byte[] buffer, int offset, int length) {
-        return inputLine.read(buffer, offset, length);
-    }
+		myClip.addLineListener(testAudioListener);
+		myClip.start();
+		setVolume();
+	}
 
-    public synchronized void resetBuffer() {
-        cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * maxDelayAmount + 1);
-        outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
-        bufferCacheCount = 0;
-        fullyCached = false;
-        delayAmount = 0;
-    }
+	private synchronized int read(byte[] buffer, int offset, int length) {
+		return inputLine.read(buffer, offset, length);
+	}
 
-    @Override
-    public void run() {
-        int offset;
-        int delayVar;
+	public synchronized void resetBuffer() {
+		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * maxDelayAmount + 1);
+		outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
+		bufferCacheCount = 0;
+		fullyCached = false;
+		delayAmount = 0;
+	}
 
-        myBuffer = new byte[BUFFER_SIZE];
-        resetBuffer();
+	@Override
+	public void run() {
+		int offset;
+		int delayVar;
 
-        while (!disposed) {
-            // read data from input line
-            read(myBuffer, 0, myBuffer.length);
+		myBuffer = new byte[BUFFER_SIZE];
+		resetBuffer();
 
-            // System.out.printf("numbytesread = %d\n", k);
+		while (!disposed) {
+			// read data from input line
+			read(myBuffer, 0, myBuffer.length);
 
-            // write to output line
-            // outputBufferQueue[count] = myBuffer.clone();
-            System.arraycopy(myBuffer, 0, outputBufferQueue, bufferCacheCount * BUFFER_SIZE, BUFFER_SIZE);
+			// System.out.printf("numbytesread = %d\n", k);
 
-            if (bufferCacheCount == cachingAmount - 1) {
-                fullyCached = true;
-            }
+			// write to output line
+			// outputBufferQueue[count] = myBuffer.clone();
+			System.arraycopy(myBuffer, 0, outputBufferQueue, bufferCacheCount * BUFFER_SIZE, BUFFER_SIZE);
 
-            bufferCacheCount = (bufferCacheCount + 1) % cachingAmount;
+			if (bufferCacheCount == cachingAmount - 1) {
+				fullyCached = true;
+			}
 
-            delayVar = (delayAmount * DELAY_PARAM) / 10;
+			bufferCacheCount = (bufferCacheCount + 1) % cachingAmount;
 
-            if (fullyCached || delayVar < (bufferCacheCount - 1) * BUFFER_SIZE) {
-                offset = ((bufferCacheCount + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
+			delayVar = (delayAmount * DELAY_PARAM) / 10;
 
-                // System.out.printf("count = %d offset = %d cachingAmount = %d delayVar = %d bufferSize = %d outputBufferSize = %d\n",
-                // bufferCacheCount, offset, cachingAmount, delayVar,
-                // BUFFER_SIZE,
-                // outputBufferQueue.length);
+			if (fullyCached || delayVar < (bufferCacheCount - 1) * BUFFER_SIZE) {
+				offset = ((bufferCacheCount + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
 
-                if ((BUFFER_SIZE * cachingAmount - offset) < BUFFER_SIZE) {
-                    write(outputBufferQueue, offset, (BUFFER_SIZE * cachingAmount - offset));
-                    write(outputBufferQueue, 0, BUFFER_SIZE - (BUFFER_SIZE * cachingAmount - offset));
-                } else {
-                    write(outputBufferQueue, offset, BUFFER_SIZE);
-                }
+				// System.out.printf("count = %d offset = %d cachingAmount = %d delayVar = %d bufferSize = %d outputBufferSize = %d\n",
+				// bufferCacheCount, offset, cachingAmount, delayVar,
+				// BUFFER_SIZE,
+				// outputBufferQueue.length);
 
-            }
-        }
-    }
+				if ((BUFFER_SIZE * cachingAmount - offset) < BUFFER_SIZE) {
+					write(outputBufferQueue, offset, (BUFFER_SIZE * cachingAmount - offset));
+					write(outputBufferQueue, 0, BUFFER_SIZE - (BUFFER_SIZE * cachingAmount - offset));
+				} else {
+					write(outputBufferQueue, offset, BUFFER_SIZE);
+				}
 
-    public void setDelayAmount(int amount) {
-        delayAmount = amount;
-    }
+			}
+		}
+	}
 
-    public void setVolume() {
-        if (outputLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            FloatControl volume = (FloatControl) outputLine.getControl(FloatControl.Type.MASTER_GAIN);
-            float minimum = volume.getMinimum();
-            float maximum = volume.getMaximum();
-            float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
-            volume.setValue(currentVolume);
-        }
-        if (myClip.isOpen() && myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
-            float minimum = volume.getMinimum();
-            float maximum = volume.getMaximum();
-            float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
-            volume.setValue(currentVolume);
-        }
-    }
+	public void setDelayAmount(int amount) {
+		delayAmount = amount;
+	}
 
-    public void setVolume(double percentLevel) {
-        if (outputLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            percentLevelVolume = percentLevel;
-            FloatControl volume = (FloatControl) outputLine.getControl(FloatControl.Type.MASTER_GAIN);
-            float minimum = volume.getMinimum();
-            float maximum = volume.getMaximum();
-            float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
-            volume.setValue(currentVolume);
-        }
-        if (myClip != null && myClip.isOpen() && myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
-            float minimum = volume.getMinimum();
-            float maximum = volume.getMaximum();
-            float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
-            volume.setValue(currentVolume);
-        }
-    }
+	public void setVolume() {
+		if (outputLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+			FloatControl volume = (FloatControl) outputLine.getControl(FloatControl.Type.MASTER_GAIN);
+			float minimum = volume.getMinimum();
+			float maximum = volume.getMaximum();
+			float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
+			volume.setValue(currentVolume);
+		}
+		if (myClip.isOpen() && myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+			FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
+			float minimum = volume.getMinimum();
+			float maximum = volume.getMaximum();
+			float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
+			volume.setValue(currentVolume);
+		}
+	}
 
-    @Override
-    public void start() {
-        super.start();
-    }
+	public void setVolume(double percentLevel) {
+		if (outputLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+			percentLevelVolume = percentLevel;
+			FloatControl volume = (FloatControl) outputLine.getControl(FloatControl.Type.MASTER_GAIN);
+			float minimum = volume.getMinimum();
+			float maximum = volume.getMaximum();
+			float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
+			volume.setValue(currentVolume);
+		}
+		if (myClip != null && myClip.isOpen() && myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+			FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
+			float minimum = volume.getMinimum();
+			float maximum = volume.getMaximum();
+			float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
+			volume.setValue(currentVolume);
+		}
+	}
 
-    public synchronized void stopTestOutput() {
-        myClip.stop();
-    }
+	@Override
+	public void start() {
+		super.start();
+	}
 
-    public synchronized void toggleMute() {
-        BooleanControl bc = (BooleanControl) outputLine.getControl(BooleanControl.Type.MUTE);
-        if (bc != null) {
-            bc.setValue(!bc.getValue());
-        }
-    }
+	public synchronized void stopTestOutput() {
+		myClip.stop();
+	}
 
-    public void updateMaxDelay() {
-        maxDelayAmount = settings.getMaxDelay();
-    }
+	public synchronized void toggleMute() {
+		BooleanControl bc = (BooleanControl) outputLine.getControl(BooleanControl.Type.MUTE);
+		if (bc != null) {
+			bc.setValue(!bc.getValue());
+		}
+	}
 
-    // possibly synchronized?
-    public void write(byte[] buffer, int offset, int length) {
-        outputLine.write(buffer, offset, length);
-    }
+	public void updateMaxDelay() {
+		maxDelayAmount = settings.getMaxDelay();
+	}
+
+	// possibly synchronized?
+	public void write(byte[] buffer, int offset, int length) {
+		outputLine.write(buffer, offset, length);
+	}
 }
