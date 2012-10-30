@@ -1,6 +1,6 @@
 package edu.unc.cs.sportsync.main.sound;
 
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.text.DecimalFormat;
 
 import javax.sound.sampled.AudioFormat;
@@ -40,7 +40,6 @@ public class SoundCheck extends Thread {
 
 	private boolean disposed;
 	private final Settings settings;
-	private final File fightSong = new File("resources//music//UNCFightSong.wav");
 
 	private double percentLevelVolume;
 
@@ -153,7 +152,7 @@ public class SoundCheck extends Thread {
 		Mixer.Info mixer = settings.getOutputMixer();
 
 		try {
-			testFileInputStream = AudioSystem.getAudioInputStream(fightSong);
+			testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("UNCFightSong.wav")));
 			myClip = AudioSystem.getClip(mixer);
 			myClip.open(testFileInputStream);
 		} catch (Exception e) {
