@@ -239,7 +239,7 @@ public class SoundCheck extends Thread {
 			float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
 			volume.setValue(currentVolume);
 		}
-		if (myClip.isOpen() && myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+		if (myClip != null && myClip.isOpen() && myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
 			FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
 			float minimum = volume.getMinimum();
 			float maximum = volume.getMaximum();
