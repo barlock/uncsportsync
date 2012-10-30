@@ -1,5 +1,0 @@
-#sidebar TableOfContents
-=SportSync Instructions=
-
-* [Home Product]
-* [Installation]
