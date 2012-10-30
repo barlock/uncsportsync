@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Spinner;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
+import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
 
 public class AudioSettingsTab extends Composite {
 
@@ -140,6 +141,8 @@ public class AudioSettingsTab extends Composite {
 					try {
 						Thread.sleep(60);
 					} catch (Throwable th) {
+						ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", th);
+						System.exit(1);
 					}
 					if (isDisposed()) {
 						return;

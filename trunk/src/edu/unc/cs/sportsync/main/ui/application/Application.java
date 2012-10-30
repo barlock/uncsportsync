@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
+import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
 import edu.unc.cs.sportsync.main.ui.settings.SettingsDialog;
 
 public class Application extends Composite {
@@ -123,6 +124,8 @@ public class Application extends Composite {
 					try {
 						Thread.sleep(1000);
 					} catch (Throwable th) {
+						ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", th);
+						System.exit(1);
 					}
 					if (isDisposed()) {
 						return;
