@@ -199,14 +199,16 @@ public class Application extends Composite {
 
 		if (settingsComposite.hasMaxDelayChanged()) {
 			delayScale.setSelection(0);
+			settingsComposite.updateSettings();
 			updateDelayTime();
 			audioControl.resetBuffer();
+		} else {
+			settingsComposite.updateSettings();
+			updateDelayTime();
 		}
 
-		settingsComposite.updateSettings();
-		updateDelayTime();
 		setDelayAmountText(delayScale.getSelection() / 10.0);
-		settings.save();
 		audioControl.updateLines();
+		settings.save();
 	}
 }
