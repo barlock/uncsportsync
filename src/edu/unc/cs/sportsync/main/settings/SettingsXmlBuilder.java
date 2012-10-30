@@ -16,6 +16,8 @@ import org.w3c.dom.Element;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
+import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
+
 public class SettingsXmlBuilder {
 
 	Document doc;
@@ -30,8 +32,9 @@ public class SettingsXmlBuilder {
 			root = doc.createElement("settings");
 			doc.appendChild(root);
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+			System.exit(1);
 		}
 	}
 
@@ -94,11 +97,13 @@ public class SettingsXmlBuilder {
 			XMLSerializer serializer = new XMLSerializer(new FileOutputStream(new File(path)), format);
 			serializer.serialize(doc);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+			System.exit(1);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+			System.exit(1);
 		}
 
 	}

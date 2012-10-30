@@ -1,7 +1,6 @@
 package edu.unc.cs.sportsync.main.sound;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 
 import javax.sound.sampled.AudioFormat;
@@ -16,9 +15,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
+import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
 
 public class SoundCheck extends Thread {
 	private final int DELAY_PARAM = 170000;
@@ -157,12 +156,10 @@ public class SoundCheck extends Thread {
 			testFileInputStream = AudioSystem.getAudioInputStream(fightSong);
 			myClip = AudioSystem.getClip(mixer);
 			myClip.open(testFileInputStream);
-		} catch (LineUnavailableException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
+			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+			System.exit(1);
 		}
 
 		myClip.addLineListener(testAudioListener);

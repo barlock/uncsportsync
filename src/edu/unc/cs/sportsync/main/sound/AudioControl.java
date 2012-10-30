@@ -18,6 +18,7 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
+import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
 
 public class AudioControl {
 
@@ -90,6 +91,8 @@ public class AudioControl {
 				mySoundCheck.openLines();
 			} catch (LineUnavailableException e) {
 				e.printStackTrace();
+				ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+				System.exit(1);
 			}
 		}
 	}
@@ -119,6 +122,8 @@ public class AudioControl {
 			mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE, settings, testAudioListener);
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
+			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+			System.exit(1);
 		}
 		mySoundCheck.start();
 
@@ -150,8 +155,9 @@ public class AudioControl {
 		try {
 			mySoundCheck.openLines();
 		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+			System.exit(1);
 		}
 		mySoundCheck.setVolume();
 		if (isMuted) {
@@ -197,6 +203,8 @@ public class AudioControl {
 				mixer.open();
 			} catch (LineUnavailableException e) {
 				e.printStackTrace();
+				ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+				System.exit(1);
 			}
 			Line.Info[] targetLines = mixer.getTargetLineInfo();
 			for (Line.Info info : targetLines) {
@@ -221,6 +229,8 @@ public class AudioControl {
 				mixer.open();
 			} catch (LineUnavailableException e) {
 				e.printStackTrace();
+				ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+				System.exit(1);
 			}
 			Line.Info[] sourceLines = mixer.getSourceLineInfo();
 			for (Line.Info info : sourceLines) {
