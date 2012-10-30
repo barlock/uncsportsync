@@ -199,6 +199,7 @@ public class Application extends Composite {
 
 		if (settingsComposite.hasMaxDelayChanged()) {
 			delayScale.setSelection(0);
+			updateDelayTime();
 			audioControl.resetBuffer();
 		}
 

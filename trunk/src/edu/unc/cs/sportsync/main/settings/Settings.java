@@ -5,7 +5,6 @@ import java.io.File;
 import javax.sound.sampled.Mixer;
 
 import edu.unc.cs.sportsync.main.sound.AudioControl;
-import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
 
 public class Settings {
 	private final String PATH = "settings.xml";
@@ -27,7 +26,8 @@ public class Settings {
 		}
 
 		if (failed) {
-			throw new IllegalStateException();
+			System.out.println("failed to parse settings file");
+			// do nothing, this is ok
 		}
 	}
 
@@ -64,8 +64,9 @@ public class Settings {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			ErrorUtil.openStackTraceDialog("An I/O error occured, the application will shut down", e);
-			System.exit(1);
+			// ErrorUtil.openStackTraceDialog("An I/O error occured, the application will shut down",
+			// e);
+			// System.exit(1);
 			return false;
 		}
 
