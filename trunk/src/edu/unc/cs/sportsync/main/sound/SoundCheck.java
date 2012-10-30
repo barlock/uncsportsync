@@ -33,7 +33,6 @@ public class SoundCheck extends Thread {
 	private boolean fullyCached;
 	private int bufferCacheCount;
 	private int cachingAmount;
-	private int maxDelayAmount;
 
 	private byte[] myBuffer;
 	private byte[] outputBufferQueue;
@@ -56,7 +55,6 @@ public class SoundCheck extends Thread {
 		 */
 		BUFFER_SIZE = bufferSize;
 		SOUND_FORMAT = format;
-		maxDelayAmount = settings.getMaxDelay();
 		disposed = false;
 		testAudioListener = tAudioListener;
 
@@ -84,6 +82,7 @@ public class SoundCheck extends Thread {
 
 	public int getBufferPercentage() {
 		double percent = fullyCached ? 100 : ((double) bufferCacheCount / cachingAmount) * 100;
+		// System.out.println(bufferCacheCount + "/" + cachingAmount);
 		return (int) percent;
 	}
 
@@ -92,7 +91,7 @@ public class SoundCheck extends Thread {
 	}
 
 	public int getMaxDelay() {
-		return maxDelayAmount;
+		return settings.getMaxDelay();
 	}
 
 	public double getOutputLevel() {
@@ -171,7 +170,8 @@ public class SoundCheck extends Thread {
 	}
 
 	public synchronized void resetBuffer() {
-		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * maxDelayAmount + 1);
+		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * settings.getMaxDelay() + 1);
+		System.out.println(cachingAmount);
 		outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
 		bufferCacheCount = 0;
 		fullyCached = false;
@@ -218,7 +218,6 @@ public class SoundCheck extends Thread {
 				} else {
 					write(outputBufferQueue, offset, BUFFER_SIZE);
 				}
-
 			}
 		}
 	}
@@ -276,10 +275,6 @@ public class SoundCheck extends Thread {
 		if (bc != null) {
 			bc.setValue(!bc.getValue());
 		}
-	}
-
-	public void updateMaxDelay() {
-		maxDelayAmount = settings.getMaxDelay();
 	}
 
 	// possibly synchronized?
