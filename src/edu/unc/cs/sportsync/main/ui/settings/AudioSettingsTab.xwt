@@ -7,7 +7,7 @@
 			<GridData horizontalAlignment="RIGHT"/>
 		</Label.layoutData>
 	</Label>
-	<Combo x:Name="inputDeviceCombo">
+	<Combo x:Name="inputDeviceCombo" x:Style="READ_ONLY">
 		<Combo.layoutData>
 			<GridData horizontalAlignment="FILL" horizontalSpan="2"/>
 		</Combo.layoutData>
@@ -23,7 +23,7 @@
 			<GridData horizontalAlignment="RIGHT"/>
 		</Label.layoutData>
 	</Label>
-	<Combo x:Name="outputDeviceCombo">
+	<Combo x:Name="outputDeviceCombo" x:Style="READ_ONLY">
 		<Combo.layoutData>
 			<GridData horizontalAlignment="FILL" horizontalSpan="2"/>
 		</Combo.layoutData>
