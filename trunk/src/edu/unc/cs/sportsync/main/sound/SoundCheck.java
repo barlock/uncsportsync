@@ -82,7 +82,6 @@ public class SoundCheck extends Thread {
 
 	public int getBufferPercentage() {
 		double percent = fullyCached ? 100 : ((double) bufferCacheCount / cachingAmount) * 100;
-		// System.out.println(bufferCacheCount + "/" + cachingAmount);
 		return (int) percent;
 	}
 
@@ -155,9 +154,15 @@ public class SoundCheck extends Thread {
 			myClip = AudioSystem.getClip(mixer);
 			myClip.open(testFileInputStream);
 		} catch (Exception e) {
-			e.printStackTrace();
-			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
-			System.exit(1);
+			try {
+				testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("test.wav")));
+				myClip = AudioSystem.getClip(mixer);
+				myClip.open(testFileInputStream);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+				System.exit(1);
+			}
 		}
 
 		myClip.addLineListener(testAudioListener);
@@ -171,7 +176,6 @@ public class SoundCheck extends Thread {
 
 	public synchronized void resetBuffer() {
 		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * settings.getMaxDelay() + 1);
-		System.out.println(cachingAmount);
 		outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
 		bufferCacheCount = 0;
 		fullyCached = false;
