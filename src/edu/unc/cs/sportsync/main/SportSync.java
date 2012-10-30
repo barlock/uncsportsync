@@ -12,40 +12,49 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.unc.cs.sportsync.main.ui.application.Application;
+import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
 
 public class SportSync {
-    private static void centerInDisplay(Shell shell) {
-        Rectangle displayArea = shell.getDisplay().getClientArea();
-        shell.setBounds(displayArea.width / 4, displayArea.height / 4, displayArea.width / 2, displayArea.height / 2);
-    }
+	private static void centerInDisplay(Shell shell) {
+		Rectangle displayArea = shell.getDisplay().getClientArea();
+		shell.setBounds(displayArea.width / 4, displayArea.height / 4, displayArea.width / 2, displayArea.height / 2);
+	}
 
-    public static void main(String args[]) throws Exception {
-        URL url = SportSync.class.getResource(SportSync.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX);
-        Control control = XWT.load(url);
-        Shell shell = control.getShell();
-        shell.layout();
-        centerInDisplay(shell);
-        // run events loop
+	public static void main(String args[]) {
+		Shell shell = new Shell();
+		try {
+			URL url = SportSync.class.getResource(SportSync.class.getSimpleName() + IConstants.XWT_EXTENSION_SUFFIX);
+			Control control = XWT.load(url);
+			shell = control.getShell();
+			shell.layout();
+			centerInDisplay(shell);
+			// run events loop
 
-        Image logo512 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync512.png")));
-        Image logo256 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync256.png")));
-        Image logo48 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync48.png")));
-        Image logo32 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync32.png")));
-        Image logo16 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync16.ico")));
-        Image[] images = { logo512, logo256, logo48, logo32, logo16 };
+			Image logo512 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync512.png")));
+			Image logo256 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync256.png")));
+			Image logo48 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync48.png")));
+			Image logo32 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync32.png")));
+			Image logo16 = new Image(shell.getDisplay(), new ImageData(SportSync.class.getResourceAsStream("sportSync16.ico")));
+			Image[] images = { logo512, logo256, logo48, logo32, logo16 };
 
-        shell.setSize(400, 250);
-        shell.setMinimumSize(400, 250);
-        shell.setImages(images);
-        Application appComposite = new Application(shell, SWT.None);
+			shell.setSize(400, 250);
+			shell.setMinimumSize(400, 250);
+			shell.setImages(images);
+			Application appComposite = new Application(shell, SWT.None);
 
-        shell.open();
-        while (!shell.isDisposed()) {
-            if (!shell.getDisplay().readAndDispatch()) {
-                shell.getDisplay().sleep();
-            }
-        }
+			shell.open();
+			while (!shell.isDisposed()) {
+				if (!shell.getDisplay().readAndDispatch()) {
+					shell.getDisplay().sleep();
+				}
+			}
 
-        appComposite.dispose();
-    }
+			appComposite.dispose();
+		} catch (Exception e) {
+			e.printStackTrace();
+			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+			System.exit(1);
+		}
+	}
+
 }
