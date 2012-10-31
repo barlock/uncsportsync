@@ -5,6 +5,7 @@
 SportSync allows you to sync your radio broadcast and tv broadcast so you can pick what announcers you personally want to listen to.
 
 
-== Features ==
-<img src="https://sportsync.googlecode.com/images/app_settings"/>
+= Features =
 
+== Delay Slider ==
+<img src="http://sportsync.googlecode.com/svn/img/app_settings.png/>
