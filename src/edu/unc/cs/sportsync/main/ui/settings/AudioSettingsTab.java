@@ -199,13 +199,14 @@ public class AudioSettingsTab extends Composite {
 	}
 
 	public void stopTestAudio() {
-		testButton.setText("Test");
-		testButton.setSelection(false);
+		if (!isDisposed()) {
+			testButton.setText("Test");
+			testButton.setSelection(false);
+		}
 		audioControl.stopTestOutput();
 	}
 
 	public void onDispose(Event event) {
-		audioControl.stopTestOutput();
 		stopTestAudio();
 	}
 }

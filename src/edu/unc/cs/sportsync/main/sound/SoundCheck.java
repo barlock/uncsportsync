@@ -1,7 +1,6 @@
 package edu.unc.cs.sportsync.main.sound;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.BufferedInputStream;
 import java.text.DecimalFormat;
 
 import javax.sound.sampled.AudioFormat;
@@ -16,9 +15,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import edu.unc.cs.sportsync.main.settings.Settings;
+import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
 
 public class SoundCheck extends Thread {
 	private final int DELAY_PARAM = 170000;
@@ -40,7 +39,6 @@ public class SoundCheck extends Thread {
 
 	private boolean disposed;
 	private final Settings settings;
-	private final File fightSong = new File("resources//music//UNCFightSongShort.wav");
 
 	private double percentLevelVolume;
 
@@ -151,15 +149,19 @@ public class SoundCheck extends Thread {
 		Mixer.Info mixer = settings.getOutputMixer();
 
 		try {
-			testFileInputStream = AudioSystem.getAudioInputStream(fightSong);
+			testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("UNCFightSongShort.wav")));
 			myClip = AudioSystem.getClip(mixer);
 			myClip.open(testFileInputStream);
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			try {
+				testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("test.wav")));
+				myClip = AudioSystem.getClip(mixer);
+				myClip.open(testFileInputStream);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+				System.exit(1);
+			}
 		}
 
 		myClip.addLineListener(testAudioListener);
