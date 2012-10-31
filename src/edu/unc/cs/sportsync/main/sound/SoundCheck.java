@@ -41,8 +41,7 @@ public class SoundCheck extends Thread {
 
 	private boolean disposed;
 	private final Settings settings;
-	private final File fightSong = new File(
-			"resources//music//UNCFightSong.wav");
+	private final File fightSong = new File("resources//music//UNCFightSongShort.wav");
 
 	private double percentLevelVolume;
 
@@ -52,8 +51,7 @@ public class SoundCheck extends Thread {
 	/*
 	 * AudioFormat tells the format in which the data is recorded/played
 	 */
-	public SoundCheck(AudioFormat format, int bufferSize, Settings settings,
-			LineListener tAudioListener) throws LineUnavailableException {
+	public SoundCheck(AudioFormat format, int bufferSize, Settings settings, LineListener tAudioListener) throws LineUnavailableException {
 		this.settings = settings;
 		/*
 		 * Get the input/output lines
@@ -87,8 +85,7 @@ public class SoundCheck extends Thread {
 	}
 
 	public int getBufferPercentage() {
-		double percent = fullyCached ? 100
-				: ((double) bufferCacheCount / cachingAmount) * 100;
+		double percent = fullyCached ? 100 : ((double) bufferCacheCount / cachingAmount) * 100;
 		return (int) percent;
 	}
 
@@ -125,8 +122,7 @@ public class SoundCheck extends Thread {
 		Line.Info[] targetlineinfos = inputMixer.getTargetLineInfo();
 		for (int i = 0; i < targetlineinfos.length; i++) {
 			if (targetlineinfos[i].getLineClass() == TargetDataLine.class) {
-				inputLine = (TargetDataLine) AudioSystem
-						.getLine(targetlineinfos[i]);
+				inputLine = (TargetDataLine) AudioSystem.getLine(targetlineinfos[i]);
 				break;
 			}
 		}
@@ -134,8 +130,7 @@ public class SoundCheck extends Thread {
 		Line.Info[] sourcelineinfos = outputMixer.getSourceLineInfo();
 		for (int i = 0; i < sourcelineinfos.length; i++) {
 			if (sourcelineinfos[i].getLineClass() == SourceDataLine.class) {
-				outputLine = (SourceDataLine) AudioSystem
-						.getLine(sourcelineinfos[i]);
+				outputLine = (SourceDataLine) AudioSystem.getLine(sourcelineinfos[i]);
 				break;
 			}
 		}
@@ -173,8 +168,7 @@ public class SoundCheck extends Thread {
 		myClip.addLineListener(testAudioListener);
 		myClip.start();
 		if (myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-			FloatControl volume = (FloatControl) myClip
-					.getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
 			float maximum = volume.getMaximum();
 			volume.setValue(maximum);
 		}
@@ -185,8 +179,7 @@ public class SoundCheck extends Thread {
 	}
 
 	public synchronized void resetBuffer() {
-		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE)
-				* maxDelayAmount + 1);
+		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * maxDelayAmount + 1);
 		outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
 		bufferCacheCount = 0;
 		fullyCached = false;
@@ -209,8 +202,7 @@ public class SoundCheck extends Thread {
 
 			// write to output line
 			// outputBufferQueue[count] = myBuffer.clone();
-			System.arraycopy(myBuffer, 0, outputBufferQueue, bufferCacheCount
-					* BUFFER_SIZE, BUFFER_SIZE);
+			System.arraycopy(myBuffer, 0, outputBufferQueue, bufferCacheCount * BUFFER_SIZE, BUFFER_SIZE);
 
 			if (bufferCacheCount == cachingAmount - 1) {
 				fullyCached = true;
@@ -221,8 +213,7 @@ public class SoundCheck extends Thread {
 			delayVar = (delayAmount * DELAY_PARAM) / 10;
 
 			if (fullyCached || delayVar < (bufferCacheCount - 1) * BUFFER_SIZE) {
-				offset = ((bufferCacheCount + cachingAmount - 1) * BUFFER_SIZE - delayVar)
-						% (cachingAmount * BUFFER_SIZE);
+				offset = ((bufferCacheCount + cachingAmount - 1) * BUFFER_SIZE - delayVar) % (cachingAmount * BUFFER_SIZE);
 
 				// System.out.printf("count = %d offset = %d cachingAmount = %d delayVar = %d bufferSize = %d outputBufferSize = %d\n",
 				// bufferCacheCount, offset, cachingAmount, delayVar,
@@ -230,10 +221,8 @@ public class SoundCheck extends Thread {
 				// outputBufferQueue.length);
 
 				if ((BUFFER_SIZE * cachingAmount - offset) < BUFFER_SIZE) {
-					write(outputBufferQueue, offset, (BUFFER_SIZE
-							* cachingAmount - offset));
-					write(outputBufferQueue, 0, BUFFER_SIZE
-							- (BUFFER_SIZE * cachingAmount - offset));
+					write(outputBufferQueue, offset, (BUFFER_SIZE * cachingAmount - offset));
+					write(outputBufferQueue, 0, BUFFER_SIZE - (BUFFER_SIZE * cachingAmount - offset));
 				} else {
 					write(outputBufferQueue, offset, BUFFER_SIZE);
 				}
@@ -248,12 +237,10 @@ public class SoundCheck extends Thread {
 
 	public void setVolume() {
 		if (outputLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-			FloatControl volume = (FloatControl) outputLine
-					.getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl volume = (FloatControl) outputLine.getControl(FloatControl.Type.MASTER_GAIN);
 			float minimum = volume.getMinimum();
 			float maximum = volume.getMaximum();
-			float currentVolume = (float) (minimum + percentLevelVolume
-					* (maximum - minimum) / 100.0F);
+			float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
 			volume.setValue(currentVolume);
 		}
 
@@ -262,12 +249,10 @@ public class SoundCheck extends Thread {
 	public void setVolume(double percentLevel) {
 		if (outputLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
 			percentLevelVolume = percentLevel;
-			FloatControl volume = (FloatControl) outputLine
-					.getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl volume = (FloatControl) outputLine.getControl(FloatControl.Type.MASTER_GAIN);
 			float minimum = volume.getMinimum();
 			float maximum = volume.getMaximum();
-			float currentVolume = (float) (minimum + percentLevelVolume
-					* (maximum - minimum) / 100.0F);
+			float currentVolume = (float) (minimum + percentLevelVolume * (maximum - minimum) / 100.0F);
 			volume.setValue(currentVolume);
 		}
 
@@ -283,16 +268,14 @@ public class SoundCheck extends Thread {
 	}
 
 	public void toggleMute() {
-		BooleanControl bc = (BooleanControl) outputLine
-				.getControl(BooleanControl.Type.MUTE);
+		BooleanControl bc = (BooleanControl) outputLine.getControl(BooleanControl.Type.MUTE);
 		if (bc != null) {
 			bc.setValue(!bc.getValue());
 		}
 	}
 
 	public void setMute(boolean state) {
-		BooleanControl bc = (BooleanControl) outputLine
-				.getControl(BooleanControl.Type.MUTE);
+		BooleanControl bc = (BooleanControl) outputLine.getControl(BooleanControl.Type.MUTE);
 		if (bc != null) {
 			bc.setValue(state);
 		}
