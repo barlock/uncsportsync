@@ -145,26 +145,29 @@ public class SoundCheck extends Thread {
 	}
 
 	public void playTestOutput() {
-		AudioInputStream testFileInputStream = null;
-		Mixer.Info mixer = settings.getOutputMixer();
+		if (myClip == null) {
+			AudioInputStream testFileInputStream = null;
+			Mixer.Info mixer = settings.getOutputMixer();
 
-		try {
-			testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("UNCFightSongShort.wav")));
-			myClip = AudioSystem.getClip(mixer);
-			myClip.open(testFileInputStream);
-		} catch (Exception e) {
 			try {
-				testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("test.wav")));
+				testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("UNCFightSongShort.wav")));
 				myClip = AudioSystem.getClip(mixer);
 				myClip.open(testFileInputStream);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
-				System.exit(1);
+			} catch (Exception e) {
+				try {
+					testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("test.wav")));
+					myClip = AudioSystem.getClip(mixer);
+					myClip.open(testFileInputStream);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+					System.exit(1);
+				}
 			}
+			myClip.addLineListener(testAudioListener);
+		} else {
+			myClip.setFramePosition(0);
 		}
-
-		myClip.addLineListener(testAudioListener);
 		myClip.start();
 		if (myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
 			FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -179,6 +182,7 @@ public class SoundCheck extends Thread {
 
 	public synchronized void resetBuffer() {
 		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * settings.getMaxDelay() + 1);
+		outputBufferQueue = new byte[0];
 		outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
 		bufferCacheCount = 0;
 		fullyCached = false;
