@@ -1,5 +1,0 @@
-#sidebar Sidebar
-
-* [SportSync]
- * [Application]
-* [Installation]
