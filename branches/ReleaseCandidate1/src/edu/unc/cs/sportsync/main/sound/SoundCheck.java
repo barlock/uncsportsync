@@ -145,23 +145,27 @@ public class SoundCheck extends Thread {
 	}
 
 	public void playTestOutput() {
-		AudioInputStream testFileInputStream = null;
-		Mixer.Info mixer = settings.getOutputMixer();
+		if (myClip == null) {
+			AudioInputStream testFileInputStream = null;
+			Mixer.Info mixer = settings.getOutputMixer();
 
-		try {
-			testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("UNCFightSongShort.wav")));
-			myClip = AudioSystem.getClip(mixer);
-			myClip.open(testFileInputStream);
-		} catch (Exception e) {
 			try {
-				testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("test.wav")));
+				testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("UNCFightSongShort.wav")));
 				myClip = AudioSystem.getClip(mixer);
 				myClip.open(testFileInputStream);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
-				System.exit(1);
+			} catch (Exception e) {
+				try {
+					testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("test.wav")));
+					myClip = AudioSystem.getClip(mixer);
+					myClip.open(testFileInputStream);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
+					System.exit(1);
+				}
 			}
+		} else {
+			myClip.setFramePosition(0);
 		}
 
 		myClip.addLineListener(testAudioListener);
