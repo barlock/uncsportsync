@@ -68,6 +68,7 @@ public class Application extends Composite {
 		@Override
 		public void handleEvent(Event event) {
 			updateUI();
+			settingsComposite.getAudioPage().stopTestAudio();
 			settingsDialog.close();
 		}
 	};
