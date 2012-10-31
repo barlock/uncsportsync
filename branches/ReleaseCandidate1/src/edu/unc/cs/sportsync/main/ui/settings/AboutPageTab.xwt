@@ -1,0 +1,24 @@
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AboutPageTab">
+	<Composite.layout>
+		<GridLayout numColumns="2"/>
+	</Composite.layout>
+	<Label image="/edu/unc/cs/sportsync/main/sportsync48.png">
+		<Label.layoutData>
+			<GridData grabExcessHorizontalSpace="true" horizontalAlignment="RIGHT" verticalSpan="2"/>
+		</Label.layoutData>
+	</Label>
+	<Label text="UNC Sport Sync">
+		<Label.layoutData>
+			<GridData grabExcessHorizontalSpace="true"/>
+		</Label.layoutData>
+	</Label>
+	<Label text="Delay your radio and get rid of Dicky-V forever"/>
+	<Label/>
+	<Label text=" "/>
+	<Label/>
+	<Label text="Version: 1.0 RC1">
+		<Label.layoutData>
+			<GridData grabExcessHorizontalSpace="true"/>
+		</Label.layoutData>
+	</Label>
+</Composite>

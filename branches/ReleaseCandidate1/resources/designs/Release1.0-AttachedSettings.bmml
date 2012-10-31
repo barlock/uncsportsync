@@ -1,0 +1,113 @@
+<mockup version="1.0" skin="sketch" measuredW="904" measuredH="302.9" mockupW="837" mockupH="230.89999999999998">
+  <controls>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::TitleWindow" x="57" y="62" w="400" h="225" measuredW="450" measuredH="400" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bottomheight>16</bottomheight>
+        <close>true</close>
+        <dragger>false</dragger>
+        <maximizeRestore>true</maximizeRestore>
+        <minimize>true</minimize>
+        <text>SportSync</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::VolumeSlider" x="74" y="241" w="72" h="-1" measuredW="72" measuredH="16" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::HSlider" x="82" y="182" w="360" h="-1" measuredW="33" measuredH="11" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::ProgressBar" x="82" y="201" w="360" h="10" measuredW="100" measuredH="20" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Icon" x="74" y="93" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>GearIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Label" x="82" y="150" w="-1" h="-1" measuredW="29" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Live</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::Label" x="393" y="151" w="-1" h="-1" measuredW="49" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>60%20Sec</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="203" y="136" w="-1" h="-1" measuredW="107" measuredH="25" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Delayed%3A%2015%20sec</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Tooltip" x="73" y="259" w="-1" h="-1" measuredW="66" measuredH="33.9" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>mute</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Tooltip" x="82" y="117" w="88" h="38" measuredW="85" measuredH="38" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>settings</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::TitleWindow" x="494" y="62" w="400" h="225" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bottomheight>15</bottomheight>
+        <text>SportSync%20%7C%20Settings</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Canvas" x="597" y="93" w="280" h="155" measuredW="100" measuredH="70" zOrder="10" locked="false" isInGroup="-1"/>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Canvas" x="509" y="93" w="80" h="155" measuredW="100" measuredH="70" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties/>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Label" x="522" y="133" w="38" h="19" measuredW="38" measuredH="25" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Audio</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="522" y="155" w="33" h="19" measuredW="33" measuredH="25" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Espn</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Label" x="522" y="179" w="52" h="19" measuredW="52" measuredH="25" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Twitter</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Icon" x="522" y="103" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>JumpBackIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::VerticalScrollBar" x="860" y="96" w="-1" h="150" measuredW="16" measuredH="100" zOrder="24" locked="false" isInGroup="-1"/>
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::ComboBox" x="727" y="103" w="119" h="-1" measuredW="118" measuredH="25" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Input%20Devices</text>
+      </controlProperties>
+    </control>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::ComboBox" x="727" y="140" w="129" h="-1" measuredW="129" measuredH="25" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Output%20Devices</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::NumericStepper" x="727" y="175" w="48" h="-1" measuredW="49" measuredH="26" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>60</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Label" x="606" y="103" w="91" h="20" measuredW="91" measuredH="25" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Input%20Device%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::Label" x="606" y="140" w="102" h="20" measuredW="102" measuredH="25" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Output%20Device%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Label" x="618" y="176" w="77" h="20" measuredW="76" measuredH="25" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Max%20Delay%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::Label" x="787" y="176" w="55" h="20" measuredW="55" measuredH="25" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Seconds</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
