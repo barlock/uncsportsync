@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 import javax.sound.sampled.Mixer;
 
 import org.eclipse.e4.xwt.DefaultLoadingContext;
@@ -52,6 +54,21 @@ public class AudioSettingsTab extends Composite {
 
 	@UI
 	Button applyButton;
+
+	private final LineListener testAudioListener = new LineListener() {
+		@Override
+		public void update(LineEvent event) {
+			if (event.getType() == LineEvent.Type.STOP) {
+				audioControl.testAudioDonePlaying();
+				getDisplay().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						stopTestAudio();
+					}
+				});
+			}
+		}
+	};
 
 	public AudioSettingsTab(Composite parent, int style) {
 		super(parent, style);
@@ -115,6 +132,7 @@ public class AudioSettingsTab extends Composite {
 
 	public void setAudioControl(AudioControl control) {
 		audioControl = control;
+		audioControl.setTestAudioListener(testAudioListener);
 	}
 
 	public void setSettings(Settings settings) {
@@ -171,25 +189,23 @@ public class AudioSettingsTab extends Composite {
 
 	public void onTestButtonSelection(Event event) {
 		if (testButton.getSelection()) {
-			testButton.setText("Stop");
 			audioControl.startTestOutput();
+			testButton.setText("Stop");
 		} else {
-			testButton.setText("Test");
 			audioControl.stopTestOutput();
+			testButton.setText("Test");
 		}
+
 	}
 
-	public void toggleTestButtonText() {
-		if (testButton.getSelection()) {
-			testButton.setText("Test");
-			testButton.setSelection(false);
-		} else {
-			testButton.setText("Stop");
-		}
+	public void stopTestAudio() {
+		testButton.setText("Test");
+		testButton.setSelection(false);
+		audioControl.stopTestOutput();
 	}
 
 	public void onDispose(Event event) {
 		audioControl.stopTestOutput();
-		toggleTestButtonText();
+		stopTestAudio();
 	}
 }

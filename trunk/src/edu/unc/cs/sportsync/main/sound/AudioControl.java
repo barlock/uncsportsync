@@ -10,7 +10,6 @@ import javax.sound.sampled.Control;
 import javax.sound.sampled.EnumControl;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.Line;
-import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
@@ -32,35 +31,11 @@ public class AudioControl {
 
 	private SoundCheck mySoundCheck;
 
-	private final LineListener testAudioListener = new LineListener() {
-		@Override
-		public void update(LineEvent event) {
-			if (event.getType() == LineEvent.Type.STOP) {
-				isPlayingTestAudio = false;
-				if (!isMuted) {
-					mySoundCheck.setMute(false);
-				}
-
-			}
-		}
-	};
-
-	public void donePlayingTestAudio() {
-		isPlayingTestAudio = false;
-		if (!isMuted) {
-			mySoundCheck.setMute(false);
-		}
-	}
-
 	public void testAudioDonePlaying() {
 		isPlayingTestAudio = false;
 		if (!isMuted) {
 			mySoundCheck.setMute(false);
 		}
-	}
-
-	public LineListener getTestAudioListener() {
-		return testAudioListener;
 	}
 
 	public AudioControl() {
@@ -135,13 +110,10 @@ public class AudioControl {
 	public void start() {
 		float frameRate = (float) 44100.0;
 		int BUFFER_SIZE = 40960;
-		AudioFormat audioFormat = new AudioFormat(
-				AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4,
-				frameRate, false);
+		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, 2, 4, frameRate, false);
 		mySoundCheck = null;
 		try {
-			mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE, settings,
-					testAudioListener);
+			mySoundCheck = new SoundCheck(audioFormat, BUFFER_SIZE, settings);
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -173,11 +145,14 @@ public class AudioControl {
 		mySoundCheck.toggleMute();
 	}
 
+	public void setTestAudioListener(LineListener tAudioListener) {
+		mySoundCheck.setTestAudioListener(tAudioListener);
+	}
+
 	public void updateLines() {
 		try {
 			mySoundCheck.openLines();
 		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mySoundCheck.setVolume();
@@ -195,25 +170,20 @@ public class AudioControl {
 		}
 
 		if (thisControl instanceof CompoundControl) {
-			System.out.println("\tControl: " + type
-					+ " (compound - values below)");
+			System.out.println("\tControl: " + type + " (compound - values below)");
 			String toReturn = "";
-			for (Control children : ((CompoundControl) thisControl)
-					.getMemberControls()) {
+			for (Control children : ((CompoundControl) thisControl).getMemberControls()) {
 				toReturn += "  " + AnalyzeControl(children) + "\n";
 			}
 			return toReturn.substring(0, toReturn.length() - 1);
 		}
 
 		if (thisControl instanceof EnumControl) {
-			return "\tControl:" + type + " (enum: " + thisControl.toString()
-					+ ")";
+			return "\tControl:" + type + " (enum: " + thisControl.toString() + ")";
 		}
 
 		if (thisControl instanceof FloatControl) {
-			return "\tControl: " + type + " (float: from "
-					+ ((FloatControl) thisControl).getMinimum() + " to "
-					+ ((FloatControl) thisControl).getMaximum() + ")";
+			return "\tControl: " + type + " (float: from " + ((FloatControl) thisControl).getMinimum() + " to " + ((FloatControl) thisControl).getMaximum() + ")";
 		}
 		return "\tControl: unknown type";
 	}

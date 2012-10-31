@@ -46,12 +46,12 @@ public class SoundCheck extends Thread {
 	private double percentLevelVolume;
 
 	private Clip myClip = null;
-	private final LineListener testAudioListener;
+	private LineListener testAudioListener;
 
 	/*
 	 * AudioFormat tells the format in which the data is recorded/played
 	 */
-	public SoundCheck(AudioFormat format, int bufferSize, Settings settings, LineListener tAudioListener) throws LineUnavailableException {
+	public SoundCheck(AudioFormat format, int bufferSize, Settings settings) throws LineUnavailableException {
 		this.settings = settings;
 		/*
 		 * Get the input/output lines
@@ -60,9 +60,12 @@ public class SoundCheck extends Thread {
 		SOUND_FORMAT = format;
 		maxDelayAmount = settings.getMaxDelay();
 		disposed = false;
-		testAudioListener = tAudioListener;
 
 		openLines();
+	}
+
+	public void setTestAudioListener(LineListener tAudioListener) {
+		testAudioListener = tAudioListener;
 	}
 
 	protected int calculateRMSLevel(byte[] chunk) {
