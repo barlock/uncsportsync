@@ -34,7 +34,6 @@ public class SoundCheck extends Thread {
 	private boolean fullyCached;
 	private int bufferCacheCount;
 	private int cachingAmount;
-	private int maxDelayAmount;
 
 	private byte[] myBuffer;
 	private byte[] outputBufferQueue;
@@ -58,7 +57,6 @@ public class SoundCheck extends Thread {
 		 */
 		BUFFER_SIZE = bufferSize;
 		SOUND_FORMAT = format;
-		maxDelayAmount = settings.getMaxDelay();
 		disposed = false;
 
 		openLines();
@@ -94,10 +92,6 @@ public class SoundCheck extends Thread {
 
 	public int getInputLevel() {
 		return calculateRMSLevel(myBuffer);
-	}
-
-	public int getMaxDelay() {
-		return maxDelayAmount;
 	}
 
 	public double getOutputLevel() {
@@ -182,7 +176,7 @@ public class SoundCheck extends Thread {
 	}
 
 	public synchronized void resetBuffer() {
-		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * maxDelayAmount + 1);
+		cachingAmount = (int) (Math.ceil((float) DELAY_PARAM / BUFFER_SIZE) * settings.getMaxDelay() + 1);
 		outputBufferQueue = new byte[cachingAmount * BUFFER_SIZE];
 		bufferCacheCount = 0;
 		fullyCached = false;
@@ -282,10 +276,6 @@ public class SoundCheck extends Thread {
 		if (bc != null) {
 			bc.setValue(state);
 		}
-	}
-
-	public void updateMaxDelay() {
-		maxDelayAmount = settings.getMaxDelay();
 	}
 
 	// possibly synchronized?
