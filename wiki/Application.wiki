@@ -1,13 +1,10 @@
 #summary Use of the main application page
 
-= Introduction =
+= Overview =
 
-Add your content here.
+SportSync allows you to sync your radio broadcast and tv broadcast so you can pick what announcers you personally want to listen to.
 
 
-= Details =
+== Features ==
+<img src="https://sportsync.googlecode.com/images/app_settings"/>
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
