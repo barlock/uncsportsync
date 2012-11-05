@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Add your content here.
+The settings page allows you to change settings of SportSync, including input device, output device, and delay time. 
 
 
 = Details =
