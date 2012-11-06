@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project SportSync">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSyncRC1/Release/sportsync_rc1_win64.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="edu.unc.cs.sportsync.main.SportSync"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/lib/swt-win64-4.2.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/com.ibm.icu_4.4.2.v20110823.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.core.databinding_1.4.1.v20120521-2329.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.core.databinding.observable_1.4.1.v20120521-2329.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.equinox.common_3.6.100.v20120522-1841.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.jface.databinding_1.6.0.v20120521-2329.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.equinox.registry_3.5.200.v20120522-1841.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.core.runtime_3.8.0.v20120521-2346.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.text_3.5.200.v20120523-1310.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/Jars/org.eclipse.e4.xwt_0.9.1.SNAPSHOT.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/Jars/org.eclipse.e4.xwt.forms_0.9.1.SNAPSHOT.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/Jars/org.eclipse.e4.xwt.forms.source_0.9.1.SNAPSHOT.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/Jars/org.eclipse.e4.xwt.source_0.9.1.SNAPSHOT.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/Jars/org.pushingpixels.trident_1.2.0.v20100204-1500.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/michael/Dropbox/Documents/School Work/Comp523/SportSync/Jars/org.pushingpixels.trident.source_1.2.0.v20100204-1500.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.jface_3.8.101.v20120817-083647.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.jface.text_3.8.1.v20120828-155502.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.core.commands_3.6.1.v20120814-150512.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.osgi_3.8.1.v20120830-144521.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.100.1.v4234e.jar"/>
+            <fileset dir="C:/Program Files/eclipse/plugins"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.ui.forms_3.5.200.v20120705-114351.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.eclipse.ui.workbench_3.103.1.v20120906-120042.jar"/>
+        </jar>
+    </target>
+</project>
