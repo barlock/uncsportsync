@@ -19,6 +19,6 @@ The settings page allows you to change settings of SportSync, including input de
 
 <img src="http://sportsync.googlecode.com/svn/img/OutputDevice.gif/>
 
-This selector allows you to change the *Max Delay* in seconds for the SportSync interface.  If you adjust the *Max Delay* and press "Apply", the _sound cache will reset_. 
+This selector allows you to change the *Max Delay* in seconds for the SportSync interface.  If you adjust the *Max Delay* and apply it, the _sound cache will reset_. 
 
 <img src="http://sportsync.googlecode.com/svn/img/MaxDelaySelector.gif/>
