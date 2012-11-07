@@ -13,3 +13,9 @@ Add your content here.  Format your content with:
   * Automatic links to other wiki pages
 
 <img src="http://sportsync.googlecode.com/svn/img/InputDevice.gif/>
+
+<img src="http://sportsync.googlecode.com/svn/img/OutputDevice.gif/>
+
+<img src="http://sportsync.googlecode.com/svn/img/MaxDelaySelector.gif/>
+
+<img src="http://sportsync.googlecode.com/svn/img/AllButtons.gif/>
