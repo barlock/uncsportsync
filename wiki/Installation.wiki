@@ -1,4 +1,4 @@
 #summary How to install SportSync
 = Installation =
 
-Go here and install the most up to date 
+Go here and install the most up to date version: [http://code.google.com/p/sportsync/downloads/list downloads]
