@@ -1,7 +1,7 @@
 #summary Frequently Asked Questions about SportSync
 
 == Where can I find game-time statistics? ==
-We will add content here!
+[http://espn.go.com/mens-college-basketball/team/_/id/153/north-carolina-tar-heels ESPN page for UNC Basketball]
 
 == Where can I find suitable cords and cables to use with UNC radio and SportSync? ==
 
