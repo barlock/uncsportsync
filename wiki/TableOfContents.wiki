@@ -1,4 +1,5 @@
 * [SportSync]
    * [Application]
    * [Settings]
+   * [FAQ]
 * [Installation]
