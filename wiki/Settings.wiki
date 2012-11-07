@@ -7,7 +7,7 @@ The settings page allows you to change settings of SportSync, including input de
 
 = Details =
 
-"Apply" will apply all the changes you made in the Settings page, but it will not exit the Settings page.  "Save" will apply all the changed settings and exit the Settings page.  "Cancel" will ignore any changes you have made in the Settings window and exit the window.
+In the picture below, the navigation buttons for the Settings page are highlighted.  Each button performs a different actions.  "Apply" will apply all the changes you made in the Settings page, but it will not exit the Settings page.  "Save" will apply all the changed settings and exit the Settings page.  "Cancel" will ignore any changes you have made in the Settings window and exit the window.
 
 <img src="http://sportsync.googlecode.com/svn/img/AllButtons.gif/>
 
