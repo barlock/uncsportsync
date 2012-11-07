@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jars" name="Create Runnable Jar for Project SportSyncRC1">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+	
+    <target name="create_run_jars">
+    	
+    	<delete><fileset dir="../Release"/></delete>
+    		
+    	<jar jarfile="libs.jar">
+	        <zipgroupfileset dir="../lib">
+	            <include name="**/*.jar" />
+	        </zipgroupfileset>
+    	</jar>
+    		
+    	<sleep seconds="1" />
+    	
+    	<!-- WINDOWS 32 BIT -->
+        <jar destfile="../Release/sportsync_rc1_win32.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="edu.unc.cs.sportsync.main.SportSync"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+        	    	
+            <fileset dir="../bin"/>
+                	
+        	<zipfileset src="libs.jar" excludes="META-INF/*.SF" />
+            	
+        	<zipfileset src="../lib_swt/swt-win32-4.2.1.jar"/>	   
+        </jar>
+        		
+		<!-- WINDOWS 64 BIT -->
+    	<jar destfile="../Release/sportsync_rc1_win64.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="edu.unc.cs.sportsync.main.SportSync"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            	
+			<fileset dir="../bin"/>
+			        	
+        	<zipfileset src="libs.jar" excludes="META-INF/*.SF" />	
+        	<zipfileset src="../lib_swt/swt-win64-4.2.1.jar"/>	   
+        </jar>
+	
+		<!-- Mac OSX 32 BIT -->
+		<jar destfile="../Release/sportsync_rc1_osx32.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="edu.unc.cs.sportsync.main.SportSync"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+        	
+			<fileset dir="../bin"/>
+			        	
+    		<zipfileset src="libs.jar" excludes="META-INF/*.SF" />
+            	
+        	<zipfileset src="../lib_swt/swt-osx32-4.2.1.jar"/>	   
+        </jar>
+	
+		<!-- Mac OSX 64 BIT -->
+		<jar destfile="../Release/sportsync_rc1_osx64.jar" filesetmanifest="mergewithoutmain">
+	    	<manifest>
+				<attribute name="Main-Class" value="edu.unc.cs.sportsync.main.SportSync"/>
+			    <attribute name="Class-Path" value="."/>
+			</manifest>
+					
+			<fileset dir="../bin"/>
+			        	
+			<zipfileset src="libs.jar" excludes="META-INF/*.SF" />
+            	
+        	<zipfileset src="../lib_swt/swt-osx64-4.2.1.jar"/>	   
+        </jar>
+	
+		<!-- Linux 32 BIT -->
+		<jar destfile="../Release/sportsync_rc1_linux32.jar" filesetmanifest="mergewithoutmain">
+	    	<manifest>
+                <attribute name="Main-Class" value="edu.unc.cs.sportsync.main.SportSync"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+			<fileset dir="../bin"/>
+			        	
+    		<zipfileset src="libs.jar" excludes="META-INF/*.SF" />
+            	
+        	<zipfileset src="../lib_swt/swt-linux32-4.2.1.jar"/>	   
+        </jar>
+	
+		<!-- Linux 64 BIT -->		
+		<jar destfile="../Release/sportsync_rc1_linux64.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="edu.unc.cs.sportsync.main.SportSync"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+			<fileset dir="../bin"/>
+			        	
+    		<zipfileset src="libs.jar" excludes="META-INF/*.SF" />
+            	
+        	<zipfileset src="../lib_swt/swt-linux64-4.2.1.jar"/>	   
+        </jar>
+    	
+    	<delete file="libs.jar"/>
+    </target>
+</project>
