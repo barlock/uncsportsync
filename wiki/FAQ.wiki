@@ -1,0 +1,9 @@
+#summary Frequently Asked Questions about SportSync
+
+= Where can I find game-time statistics =
+
+We will add content here!
+
+= Can I change the SportSync Theme? =
+
+No, there are currently no options to change the theme of SportSync.
