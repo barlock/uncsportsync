@@ -11,7 +11,7 @@
 
 ==Where can I find suitable cables to use with UNC radio and SportSync?==
 
-Suggested submitted by an avid SportSync user:
+Suggested submitted by a SportSync user:
 
   One way to use SportSync is to connect the audio output or headphone output from a radio to the microphone input jack on your computer. Note, however, that the microphone input is made for a very low voltage signal.  To avoid overloading the microphone input, which results in a very distorted signal and could damage your sound card, you may need to reduce the voltage of the input signal.  With a headphone output, you can probably just turn the volume down on the radio.  For a regular audio output, which is not affected by the volume setting on the radio, a simple solution is to use an attenuating dubbing cord.  RadioShack makes a 6-Ft. Attenuating Dubbing Cord, 1/8" Phone Plug to RCA Plug, part number 42-2461.  If you have a standard 1/8" microphone input on your computer, you'll also need to get a Mono Phone Jack to 1/8" Stereo Plug Adapter, part number 274-378.  These cost $6.99 and $4.49, respectively.
 
