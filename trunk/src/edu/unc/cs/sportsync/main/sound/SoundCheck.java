@@ -104,7 +104,7 @@ public class SoundCheck extends Thread {
 		if (outputLine != null && outputLine.isOpen()) {
 			outputLine.close();
 		}
-
+		myClip = null;
 		inputLine = null;
 		outputLine = null;
 
@@ -167,8 +167,11 @@ public class SoundCheck extends Thread {
 			myClip.addLineListener(testAudioListener);
 		} else {
 			myClip.setFramePosition(0);
+
 		}
+
 		myClip.start();
+
 		if (myClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
 			FloatControl volume = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
 			float maximum = volume.getMaximum();
