@@ -22,6 +22,6 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.ui.workbench_3.103.1.v20120906-120042.jar"/>
 	<classpathentry kind="lib" path="lib/org.pushingpixels.trident_1.2.0.v20100204-1500.jar"/>
 	<classpathentry kind="lib" path="lib/org.pushingpixels.trident.source_1.2.0.v20100204-1500.jar"/>
-	<classpathentry kind="lib" path="lib_swt/swt-win32-4.2.1.jar"/>
+	<classpathentry kind="lib" path="lib_swt/swt-win64-4.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
