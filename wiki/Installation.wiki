@@ -1,4 +1,23 @@
 #summary How to install SportSync
 = Installation =
 
-Go here and install the most up to date version: [http://code.google.com/p/sportsync/downloads/list downloads]
+#summary Description of the settings page and how to use it
+
+= Introduction =
+
+Here are directions on how to install the UNC SportSync software.
+
+
+= Details =
+
+Installer page on the website.
+<img src="http://sportsync.googlecode.com/svn/img/InstallerPage.PNG"/>
+
+Verify Publisher Page
+<img src="http://sportsync.googlecode.com/svn/img/VerifyPublisherPage.PNG"/>
+
+Installer Welcome Page
+<img src="http://sportsync.googlecode.com/svn/img/InstallerWelcomePage.PNG/>
+
+Installer Finished Page
+<img src="http://sportsync.googlecode.com/svn/img/InstallerFinished.PNG/>
