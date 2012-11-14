@@ -10,7 +10,7 @@ Here are directions on how to install the UNC SportSync software.
 
 ==Install on Windows==
 
-Go to the downloads page and find the appropriate installation for your computer.  (WILL CHANGE THIS STEP AS A RUNNING VERSION BECOMES AVAILABLE)
+Go to the [http://code.google.com/p/sportsync/downloads/list downloads page] and find the appropriate installation for your computer.  (WILL CHANGE THIS STEP AS A RUNNING VERSION BECOMES AVAILABLE)
 
 <img src="http://sportsync.googlecode.com/svn/img/InstallerPage.PNG"/>
 
