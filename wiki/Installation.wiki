@@ -1,11 +1,11 @@
 #summary How to install SportSync
-= Installation =
-
-#summary Description of the settings page and how to use it
 
 = Introduction =
 
-Here are directions on how to install the UNC SportSync software.
+Step-by-step instructions on how to install SportSync.
+* [#Install_on_Windows Install on Windows]
+* Install on OSX
+* Install on Linux
 
 
 ==Install on Windows==
