@@ -15,7 +15,7 @@ In the picture below, the navigation buttons for the Settings page are highlight
 
 <img src="http://sportsync.googlecode.com/svn/img/InputDevice.gif/>
 
-*Output Device* will allow you to select which output device you want SportSync to send the audio to.  Chances are that you will not need to alter this on a simple laptop or computer.  The "Test" button plays a sound clip ("Hark the Sound"!) so you can test that your output device is working correctly.
+*Output Device* will allow you to select which output device you want SportSync to send the audio to.  Chances are that you will not need to alter this on a standard laptop or computer.  The "Test" button plays a sound clip ("Hark the Sound"!) so you can test that your output device is working correctly.
 
 <img src="http://sportsync.googlecode.com/svn/img/OutputDevice.gif/>
 
