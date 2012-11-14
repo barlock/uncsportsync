@@ -16,9 +16,17 @@
 	<Label/>
 	<Label text=" "/>
 	<Label/>
-	<Label text="Version: 1.0 RC1">
+	<Label text="Version: 1.0">
 		<Label.layoutData>
 			<GridData grabExcessHorizontalSpace="true"/>
 		</Label.layoutData>
 	</Label>
+	<Label/>
+	<Label/>
+	<Label/>
+	<Label text="Developed by the University of North Carolina at Chapel Hill"/>
+	<Label/>
+	<Label text="Computer Science, Comp 523"/>
+	<Label/>
+	<Label text="Michael Barlock, Kartik Sethuraman, Patrick Waivers"/>
 </Composite>
