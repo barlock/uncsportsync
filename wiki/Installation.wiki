@@ -7,7 +7,7 @@ Step-by-step instructions on how to install SportSync.
   * [#OS_X_Installation OS X Installation]
   * [#Linus_Installation Linux Installation]
 
-
+<br><br><br>
 ==Windows Installation==
 
 Go to the [http://code.google.com/p/sportsync/downloads/list downloads page] and find the appropriate installation for your computer and then click on the blue link (pictured below).  (WILL CHANGE THIS STEP AS A RUNNING VERSION BECOMES AVAILABLE)
@@ -16,7 +16,7 @@ Go to the [http://code.google.com/p/sportsync/downloads/list downloads page] and
 
 <hr />
 
-A "Verify Publisher" window might pop up.  Click "Run".
+A verify publisher window might pop up.  Click "Run".
 
 <img src="http://sportsync.googlecode.com/svn/img/VerifyPublisherPage.PNG"/>
 
