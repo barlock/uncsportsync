@@ -3,12 +3,12 @@
 = Introduction =
 
 Step-by-step instructions on how to install SportSync.
-* [#Install_on_Windows Install on Windows]
-* Install on OSX
-* Install on Linux
+  * [#Windows_Installation Windows Installation]
+  * Install on OSX
+  * Install on Linux
 
 
-==Install on Windows==
+==Windows Installation==
 
 Go to the [http://code.google.com/p/sportsync/downloads/list downloads page] and find the appropriate installation for your computer and then click on the blue link (pictured below).  (WILL CHANGE THIS STEP AS A RUNNING VERSION BECOMES AVAILABLE)
 
