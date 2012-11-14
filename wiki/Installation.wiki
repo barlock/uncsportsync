@@ -5,7 +5,7 @@
 Step-by-step instructions on how to install SportSync.
   * [#Windows_Installation Windows Installation]
   * [#OS_X_Installation OS X Installation]
-  * [#Linus_Installation Linux Installation]
+  * [#Linux_Installation Linux Installation]
 
 <br><br><br>
 ==Windows Installation==
@@ -39,5 +39,5 @@ Currently not available on OS X machines.
 
 
 <br><br><br>
-==Linus Installation==
+==Linux Installation==
 Currently not available on Linux machines.
