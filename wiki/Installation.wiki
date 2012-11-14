@@ -33,8 +33,14 @@ Congratulation on installing UNC SportSync!  Click "Finish" to close the install
 <img src="http://sportsync.googlecode.com/svn/img/InstallerFinished.PNG/>
 
 
+<br><br><br>
 ==OS X Installation==
 Currently not available on OS X machines.
+
+
+
+
+
 
 ==Linus Installation==
 Currently not available on Linux machines.
