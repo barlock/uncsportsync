@@ -7,7 +7,9 @@ import javax.sound.sampled.Mixer;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
 
 public class Settings {
-	private final String PATH = "settings.xml";
+	private final String PATH;
+	private final String APP_DIR = "/.uncsportsync/";
+	private final String SETTINGS_NAME = "settings.xml";
 	private int maxDelay;
 	private int volume;
 
@@ -15,7 +17,15 @@ public class Settings {
 	private Mixer.Info outputMixer;
 
 	public Settings() {
+		String userHome = System.getProperty("user.home");
+		PATH = userHome + APP_DIR + SETTINGS_NAME;
+
+		// Create app_dir if it doesn't exist
+		File appDir = new File(userHome + APP_DIR);
+		appDir.mkdir();
+
 		File file = new File(PATH);
+
 		boolean failed = false;
 
 		// Init settings to default
