@@ -4,8 +4,8 @@
 
 Step-by-step instructions on how to install SportSync.
   * [#Windows_Installation Windows Installation]
-  * Install on OSX
-  * Install on Linux
+  * [#OS_X_Installation OS X Installation]
+  * [#Linus_Installation Linux Installation]
 
 
 ==Windows Installation==
@@ -31,3 +31,10 @@ Next the welcome page will appear for the application.  Click "Next" until the a
 Congratulation on installing UNC SportSync!  Click "Finish" to close the installer.
 
 <img src="http://sportsync.googlecode.com/svn/img/InstallerFinished.PNG/>
+
+
+==OS X Installation==
+Currently not available on OS X machines.
+
+==Linus Installation==
+Currently not available on Linux machines.
