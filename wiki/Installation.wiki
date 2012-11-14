@@ -11,13 +11,23 @@ Here are directions on how to install the UNC SportSync software.
 = Details =
 
 Installer page on the website.
+
 <img src="http://sportsync.googlecode.com/svn/img/InstallerPage.PNG"/>
 
+<hr />
+
 Verify Publisher Page
+
 <img src="http://sportsync.googlecode.com/svn/img/VerifyPublisherPage.PNG"/>
 
+<hr />
+
 Installer Welcome Page
+
 <img src="http://sportsync.googlecode.com/svn/img/InstallerWelcomePage.PNG/>
 
+<hr />
+
 Installer Finished Page
+
 <img src="http://sportsync.googlecode.com/svn/img/InstallerFinished.PNG/>
