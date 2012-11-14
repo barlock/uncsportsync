@@ -1,0 +1,19 @@
+<Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.HelpPageTab">
+	<Composite.layout>
+		<GridLayout/>
+	</Composite.layout>
+	<Label text="For help please visit our webpage">
+		<Label.layoutData>
+			<GridData grabExcessHorizontalSpace="true"/>
+		</Label.layoutData>
+	</Label>
+	<Label text=" "/>
+	<Label text="Home:"/>
+	<Link text="&lt;a&gt;http://code.google.com/p/sportsync/&lt;/a&gt;" x:Name="homeLink" SelectionEvent="onHomeLinkClick"/>
+	<Label text=" "/>
+	<Label text="Wiki:"/>
+	<Link text="&lt;a&gt;http://code.google.com/p/sportsync/w/list&lt;/a&gt;" x:Name="wikiLink" SelectionEvent='onWikiLinkClick'/>
+	<Label/>
+	<Label text="Downloads:"/>
+	<Link text="&lt;a&gt;http://code.google.com/p/sportsync/downloads/list&lt;/a&gt;" x:Name="downloadsLink" SelectionEvent='onDownloadsLinkClick'/>
+</Composite>
