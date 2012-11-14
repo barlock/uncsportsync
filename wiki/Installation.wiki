@@ -38,9 +38,6 @@ Congratulation on installing UNC SportSync!  Click "Finish" to close the install
 Currently not available on OS X machines.
 
 
-
-
-
-
+<br><br><br>
 ==Linus Installation==
 Currently not available on Linux machines.
