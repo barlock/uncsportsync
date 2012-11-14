@@ -81,9 +81,10 @@
         	<zipfileset src="../lib_swt/swt-win32-4.2.1.jar"/>	   
         </jar>
     	
-        <!--		
-		<launch4j configFile="./l4j/win32.xml" fileVersion="1.0.0" />
-        -->		
+        		
+		<launch4j configFile="./l4j/win32.xml"/>
+    	<launch4j configFile="./l4j/win32-b.xml"/>
+        		
     	
 		<!-- WINDOWS 64 BIT -->
     	<jar destfile="./release/sportsync_1.0_win64.jar" filesetmanifest="mergewithoutmain">
@@ -97,6 +98,9 @@
         	<zipfileset src="libs.jar" excludes="META-INF/*.SF" />	
         	<zipfileset src="../lib_swt/swt-win64-4.2.1.jar"/>	   
         </jar>
+    	
+    	<launch4j configFile="./l4j/win64.xml"/>
+    	<launch4j configFile="./l4j/win64-b.xml"/>
 	
 		<!-- Linux 32 BIT -->
 		<jar destfile="./release/sportsync_1.0_linux32.jar" filesetmanifest="mergewithoutmain">
