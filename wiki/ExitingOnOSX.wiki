@@ -9,4 +9,4 @@ In to exit SportSync in Mac OSX, the user will need to Force Quit the program fr
 
 1.  Click the Apple icon in the upper-left corner of the screen, and select "Force Quit".
 
-<img src="http://sportsync.googlecode.com/svn/img/AllButtons.gif/>
+<img src="http://sportsync.googlecode.com/svn/img/SelectForceQuit.png/>
