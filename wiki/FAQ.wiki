@@ -23,4 +23,9 @@ Suggested submitted by a SportSync user:
     - Brian, updated Nov. 6, 2012
 
 == Can I change the SportSync Theme? ==
+
 No, there are currently no options to change the theme of SportSync.
+
+==Why does the application freeze when I try to exit SportSync on Mac OS X==
+
+This is a current bug when trying to exit the application on a Mac operating system.   You need "Force Quit" the application outside of the application.  Directions are found in ExitingOnOSX.
