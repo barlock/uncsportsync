@@ -46,8 +46,8 @@ public class SportSync {
 					shell.getDisplay().sleep();
 				}
 			}
-
 			appComposite.dispose();
+			shell.dispose();
 		} catch (Exception e) {
 			e.printStackTrace();
 			ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);
