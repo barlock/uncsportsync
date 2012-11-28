@@ -2,4 +2,5 @@
    * [Application]
    * [Settings]
    * [FAQ]
+   * [ExitingOnOSX]
 * [Installation]
