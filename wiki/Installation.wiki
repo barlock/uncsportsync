@@ -5,12 +5,11 @@
 Step-by-step instructions on how to install SportSync.
   * [#Windows_Installation Windows Installation]
   * [#OS_X_Installation OS X Installation]
-  * [#Linux_Installation Linux Installation]
 
 <br><br><br>
 ==Windows Installation==
 
-Go to the [http://code.google.com/p/sportsync/downloads/list downloads page] and find the appropriate installation for your computer and then click on the blue link (pictured below).  (WILL CHANGE THIS STEP AS A RUNNING VERSION BECOMES AVAILABLE)
+Go to the [http://code.google.com/p/sportsync/downloads/list downloads page] and find the appropriate installation for your computer and then click on the blue link (pictured below).
 
 <img border="1" bordercolor="black" src="http://sportsync.googlecode.com/svn/img/InstallerPage.PNG"/>
 
@@ -35,9 +34,24 @@ Congratulation on installing UNC SportSync!  Click "Finish" to close the install
 
 <br><br><br>
 ==OS X Installation==
-Currently not available on OS X machines.
 
+Go to the [http://code.google.com/p/sportsync/downloads/list downloads page] and find the appropriate installation for your computer and then click on the blue link (pictured below).
 
-<br><br><br>
-==Linux Installation==
-Currently not available on Linux machines.
+<img border="1" bordercolor="black" src="http://sportsync.googlecode.com/svn/img/OSXDownloadPage.png"/>
+
+<hr />
+
+After the file downloads, go to your "Downloads" folder and double-click on the file.
+
+<img src="http://sportsync.googlecode.com/svn/img/OSXDownloadsFolder.png"/>
+
+<hr />
+
+After a short time, another window will pop up.  You should see the SportSync logo and the Applications folder for your computer.  (If this page does not show up soon, then go to your File Explorer and select the "Device" on the left side name "UNCSportSync64/32")  When this window does open, drag the SportSync logo into the Applications folder.
+
+<img src="http://sportsync.googlecode.com/svn/img/OSXDmgFileDrag.png/>
+
+<hr />
+
+You have finished installing UNC SportSync! Go to your applications folder to open it.
+
