@@ -1,5 +1,19 @@
 package edu.unc.cs.sportsync.main.settings;
 
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Kartik Sethuraman
+ * 		   created: September 17, 2012
+ * 	 last modified: November 13, 2012
+ * 
+ * Function - The settings file is the model for reading/creating/updating the settings.xml file.
+ * 		   It owns SettingsXMLBuilder and SettingsXMLParser objects which are responsible for 
+ *         the actual creation and parsing of the settings.xml file.  Other classes own a Settings
+ *         object which provides them with the saved settings (max delay, volume, input mixer,
+ *         output mixer.
+ * 
+ * 
+ *************************************************************************************/
 import java.io.File;
 
 import javax.sound.sampled.Mixer;

@@ -1,5 +1,16 @@
 package edu.unc.cs.sportsync.main.sound;
 
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Kartik Sethuraman
+ * 		   created: September 17, 2012
+ * 	 last modified: October 31, 2012
+ * 
+ * Function - Owns a SoundCheck object, and serves as an interface for the sound functionality
+ * 	 	in the application.  The bridge between user interaction and sound functionality
+ * 
+ * 
+ *************************************************************************************/
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioFormat;

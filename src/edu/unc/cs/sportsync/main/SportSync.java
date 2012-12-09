@@ -1,5 +1,16 @@
 package edu.unc.cs.sportsync.main;
 
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Kartik Sethuraman, Patrick Waivers
+ * 		   created: October 2, 2012
+ * 	 last modified: October 26, 2012
+ * 
+ * Function - Contains the main function for the application.  Launches a shell with the UI
+ *     set up by an Application object.
+ * 
+ * 
+ *************************************************************************************/
 import java.net.URL;
 
 import org.eclipse.e4.xwt.IConstants;

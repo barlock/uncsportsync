@@ -11,6 +11,16 @@ import org.eclipse.e4.xwt.XWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
+/*************************************************************************************
+ * 
+ * Author - Michael Barlock 
+ * 		    created: October 25, 2012
+ *    last modified: October 25, 2012
+ * 
+ * Function - This is the controller for the about page tab.
+ * 
+ * 
+ *************************************************************************************/
 public class AboutPageTab extends Composite {
 
 	public AboutPageTab(Composite parent, int style) {

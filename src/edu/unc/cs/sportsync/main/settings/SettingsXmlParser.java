@@ -1,5 +1,16 @@
 package edu.unc.cs.sportsync.main.settings;
 
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock
+ * 		   created: October 25, 2012
+ * 	 last modified: September 25, 2012
+ * 
+ * Function - Parsing through the setting.xml file to pull out the user's saved settings
+ *     for the max delay time, volume, input mixer and output mixer.
+ * 
+ * 
+ *************************************************************************************/
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
