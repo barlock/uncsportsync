@@ -5,6 +5,8 @@
 [#Where_can_I_find_game-time_statistics? Where can I find game-time statistics?]
 <br />
 [#Where_can_I_find_suitable_cables_to_use_with_UNC_radio_and_SportSync? Where can I find suitable cables to use with UNC radio and SportSync?]
+<br />
+[#How_long_is_the_T.V._delay_usually? How long is the T.V. delay usually?]
 <hr />
 </wiki:comment>
 
@@ -21,6 +23,10 @@ Suggested submitted by a SportSync user:
   Note that RadioShack also makes a 6.5-Ft. Attenuating Dubbing Cord with 1/8" Phone Plugs, part number 42-2152.  However, this cord has a considerably higher resistance than the cord above, and in our initial test case it reduced the signal too much, so you could barely hear it. Note also that both cords are packaged so that you can remove them from the packaging without tearing the packaging, which allows you to test them and return the one that does not work for you.
 
     - Brian, updated Nov. 6, 2012
+
+==How long is the T.V. delay usually?==
+
+It depends on the cable provider you have, but a normal T.V. delay is about 15 to 25 seconds. 
 
 == Can I change the SportSync Theme? ==
 
