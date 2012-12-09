@@ -1,5 +1,15 @@
 package edu.unc.cs.sportsync.main.ui.settings;
 
+/*************************************************************************************
+ * 
+ * Author - Michael Barlock 
+ * 		     created: October 25, 2012 
+ *     last modified: October 25, 2012
+ * 
+ * Function - This is the controller for the help page tab.
+ * 
+ * 
+ *************************************************************************************/
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,16 +22,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 
-/*************************************************************************************
- * 
- * Author - Michael Barlock 
- * 		     created: October 25, 2012 
- *     last modified: October 25, 2012
- * 
- * Function - This is the controller for the help page tab.
- * 
- * 
- *************************************************************************************/
 public class HelpPageTab extends Composite {
 
 	public HelpPageTab(Composite parent, int style) {
