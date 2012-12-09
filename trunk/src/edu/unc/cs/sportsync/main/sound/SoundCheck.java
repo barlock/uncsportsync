@@ -1,5 +1,20 @@
 package edu.unc.cs.sportsync.main.sound;
 
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Kartik Sethuraman
+ * 		   created: October 9, 2012
+ * 	 last modified: November 13, 2012
+ * 
+ * Function - This class houses all the Java Sound functionality for the application.
+ *    Responsible for opening input/output lines, setting the volume level, playing
+ *    test output, outputing delayed audio, caching audio.
+ *    
+ * Key algorithms - Methods that use the input/output audio lines are synchronized to
+ *  	ensure mutual exclusion.  A circular buffer is used to cache the input audio.
+ * 
+ * 
+ *************************************************************************************/
 import java.io.BufferedInputStream;
 import java.text.DecimalFormat;
 
@@ -111,8 +126,12 @@ public class SoundCheck extends Thread {
 		inputMixer = AudioSystem.getMixer(settings.getInputMixer());
 		outputMixer = AudioSystem.getMixer(settings.getOutputMixer());
 
-		inputMixer.open();
-		outputMixer.open();
+		if (!inputMixer.isOpen()) {
+			inputMixer.open();
+		}
+		if (!outputMixer.isOpen()) {
+			outputMixer.open();
+		}
 
 		Line.Info[] targetlineinfos = inputMixer.getTargetLineInfo();
 		for (int i = 0; i < targetlineinfos.length; i++) {
@@ -129,9 +148,12 @@ public class SoundCheck extends Thread {
 				break;
 			}
 		}
-
-		inputMixer.close();
-		outputMixer.close();
+		if (inputMixer.isOpen()) {
+			inputMixer.close();
+		}
+		if (outputMixer.isOpen()) {
+			outputMixer.close();
+		}
 
 		if (inputLine == null || outputLine == null) {
 			throw new LineUnavailableException();
@@ -152,12 +174,16 @@ public class SoundCheck extends Thread {
 			try {
 				testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("UNCFightSongShort.wav")));
 				myClip = AudioSystem.getClip(mixer);
-				myClip.open(testFileInputStream);
+				if (!myClip.isOpen()) {
+					myClip.open(testFileInputStream);
+				}
 			} catch (Exception e) {
 				try {
 					testFileInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream("test.wav")));
 					myClip = AudioSystem.getClip(mixer);
-					myClip.open(testFileInputStream);
+					if (!myClip.isOpen()) {
+						myClip.open(testFileInputStream);
+					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					ErrorUtil.openStackTraceDialog("A Fatal Error has occured and the application will need to shut down", e);

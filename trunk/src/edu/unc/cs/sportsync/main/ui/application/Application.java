@@ -1,5 +1,16 @@
 package edu.unc.cs.sportsync.main.ui.application;
 
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Kartik Sethuraman, Patrick Waivers
+ * 		   created: October 2, 2012
+ * 	 last modified: September 17, 2012
+ * 
+ * Function - Controlling class for all of the application's UI. Uses a settings object to
+ *      get user's saved settings, and uses an audioControl object for sound functionality.
+ * 
+ * 
+ *************************************************************************************/
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;

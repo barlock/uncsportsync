@@ -1,3 +1,13 @@
+<!--*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Patrick Waivers
+ * 		   created: October 2, 2012
+ * 	 last modified: October 30, 2012
+ * 
+ * Function - Sets up the UI elements for the Audio Settings page tab.
+ * 
+ * 
+ *************************************************************************************-->
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.AudioSettingsTab" xmlns:p1="clr-namespace:org.eclipse.ui.forms.widgets" x:Name="testButton"  DisposeEvent="onDispose">
 	<Composite.layout>
 		<GridLayout numColumns="3" horizontalSpacing="25" marginWidth="10" marginHeight="10"/>

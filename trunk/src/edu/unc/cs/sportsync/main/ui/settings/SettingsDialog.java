@@ -1,5 +1,16 @@
 package edu.unc.cs.sportsync.main.ui.settings;
 
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Kartik Sethuraman
+ * 		   created: October 2, 2012
+ * 	 last modified: October 26, 2012
+ * 
+ * Function - This is the controller for the settings dialog tab.  Has the listeners for
+ * 		user interactions.
+ * 
+ * 
+ *************************************************************************************/
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;

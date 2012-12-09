@@ -1,3 +1,13 @@
+<!--*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Patrick Waivers
+ * 		   created: October 2, 2012
+ * 	 last modified: October 30, 2012
+ * 
+ * Function - Sets up the UI elements for the Help Page Tab.
+ * 
+ * 
+ *************************************************************************************-->
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.HelpPageTab">
 	<Composite.layout>
 		<GridLayout/>

@@ -1,3 +1,13 @@
+<!--*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Patrick Waivers
+ * 		   created: October 2, 2012
+ * 	 last modified: October 30, 2012
+ * 
+ * Function - Sets up UNC SportSync splash screen.
+ * 
+ * 
+ *************************************************************************************-->
 <Shell xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.SportSync" text="UNC SportSync" xmlns:p1="clr-namespace:edu.unc.cs.sportsync.main.ui.application" image="sportsync256.png" x:Style="SHELL_TRIM">
 	<Shell.layout>
 		<FillLayout/>

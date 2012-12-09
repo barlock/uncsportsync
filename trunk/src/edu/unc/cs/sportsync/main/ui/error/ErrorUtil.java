@@ -9,7 +9,16 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
-
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock
+ * 		   created: October 29, 2012
+ * 	 last modified: October 29, 2012
+ * 
+ * Function - Creates the error dialog box.
+ * 
+ * 
+ *************************************************************************************/
 public class ErrorUtil {
 
 	/**

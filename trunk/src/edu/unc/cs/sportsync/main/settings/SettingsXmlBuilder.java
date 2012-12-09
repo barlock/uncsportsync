@@ -17,7 +17,17 @@ import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
-
+/*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock
+ * 		   created: September 25, 2012
+ * 	 last modified: October 30, 2012
+ * 
+ * Function - Creating the settings.xml file, and updating it with the most recent
+ *          settings.
+ * 
+ * 
+ *************************************************************************************/
 public class SettingsXmlBuilder {
 
 	Document doc;

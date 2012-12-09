@@ -1,3 +1,13 @@
+<!--*************************************************************************************
+ * 
+ * Author(s) - Michael Barlock, Patrick Waivers
+ * 		   created: October 2, 2012
+ * 	 last modified: October 30, 2012
+ * 
+ * Function - Sets up the UI elements for the Settings Dialog window.
+ * 
+ * 
+ *************************************************************************************-->
 <Composite xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" x:Class="edu.unc.cs.sportsync.main.ui.settings.SettingsDialog" xmlns:p1="clr-namespace:java.lang">
 	<Composite.layout>
 		<GridLayout numColumns="3" marginWidth="0" marginHeight="0" verticalSpacing="0" horizontalSpacing="0"/>
