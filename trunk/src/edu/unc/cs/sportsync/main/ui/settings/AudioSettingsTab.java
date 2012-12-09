@@ -1,5 +1,16 @@
 package edu.unc.cs.sportsync.main.ui.settings;
 
+/*************************************************************************************
+ * 
+ * Author - Michael Barlock, Kartik Sethuraman
+ * 		   created: October 2, 2012
+ * 	 last modified: October 31, 2012
+ * 
+ * Function - This is the controller for the audio page tab.  Controls the functionality
+ *    for user interaction within the tab.
+ * 
+ * 
+ *************************************************************************************/
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,17 +38,7 @@ import org.eclipse.swt.widgets.Spinner;
 import edu.unc.cs.sportsync.main.settings.Settings;
 import edu.unc.cs.sportsync.main.sound.AudioControl;
 import edu.unc.cs.sportsync.main.ui.error.ErrorUtil;
-/*************************************************************************************
- * 
- * Author - Michael Barlock, Kartik Sethuraman
- * 		   created: October 2, 2012
- * 	 last modified: October 31, 2012
- * 
- * Function - This is the controller for the audio page tab.  Controls the functionality
- *    for user interaction within the tab.
- * 
- * 
- *************************************************************************************/
+
 public class AudioSettingsTab extends Composite {
 
 	private ArrayList<Mixer.Info> inputMixerInfo;

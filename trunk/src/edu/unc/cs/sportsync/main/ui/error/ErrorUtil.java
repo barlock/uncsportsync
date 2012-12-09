@@ -1,14 +1,5 @@
 package edu.unc.cs.sportsync.main.ui.error;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 /*************************************************************************************
  * 
  * Author(s) - Michael Barlock
@@ -19,6 +10,16 @@ import org.eclipse.jface.dialogs.ErrorDialog;
  * 
  * 
  *************************************************************************************/
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
+
 public class ErrorUtil {
 
 	/**
